@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>I BCL.</title>
+  
+  <subtitle>ibcl.us</subtitle>
+  <link href="https://ibcl.us/atom.xml" rel="self"/>
+  
+  <link href="https://ibcl.us/"/>
+  <updated>2021-07-03T03:44:42.451Z</updated>
+  <id>https://ibcl.us/</id>
+  
+  <author>
+    <name>BCLSWL</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Television Hokkaido Broadcasting Co. LTD.</title>
+    <link href="https://ibcl.us/QSL-JOHIdtv_20210105/"/>
+    <id>https://ibcl.us/QSL-JOHIdtv_20210105/</id>
+    <published>2021-01-05T13:50:28.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;基本信息&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;电视台名称：&lt;/strong&gt; &lt;em&gt;Television Hokkaido Broadcasting Co. LTD.&lt;/em&gt;&lt;br&gt;&lt;strong&gt;所属国家：&lt;/strong&gt; &lt;em&gt;JP 日本&lt;/em&gt;&lt;br&gt;&lt;strong&gt;取得时间：&lt;/strong&gt; &lt;em&gt;2018 年&lt;/em&gt;&lt;br&gt;&lt;strong&gt;收听报告寄送方式：&lt;/strong&gt; &lt;em&gt;航空邮件&lt;/em&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="QSL" scheme="https://ibcl.us/categories/QSL/"/>
+    
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="电视台" scheme="https://ibcl.us/tags/%E7%94%B5%E8%A7%86%E5%8F%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>宮城テレビ放送</title>
+    <link href="https://ibcl.us/QSL-JOMMdtv_20210105/"/>
+    <id>https://ibcl.us/QSL-JOMMdtv_20210105/</id>
+    <published>2021-01-05T12:50:28.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;基本信息&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;电视台名称：&lt;/strong&gt; &lt;em&gt;宮城テレビ放送&lt;/em&gt;&lt;br&gt;&lt;strong&gt;所属国家：&lt;/strong&gt; &lt;em&gt;JP 日本&lt;/em&gt;&lt;br&gt;&lt;strong&gt;取得时间：&lt;/strong&gt; &lt;em&gt;2018年&lt;/em&gt;&lt;br&gt;&lt;strong&gt;收听报告寄送方式：&lt;/strong&gt; &lt;em&gt;航空邮件&lt;/em&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="QSL" scheme="https://ibcl.us/categories/QSL/"/>
+    
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="电视台" scheme="https://ibcl.us/tags/%E7%94%B5%E8%A7%86%E5%8F%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历</title>
+    <link href="https://ibcl.us/GSM-Sniffing_20200826/"/>
+    <id>https://ibcl.us/GSM-Sniffing_20200826/</id>
+    <published>2020-08-25T17:16:38.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;本文内容仅供参考、学习之用。&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;在阅读本文之前，请详细了解相关法律，若因读者对本文内容进行模仿而造成的一切负面影响及后果，&lt;a href=&quot;https://ibcl.us/&quot;&gt;“I BCL.”&lt;/a&gt;一概对其不负责。&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;本文内容应情节需求系完全虚构，如有雷同实属巧合。&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;前情提要&quot;&gt;&lt;a href=&quot;#前情提要&quot; class=&quot;headerlink&quot; title=&quot;前情提要&quot;&gt;&lt;/a&gt;前情提要&lt;/h1&gt;&lt;p&gt;一个百无聊赖的午间，博主正躺在床上带着耳机听歌，昏昏欲睡之中，突然收到一条讯息。&lt;/p&gt;
+&lt;p&gt;冷气与睡意之间，被通知铃声吵醒是一件痛苦的事，但是博主还是打开了萤幕，原来是某位大佬发来的留言。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;大佬：最近忙啥呢？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;既然是大佬主动联系博主，一定是有什么有趣的事情。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;博主：表示现在很闲，大佬是有什么事？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;接着，大佬发来一个链接，对应的地址是一个&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9naXRodWIuY29tL3B0cmtyeXNpay9nci1nc20=&quot;&gt;名为 gr-gsm 开源专案&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;大佬：既然有时间，咱们来玩嗅探 GSM 怎么样？就用你的 RTL-SDR。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;博主：蛤？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;博主从未想过，自己与成为一个能偷看他人简讯的偷窥狂，仅仅只有 50 块的距离……&lt;/p&gt;
+&lt;p&gt;这么有趣的体验，怎么能够拒绝？于是博主果断答应了大佬的邀请。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>北京机关和自由日本放送：藤井冠次（二）</title>
+    <link href="https://ibcl.us/RadioFreeJapan-Peking_20200818/"/>
+    <id>https://ibcl.us/RadioFreeJapan-Peking_20200818/</id>
+    <published>2020-08-18T04:08:08.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;第三章：自由日本放送（PG-159-198-全文）&quot;&gt;&lt;a href=&quot;#第三章：自由日本放送（PG-159-198-全文）&quot; class=&quot;headerlink&quot; title=&quot;第三章：自由日本放送（PG 159-198 全文）&quot;&gt;&lt;/a&gt;第三章：自由日本放送（PG 159-198 全文）&lt;/h1&gt;&lt;h2 id=&quot;1-短波与中波&quot;&gt;&lt;a href=&quot;#1-短波与中波&quot; class=&quot;headerlink&quot; title=&quot;1. 短波与中波&quot;&gt;&lt;/a&gt;1. 短波与中波&lt;/h2&gt;&lt;p&gt;1952 年 5 月 2 日，也就是所谓的&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9qYS53aWtpcGVkaWEub3JnL3dpa2kvJUU4JUExJTgwJUUzJTgxJUFFJUUzJTgzJUExJUUzJTgzJUJDJUUzJTgzJTg3JUUzJTgzJUJDJUU0JUJBJThCJUU0JUJCJUI2&quot;&gt;“血腥五一事件”&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;发生后的第二天早上，东京的报纸，包括《朝日新闻》、《读卖新闻》等各大报纸头版都被“血腥五一事件”洗版，在报道的下半部分，则用小标题单独列出了广播新闻社的报道：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;共产系“自由日本放送”&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;东京电：5 月 1 日晚，首次监听到名为“自由日本放送”的共产系日语广播。当晚，播送了《日本共产党五一宣言》、《世界工会联合会五一节致辞》和《日本国民必胜解说》等节目。广播地点不详，但从每晚 20:30 到 21:00 在 11900kHz 准时的广播来看，应该来自北京、平壤或伯力，而非日本。（《读卖新闻》）&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;同一天，《朝日新闻》的小标题是“神秘广播出现 · 共产系‘自由日本’”。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="历史" scheme="https://ibcl.us/tags/%E5%8E%86%E5%8F%B2/"/>
+    
+    <category term="怀旧" scheme="https://ibcl.us/tags/%E6%80%80%E6%97%A7/"/>
+    
+    <category term="我没有听敌台￣へ￣" scheme="https://ibcl.us/tags/%E6%88%91%E6%B2%A1%E6%9C%89%E5%90%AC%E6%95%8C%E5%8F%B0%EF%BF%A3%E3%81%B8%EF%BF%A3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>北京机关和自由日本放送：藤井冠次（一）</title>
+    <link href="https://ibcl.us/RadioFreeJapan-Peking_20200727/"/>
+    <id>https://ibcl.us/RadioFreeJapan-Peking_20200727/</id>
+    <published>2020-07-27T15:08:08.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;译自 &lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2UvcGVraW4uaHRt&quot;&gt;www2s.biglobe.ne.jp/~mike/pekin.htm&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;。由于原文篇幅较长，故博主决定根据原文内容，分为多篇文章发布。&lt;/p&gt;
+&lt;h1 id=&quot;前情提要&quot;&gt;&lt;a href=&quot;#前情提要&quot; class=&quot;headerlink&quot; title=&quot;前情提要&quot;&gt;&lt;/a&gt;前情提要&lt;/h1&gt;&lt;p&gt;藤井冠次是前 NHK 新闻记者，赤色清洗（Red Purge）后流亡北京，成为自由日本放送的编辑兼制作人。&lt;/p&gt;
+&lt;p&gt;这份档案是他的证言《伊藤律与北京 · 德田机关》（三一书房，1980 年，已绝版）中《第三章· 自由日本放送》的全文转载。&lt;/p&gt;
+&lt;p&gt;第 1 章“德田机关”，第 2 章“伊藤律的问题”、北京机关的内部状况、伊藤律在北京机关的活动，以及调查等都是非常有趣的内容。&lt;/p&gt;
+&lt;p&gt;另外，他是日本共产党中唯一谈及人民舰队的具体偷渡体验和人民舰队负责人冈田文吉往返偷渡的人。&lt;/p&gt;
+&lt;p&gt;再者，第 3 章很长，所以我（宫地，本文作者）给它起了个小标题。&lt;/p&gt;
+&lt;h2 id=&quot;相关链接&quot;&gt;&lt;a href=&quot;#相关链接&quot; class=&quot;headerlink&quot; title=&quot;相关链接&quot;&gt;&lt;/a&gt;相关链接&lt;/h2&gt;&lt;p&gt;为方便了解本文背景，在此提供相关链接。&lt;/p&gt;
+&lt;h3 id=&quot;中文部分&quot;&gt;&lt;a href=&quot;#中文部分&quot; class=&quot;headerlink&quot; title=&quot;中文部分&quot;&gt;&lt;/a&gt;中文部分&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JThDJTk3JUU0JUJBJUFDJUU2JTlDJUJBJUU1JTg1JUIz&quot;&gt;北京机关&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JTg3JUFBJUU3JTk0JUIxJUU2JTk3JUE1JUU2JTlDJUFDJUU2JTk0JUJFJUU5JTgwJTgx&quot;&gt;自由日本放送&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU4JUI1JUE0JUU4JTg5JUIyJUU2JUI4JTg1JUU2JUI0JTk3&quot;&gt;赤色清洗&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU0JUJBJUJBJUU2JUIwJTkxJUU4JTg5JUE2JUU5JTlBJThB&quot;&gt;人民舰队&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU0JUJDJThBJUU4JTk3JUE0JUU1JUJFJThC&quot;&gt;伊藤律&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly96aC53aWtpcGVkaWEub3JnL3dpa2kvJUU1JUJGJTk3JUU3JTk0JUIwJUU5JTg3JThEJUU3JTk0JUI3&quot;&gt;志田重男&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;日文部分&quot;&gt;&lt;a href=&quot;#日文部分&quot; class=&quot;headerlink&quot; title=&quot;日文部分&quot;&gt;&lt;/a&gt;日文部分&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2UvbW91dGVuMi5odG0=&quot;&gt;「武装闘争責任論」の盲点 · 朝鮮“侵略戦争”に「参戦」した日本共産党&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2UvbW91dGVuLmh0bQ==&quot;&gt;宮本顕治の｢五全協｣前、スターリンへの“屈服”&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2UveW9zaGlkYS5odG0=&quot;&gt;吉田四郎 · 50 年分裂から六全協まで · 主流派幹部インタビュー&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2Uvb2t1Ym8uaHRt&quot;&gt;大窪敏三 · 占領下の共産党軍事委員長 · 地下軍事組織“Y”&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2Uvc2Fuc29uMS5odG0=&quot;&gt;由井誓 · “「五一年綱領」と極左冒険主義”のひとこま · 山村工作隊活動&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2Uvc2Fuc29uMi5odG0=&quot;&gt;脇田憲一 · 私の山村工作隊体験 · 独立遊撃隊関西第一支隊&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2UvbWFzdXlhbWEuaHRt&quot;&gt;増山太助 · 戦後期左翼人士群像 · 日本共産党の軍事闘争&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2UvbmFrYW5vMi5odG0=&quot;&gt;中野徹三 · 現代史への一証言 · 流されて蜀の国へ · を紹介する&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;（追加）川口孝夫 · 流されて蜀の国へ · 終章 · 私と白鳥事件&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dzJzLmJpZ2xvYmUubmUuanAvfm1pa2UvaXNpZG9jb20uaHRt&quot;&gt;石堂清倫 · コミンフォルム批判 · 再考 · スターリン、中国との関係&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dy5tYXJpbm8ubmUuanAvfnJlbmRhaWNvL3Rvc2hpL25paG9ua2l5b3NhbnRvX25va2Vua2l5dV90b3NoaS5odG1s&quot;&gt;れんだいこ · 日本共産党戦後党史の研究&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cDovL3d3dy5raXRhbmV0Lm5lLmpwL350YWthc2hpLzFidS1reW91LzFidS1reW91LWluZGV4Lmh0bQ==&quot;&gt;八百川孝共産党区会議員 · 夢 · 共産主義 · 50 年問題 · Pg 21-24&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;书影&quot;&gt;&lt;a href=&quot;#书影&quot; class=&quot;headerlink&quot; title=&quot;书影&quot;&gt;&lt;/a&gt;书影&lt;/h2&gt;&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/RadioFreeJapan-Peking_20200727/1.jpg&quot; alt=&quot;伊藤律与北京 · 德田机关&quot; title=&quot;伊藤律与北京 · 德田机关&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/RadioFreeJapan-Peking_20200727/2.jpg&quot; alt=&quot;战后期左翼人士群像&quot; title=&quot;战后期左翼人士群像&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="历史" scheme="https://ibcl.us/tags/%E5%8E%86%E5%8F%B2/"/>
+    
+    <category term="怀旧" scheme="https://ibcl.us/tags/%E6%80%80%E6%97%A7/"/>
+    
+    <category term="我没有听敌台￣へ￣" scheme="https://ibcl.us/tags/%E6%88%91%E6%B2%A1%E6%9C%89%E5%90%AC%E6%95%8C%E5%8F%B0%EF%BF%A3%E3%81%B8%EF%BF%A3/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>FlightFeeder 白嫖背后的阴谋（续）</title>
+    <link href="https://ibcl.us/ADSB-FlightFeeder_20200601/"/>
+    <id>https://ibcl.us/ADSB-FlightFeeder_20200601/</id>
+    <published>2020-05-31T16:00:00.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;em&gt;应读者要求，博主将在这篇文章中介绍如何优雅地向 FlightAware 上传数据。&lt;/em&gt;&lt;/p&gt;
+&lt;h1 id=&quot;前情提要&quot;&gt;&lt;a href=&quot;#前情提要&quot; class=&quot;headerlink&quot; title=&quot;前情提要&quot;&gt;&lt;/a&gt;前情提要&lt;/h1&gt;&lt;p&gt;在上一篇博文中，博主在文章结尾处粗略提到了安装 PiAware 过后通过透明代理向 FlightAware 上传 ADS-B 资讯。但一段时间后博主发现，即便是这样，也依然免不了 FlightAware 每个礼拜定期的邮件轰炸。&lt;/p&gt;
+&lt;p&gt;可能是 FlightAware 的工作人员等得不耐烦了，最后还亲自给博主发了一封邮件。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;Matt H (FlightAware)&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Apr 13, 13:16 CDT&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Hi（您好）&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;This is FlightAware Support.（这里是 FlightAware 支援部。）&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;We shipped you FlightFeeder serial number 5784 on 2020-01-29.（我们于 2020 年 1 月 29 日向您发送了序列号为 5784 的 FlightFeeder。）&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Did you receive the shipment OK? If you did, is there anything we can do to help you install it?（您收到货物了吗？如果确实如此，需要我们帮助您安装吗？）&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;It would be great to get you up and running as soon as possible and activate your free Enterprise account. So please get back to me for any assistance we can provide.（若您可以尽快运行，并激活您的免费企业帐户的话，将会是非常棒的。所以请回复我，以为您提供任何帮助。）&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;*** If this installation delay is related to COVID-19, please let us know and we will make a note on your account（如果推迟安装与 COVID-19 有关，请让我们知道，并为您记录） ***&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;Matt&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;FlightAware&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;博主将这一遭遇告诉某位大佬过后，大佬却给了个馊主意。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你就给他们回复说你得了新型肺炎，在接受治疗。接下来不管他们给你发什么电邮，你都不要理会了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;言外有意，话中有话，这不咒博主去阴间嘛！&lt;/p&gt;
+&lt;p&gt;缺德的事还是干不得，毕竟账是记在那的。既然现在已经具备了透明代理的条件，干脆就装上带有后门的 FlightFeeder 全家桶吧！&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>FlightFeeder 白嫖背后的阴谋</title>
+    <link href="https://ibcl.us/ADSB-FlightFeeder_20200319/"/>
+    <id>https://ibcl.us/ADSB-FlightFeeder_20200319/</id>
+    <published>2020-03-19T09:30:06.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;某年某月某日，某无（国）限（安）垫（局）技（茶）术（道）讨（研）论（究）群（组）中出现了这样一段对话。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;呐，听大佬说，FlightAware 的 FlightFeeder 套件本体是 Raspberry Pi 呢。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;So？白嫖安排上？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;据说 FlightFeeder 会把 ADS-B 资讯上传到国外，有人因为这个喝了茶的。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;国安的怎么知道 FlightFeeder 使用者的确切位置？这不科学啊！钓鱼执法？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可能是通过网络抓包吧？这个我也不清楚哈哈。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;谁管这么多，先弄到手再说。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;…&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;作为一个遵纪守法的好公（居）民，看到这种危险的言论，就应该立刻 jvbao，然后把这些不法分子一锅端掉，为维护国家的稳定做出贡献（手动滑稽&lt;/p&gt;
+&lt;p&gt;鼠标移到了“举报”键上，在离一锅端只有一步之遥时，博主却犹豫了…&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;博主是个穷人，买不起 Raspberry Pi 这种奢侈品，只能看其他人玩，能有一块 Raspberry Pi 是博主多年以来的梦想（大雾&lt;/p&gt;
+&lt;p&gt;然而现在，一个免费领 Raspberry Pi 的机会就在面前，为何要做 jvbao 这种傻事！&lt;/p&gt;
+&lt;p&gt;鼠标滑到 Chrome 的图标上，接着博主去到了 &lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9mbGlnaHRhd2FyZS5jb20vYWRzYi9mbGlnaHRmZWVkZXIv&quot;&gt;FlightAware 的网站&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>致信 KBS：我要为她点首歌</title>
+    <link href="https://ibcl.us/KBS-RequestSong4Her_20200226/"/>
+    <id>https://ibcl.us/KBS-RequestSong4Her_20200226/</id>
+    <published>2020-02-26T15:22:00.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;前情提要&quot;&gt;&lt;a href=&quot;#前情提要&quot; class=&quot;headerlink&quot; title=&quot;前情提要&quot;&gt;&lt;/a&gt;前情提要&lt;/h1&gt;&lt;p&gt;19 年 12 月份，博主黑进了学校教务处的系统，拿到了整个高三年级的学生信息表（Kali Linux 从入门到入狱实践者），在密密麻麻的学生名单中，博主随手一翻就看到了她的名字和身份证号码…&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;嗯，3 月 4 号的生日… 什么？她居然比我大！&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;算了，这也没什么（&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;由于博主在线下向来是个怂包，不敢直接去问她的生日… 黑进教务处，也实属无奈之举。&lt;/p&gt;
+&lt;p&gt;不过现在，博主至少知道了她的生日，而且到三月份也没多久了（从去年 12 月份算起），所以准备生日礼物的事项必须提上日程。&lt;/p&gt;
+&lt;p&gt;送她什么好呢？饰品挂件什么的显得太庸俗，送书之类的又显得太做作… 这实在是一个难题。&lt;/p&gt;
+&lt;p&gt;一次偶然的机会，博主知道了她的偶像是权志龙。作为 KBS World Radio 的老听友，或许博主可以联系 KBS，在她生日那天的广播里为她放一首权志龙的歌，然后录音送给她？&lt;/p&gt;
+&lt;p&gt;好主意！&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/KBS-RequestSong4Her_20200226/1.jpg&quot; alt=&quot;KBS World Radio&quot; title=&quot;KBS World Radio&quot;&gt;&lt;/p&gt;
+&lt;p&gt;然而让博主没有想到的是，这次的点歌经历充满曲折…&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ADS-B：从入门到入狱</title>
+    <link href="https://ibcl.us/ADSB_Decode_20200118/"/>
+    <id>https://ibcl.us/ADSB_Decode_20200118/</id>
+    <published>2020-01-18T09:30:06.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;听惯了中短波广播，甚至已经能准确说出当前的某个频率对应哪个电台在播音… 是的，博主终于对传统广播有了倦意，也正因如此，最后博主决定拿出闲置的 RTL-SDR，玩玩 ADS-B 接收。&lt;/p&gt;
+&lt;p&gt;在这篇文章中，博主将介绍如何用 RTL-SDR 接收 1090MHz，由航班下发的 ADS-B 信号，并将实时航班情况展示在地图上，公开至外网，给喜欢的她装个逼，然后坐等被喝茶（&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9hLmliY2wudXMv&quot;&gt;现在，博主的 ADS-B 监测站点已经上线，欢迎来踩～&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/ADSB-Decode_20200118/1.jpg&quot; alt=&quot;博主的 SDR 服务器&quot; title=&quot;博主的 SDR 服务器&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>喜欢的你</title>
+    <link href="https://ibcl.us/Beloved-Her_20200105/"/>
+    <id>https://ibcl.us/Beloved-Her_20200105/</id>
+    <published>2020-01-05T05:22:00.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;创作背景：博主最近向暗恋了一年的女生表白了。所以瞎写了一通骚话，放在博客里供大家欣赏，并应付已经几个月没有更新的文章。&lt;/p&gt;
+&lt;p&gt;由于没几个月就要高考了，所以博主降低了更新文章的频率，在此向长期以来关注 I BCL. 的朋友道个歉。&lt;/p&gt;
+&lt;p&gt;下一篇文章，或许是和 ADS-B 有关的话题。&lt;/p&gt;
+&lt;p&gt;前方高能（捂脸&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在 Heroku 搭建 V2Ray</title>
+    <link href="https://ibcl.us/Heroku-V2Ray_20191014/"/>
+    <id>https://ibcl.us/Heroku-V2Ray_20191014/</id>
+    <published>2019-10-14T15:22:00.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;重要：由于 V2Ray 修改了自动安装脚本，导致 bclswl0827/v2ray-heroku 该镜像在 Heroku 无法运行。修改 Dockerfile 后问题已经解决，现在请 2020 年 2 月 20 日前部署过本镜像的用户，删除原先的 V2Ray 应用，并重新在 Heroku 部署本镜像。&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;已经 Fork 过这个项目的用户，请重新 Fork 一次。&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;在白嫖党的强势围攻之下，Arukas 终于宣布倒闭，并将于 2020 年 1 月 31 日关闭所有服务。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Dear Arukas users,&lt;br&gt;We will shutdown of service on January 31, 2020 (JST).&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;又一个免费服务被撸翻了车，默默为 Arukas 心疼一秒…&lt;/p&gt;
+&lt;p&gt;算下来的话，现在还在运营中的，提供免费容器的也就只有 OpenShift 和 Heroku 了，很气的是，OpenShift 在今年二月左右变更了政策，此前可以一直使用的 OpenShift Starter 的有效期改为了只有两个月，到期之后需要重新申请免费的 OpenShift Starter 并重新部署应用。&lt;/p&gt;
+&lt;p&gt;于是 Free Plan 变成了 Free Trail，顿时 OpenShift 就不香了。&lt;/p&gt;
+&lt;p&gt;对于白嫖党们来说，Arukas 的倒下和 OpenShift 政策的变更确实是一个极坏的消息，但是好在还有 Heroku 这个活雷锋，并且 Heroku 和 OpenSHift 一样是使用的 Amazon EC2…&lt;/p&gt;
+&lt;p&gt;或许可以再利用一波？&lt;/p&gt;
+&lt;p&gt;这篇水文，将介绍博主如何写 Dockerfie 以在 Heroku 上搭建 V2Ray。&lt;/p&gt;
+&lt;p&gt;默默为 Heroku 心疼两秒…&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>曲线救国：利用 Cloudflare API 关闭 Cloudflare IPv6 兼容功能</title>
+    <link href="https://ibcl.us/Disable-CloudFlareIPv6_20190922/"/>
+    <id>https://ibcl.us/Disable-CloudFlareIPv6_20190922/</id>
+    <published>2019-09-22T03:22:00.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;博主有幸用到中国移不动免费送的流量，但是却发现打开自己的博客所用时间再创 147s 的新高。&lt;/p&gt;
+&lt;p&gt;博主博客使用 Cloudflare 的 CDN 保护源站并&lt;del&gt;加速&lt;/del&gt;，经过 nslookup 等一波操作后，博主发现原来是 Cloudflare 优先让浏览者使用了 IPv6 访问网站。&lt;/p&gt;
+&lt;p&gt;好吧，没有任何贬低 IPv6 的意思，老外们都说 IPv6 速度快，博主也相信这只是在国外而言…&lt;/p&gt;
+&lt;p&gt;以日本为例，这个亚洲 IPv6 普及度比较高的国家。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Disable-CloudFlareIPv6_20190922/1.png&quot; alt=&quot;IPv6 在日本&quot; title=&quot;IPv6 在日本&quot;&gt;&lt;/p&gt;
+&lt;p&gt;然而这玩意在中国却又变了味，就算连到百度的 IPv6 站，延迟都是 70+ms，丢包更不用说，80% Loss 绝对不是吹牛。工信部下令部署 IPv6，三大运营商也只是为了完成任务，之所以连通性这么低，也是因为利益相关。&lt;/p&gt;
+&lt;p&gt;在这么一个神奇的国度，IPv6 自然不合国情，所以要阉割掉。然而 Cloudflare 却不让用户直接关掉 IPv6 兼容功能，所以这是一个很恼火的问题。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>某科学的 T1 盒子刷 Armbian 调教笔记</title>
+    <link href="https://ibcl.us/PhicommT1-Armbian_20190825/"/>
+    <id>https://ibcl.us/PhicommT1-Armbian_20190825/</id>
+    <published>2019-08-25T08:22:00.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在剁手斐讯 N1 刷入 Armbian 作为&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9zLmliY2wudXMv&quot;&gt;本站的 SDR 服务器&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;之后，博主已经对这个“穷人的树莓派”佩服得五体投地了。&lt;/p&gt;
+&lt;p&gt;然而人的欲望总是无止境的，所以过了几天，博主又在并夕夕上剁手了斐讯 T1 盒子，也打算刷入 Armbian，作为日常实（瞎）验（搞）之用。&lt;/p&gt;
+&lt;p&gt;可网上一大堆教程都是在调教 N1，有关 T1 刷机的文章少之又少，一切只能自己摸索。&lt;/p&gt;
+&lt;p&gt;在害怕踩坑并搞烂 T1，导致自己省下的一百五十来块打水漂的情况下，于是博主带着 T1 去附近的庙里烧了香拜了佛……&lt;/p&gt;
+&lt;p&gt;听上去有些扯，但是博主最后顺利地让 T1 运行了 Armbian，并烧写镜像到了自带的 emmc 中。&lt;/p&gt;
+&lt;p&gt;这篇文章，便是调教 T1 盒子的笔记。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/PhicommT1-Armbian_20190825/1.jpg&quot; alt=&quot;T1 盒子&quot; title=&quot;T1 盒子&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+    <category term="杂谈" scheme="https://ibcl.us/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>别样的 GK2A 气象卫星接收大战</title>
+    <link href="https://ibcl.us/GK2A-Decode_20190811/"/>
+    <id>https://ibcl.us/GK2A-Decode_20190811/</id>
+    <published>2019-08-10T16:10:06.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;一天，BH4ERB 给我发来消息他说：“你敢不敢和我接收 GK2A 气象卫星”，我豪爽的答应了：“我当然敢”，周日下午在 xx 路 xx 大厦举行，谁不来谁就是怂货。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我原本以为我恐吓了 BH4ERB，BH4ERB 应该躲在家，不敢找我，可正当这时，我听见了音乐声，原来是我手机响了，一看，竟然是 BH4ERB 发来的消息，他还真有勇气，我接通了电话，听道电话那头骂道：“&lt;del&gt;小废物，你怎么还不来，再不来你妈的泌尿系统就被我搞坏了。&lt;/del&gt;”我听到他对我的毒骂之后，我回骂道：“&lt;del&gt;我要把你挂到同性恋网站上，帮你炒作一番，你说好不好啊。&lt;/del&gt;”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;他吓得没再回应我，可是到了周日，BH4ERB 竟然又给我发消息了，他还真要和我举行接收大战，于是我按照约定，到达了 xx 大厦，可他已经等我很久了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;……&lt;/p&gt;
+&lt;p&gt;GK2A 是韩国的气象卫星，由韩国气象厅开发，KARI 制造。于 2018 年 12 月 4 日由欧洲航天局的阿丽亚娜 5 号将其送上轨道，属于地球同步卫星。&lt;/p&gt;
+&lt;p&gt;最近 HAM 大佬  BH4ERB 对这颗卫星感上了兴趣，决定尝试接收并解码 GK2A 下传的数据。&lt;/p&gt;
+&lt;p&gt;接收数据需要使用到一个名为 Goestools 的工具，钦定在 Linux 下运行。由于 BH4ERB 对 Linux 并不熟悉，在多次尝试编译安装，却报错无法启动之后，找到了博主帮忙，希望跟博主一起合作填完这个巨坑。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在 ARMv8 架构设备上编译 csdr</title>
+    <link href="https://ibcl.us/ARMv8-csdr_20190729/"/>
+    <id>https://ibcl.us/ARMv8-csdr_20190729/</id>
+    <published>2019-07-29T09:30:06.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;放假惹…..博主最近在并夕夕上剁手了 PHICOMM N1 盒子，PHICOMM N1 的 CPU 采用的是更新的 ARMv8 架构，在把 RTL-SDR 服务器从 Orange Pi Lite 转移到 N1 时遇到了一些麻烦。&lt;/p&gt;
+&lt;p&gt;为了不让有类似需求的其他人踩坑，特此水一文章……&lt;/p&gt;
+&lt;p&gt;话说回来，编译就是踩坑呢！（这段划去）&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HG255d + RTL-SDR = ？</title>
+    <link href="https://ibcl.us/HG255d-RTLSDR_20190720/"/>
+    <id>https://ibcl.us/HG255d-RTLSDR_20190720/</id>
+    <published>2019-07-20T10:10:06.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;em&gt;博主从九月份开始，就是一个高三学生了哦… 建站这三年来，本站经历了不少事，抽空会写一篇文章，分享 I BCL. 博客的建站之初的故事。&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;博主一年前在网上花了 50 来块，买了 4 台华为 HG255d 路由器，最初只是想在上面运行 Shadowsocks-libev 做透明代理，但是后来由于 SS 开始出现断流现象，保险起见，于是将 SS 换成了 V2Ray，此后 HG255d 再也没开过机…&lt;/p&gt;
+&lt;p&gt;学校连续补了十二天课之后，终于大发慈悲，决定放一天假。趁着这一天假，博主赶紧打开积了一层灰的 HG255d，看看能折腾些什么。&lt;/p&gt;
+&lt;p&gt;偶然看到随手扔在书桌上的 RTL-SDR，于是萌生了在 HG255d 上运行 RTL-SDR 的奇怪想法。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/HG255d-RTLSDR_20190720/1.jpg&quot; alt=&quot;HG255d 和 RTL-SDR&quot; title=&quot;HG255d 和 RTL-SDR&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/HG255d-RTLSDR_20190720/2.jpg&quot; alt=&quot;RTL-SDR 特写&quot; title=&quot;RTL-SDR 特写&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>修改 RTL-SDR 驱动使 rtl_tcp 支持从 I/Q 通道直采信号</title>
+    <link href="https://ibcl.us/rtltcp-BranchIQ_20190611/"/>
+    <id>https://ibcl.us/rtltcp-BranchIQ_20190611/</id>
+    <published>2019-06-11T05:10:06.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;博主最近申请到了 WebSDR 的服务端程序，在准备好各种环境之后，却卡在了与 RTL-SDR 的对接上……&lt;/p&gt;
+&lt;p&gt;WebSDR 的后端一般与 RTL-SDR 驱动自带的 TCP 服务器模块 &lt;code&gt;rtl_tcp&lt;/code&gt; 对接并进行调谐。&lt;code&gt;rtl_tcp&lt;/code&gt; 的启动很简单，只需要一行命令即可解决。&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;root@yukiho:~# rtl_tcp -a 127.0.0.1 -s 1024000 -g 0 -d 0 -p 1234&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;在设置好中心频率（9500 kHz），采样率（1.2 Msps）并启动该模块之后，博主却发现 WebSDR 并不能正常地接收短波信号，频谱瀑布一片空白。&lt;/p&gt;
+&lt;p&gt;这就很迷了。经过一波分析之后，博主得出了结论：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;rtl_tcp&lt;/code&gt; 命令不能像 &lt;code&gt;rtl_sdr&lt;/code&gt; 命令一样使用 I/Q 通道直采接收中短波信号，而此前 OpenWebRX 能实现是因为 Op 采用的是支持 I/Q 通道直采的 &lt;code&gt;rtl_sdr&lt;/code&gt; 模块加 netcat 转发数据至 TCP 实现的……&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;转发数据确实是一条新的思路，但是操作起来却有些麻烦：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;root@yukiho:~# rtl_sdr -D2 -s 1024000 -f 9500000 -p 0 -g 0 -| nmux --bufsize 253952 --bufcnt 379 --port 1234 --address 127.0.0.1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;此外，由于引入了新的工具 netcat 做数据转发，所以负载也跟着上去了，对于博主的垃圾 Orange Pi Lite 来说简直就是灭顶之灾……&lt;/p&gt;
+&lt;p&gt;还有更好的方法吗？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HC5962 运行 V2Ray 透明代理</title>
+    <link href="https://ibcl.us/HC5962-V2Ray_20190518/"/>
+    <id>https://ibcl.us/HC5962-V2Ray_20190518/</id>
+    <published>2019-05-18T15:22:00.000Z</published>
+    <updated>2021-07-03T03:44:42.447Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;博主的同桌在去年年底入手了一台 Switch，但最近他发现联网游戏的掉线次数越来越多，eShop 也经常连接不上。在博主的安利下，他决定买一台极路由 4 增强版刷 OpenWRT 做透明代理，蹭博主的 VPS 来加速游戏，顺便看看 YouTube……&lt;/p&gt;
+&lt;h2 id=&quot;情况&quot;&gt;&lt;a href=&quot;#情况&quot; class=&quot;headerlink&quot; title=&quot;情况&quot;&gt;&lt;/a&gt;情况&lt;/h2&gt;&lt;p&gt;考虑到 Shadowsocks 的安全性，所以博主的 VPS 上并未部署这一类软件，而是部署的是更加复杂的 V2Ray。&lt;/p&gt;
+&lt;p&gt;也正因为 V2Ray 配置的复杂，博主踩了些坑。最终博主决定记下这次折腾，即如何在 OpenWRT 路由器上运行并设置透明代理，同时也希望这篇文章帮到一部分有同样需求的人。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Re：从零开始的 RTL-SDR 折腾记</title>
+    <link href="https://ibcl.us/RTLSDR-Modifying_20190323/"/>
+    <id>https://ibcl.us/RTLSDR-Modifying_20190323/</id>
+    <published>2019-03-23T05:10:06.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;引子&quot;&gt;&lt;a href=&quot;#引子&quot; class=&quot;headerlink&quot; title=&quot;引子&quot;&gt;&lt;/a&gt;引子&lt;/h2&gt;&lt;h3 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h3&gt;&lt;p&gt;最近对 SDR 极感兴趣，于是先后剁手了 SDRPlay、RTL-SDR、Mini-Whip 等设备。闷声发大财当然没有意思，好东西还是要分享出来，于是博主又剁手了一台 Orange Pi Lite，决定搭建一个 SDR 站点。&lt;/p&gt;
+&lt;p&gt;经过三个小时的折腾，终于成功了，于是有了现在的 &lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9zLmliY2wudXMv&quot;&gt;s.ibcl.us&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;。&lt;/p&gt;
+&lt;p&gt;这篇文章，记录了博主从零搭建 SDR 站点的全部过程，并分享了自己的一些经验。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>博主穿越了～这些磁带，您知多少？</title>
+    <link href="https://ibcl.us/Tape-Size_20190218/"/>
+    <id>https://ibcl.us/Tape-Size_20190218/</id>
+    <published>2019-02-18T15:58:08.000Z</published>
+    <updated>2021-07-03T03:44:42.451Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;一直对用各种“带”的那个年代心存向往，在系统地了解了一些磁带的信息之后，于是决定写一篇介绍各种磁带型号、尺寸的科普文。&lt;/p&gt;
+&lt;p&gt;下面提到的这些“带子”，您都见过（或用过）哪些呢？&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;（多图预警）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Tape-Size_20190218/1.jpg&quot; alt=&quot;博主拍摄的卡式录音带&quot; title=&quot;博主拍摄的卡式录音带&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="历史" scheme="https://ibcl.us/tags/%E5%8E%86%E5%8F%B2/"/>
+    
+    <category term="怀旧" scheme="https://ibcl.us/tags/%E6%80%80%E6%97%A7/"/>
+    
+  </entry>
+  
+</feed>
