@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <div id="app" />
+    </body>
+    <script type="text/javascript">
+        const archive = "archive";
+        const origin = window.location.origin;
+        const pathname = window.location.pathname.replaceAll("/", "");
+
+        const app = document.getElementById("app");
+        const date = pathname.match(/\d{8}/);
+
+        if (pathname.includes(archive)) {
+            app.innerText = `页面未找到，请检查该文章是否存在`;
+        } else if (date) {
+            if (parseInt(date[0]) < 20230520) {
+                app.innerText = `本页文章已做归档，即将尝试跳转`;
+                window.location.href = `${origin}/${archive}/${pathname}.html`;
+            }
+        } else {
+            app.innerText = `页面未找到，请检查 URL 路径！`
+        }
+    </script>
+</html>

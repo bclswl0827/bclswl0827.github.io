@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="本文已失效，不再具有参考意义。 引子起因最近对 SDR 极感兴趣，于是先后剁手了 SDRPlay、RTL-SDR、Mini-Whip 等设备。闷声发大财当然没有意思，好东西还是要分享出来，于是博主又剁手了一台 Orange Pi Lite，决定搭建一个 SDR 站点。 经过三个小时的折腾，终于成功了，于是有了现在的 s.ibcl.us。 这篇文章，记录了博主从零搭建 SDR 站点的全部过程，并分享">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Re：从零开始的 RTL-SDR 折腾记">
+<meta property="og:url" content="https://ibcl.us/archive/RTLSDR-Modifying_20190323.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="本文已失效，不再具有参考意义。 引子起因最近对 SDR 极感兴趣，于是先后剁手了 SDRPlay、RTL-SDR、Mini-Whip 等设备。闷声发大财当然没有意思，好东西还是要分享出来，于是博主又剁手了一台 Orange Pi Lite，决定搭建一个 SDR 站点。 经过三个小时的折腾，终于成功了，于是有了现在的 s.ibcl.us。 这篇文章，记录了博主从零搭建 SDR 站点的全部过程，并分享">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/3.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/4.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/5.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/6.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/7.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/8.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/9.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/10.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/11.gif">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/12.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/13.jpg">
+<meta property="og:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/14.jpg">
+<meta property="article:published_time" content="2019-03-23T05:10:06.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.386Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="广播">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="SDR">
+<meta property="article:tag" content="瞎搞">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/RTLSDR-Modifying_20190323/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/archive/RTLSDR-Modifying_20190323">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Re：从零开始的 RTL-SDR 折腾记 | I BCL.
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">Re：从零开始的 RTL-SDR 折腾记
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p><strong>本文已失效，不再具有参考意义。</strong></p>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>最近对 SDR 极感兴趣，于是先后剁手了 SDRPlay、RTL-SDR、Mini-Whip 等设备。闷声发大财当然没有意思，好东西还是要分享出来，于是博主又剁手了一台 Orange Pi Lite，决定搭建一个 SDR 站点。</p>
+<p>经过三个小时的折腾，终于成功了，于是有了现在的 <span class="exturl" data-url="aHR0cHM6Ly9zLmliY2wudXMv">s.ibcl.us<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>这篇文章，记录了博主从零搭建 SDR 站点的全部过程，并分享了自己的一些经验。</p>
+<span id="more"></span>
+
+<h3 id="情况"><a href="#情况" class="headerlink" title="情况"></a>情况</h3><p>GitHub 上的一个名为 OpenWebRX 的项目便提供了搭建 Web 页面 SDR 的解决方案。该项目基于 Python 编写，除了完全开源外，官方也提供了完备的技术文档，在某些方面甚至超越了 WebSDR。</p>
+<h3 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h3><p>去年黑五时没忍住诱惑，在 Virmach 剁手了一台年付 20 刀的 VPS，很栽的是，博主被分到的是一个被 TCP 阻断的 IP，此后便一直吃灰。此次折腾，说不定可以救活这台 VPS……</p>
+<p>此地的垃圾电信在去年 10 月底回收了博主家的公网 IP，然后偷偷换成了大内网… 在多次打电话要求还回 IP 之后无果，现在只能依赖于内网穿透。</p>
+<p>当然，博主肯定不会去用“花生壳”这一类的坑逼软件。博主的想法是，在吃灰的 VPS 上安装 Frps，然后在需映射机上用 Kcp 与 VPS 建立连接。这样不但回避了 TCP 连接，还可以对抗恶劣的网络环境。</p>
+<p>为了隐藏 VPS 的 IP 地址保证安全，博主决定使用 CDN 进行加速保护。可是 CDN 流量也要钱的啊，为了节约成本，就只能使用 CloudFlare 了。正好， CloudFlare 也支持 WebSocket 连接。</p>
+<p>由于 VPS 已经安装了 Nginx 并占用了 80/443 端口，且 CouldFlare 免费套餐不能中继除 80/443 以外的端口，所以博主决定使用 Nginx 反向代理 Frps 映射的 OpenWebRX 页面到 80 端口。</p>
+<p>RTL-SDR 方面，可以通过改装 Q 通道让 RTL2832U 接收短波信号，天线选用长电线加 9:1 巴伦，然后将信号直接输入 RTL2832U。</p>
+<p>下面是用 Mermaid 绘制的一张流程图，以供参考。</p>
+<pre class="mermaid">graph LR
+A(天线) -- 巴伦 --> B(RTL-SDR)
+B -- USB --> C(Orange Pi Lite)
+C -- Frpc Kcp 模式 --> D(VPS Frps 8073 端口)
+D -- Nginx 反向代理 --> E(VPS Nginx 80 端口)
+E -- CloudFlare CDN --> F(用户)</pre>
+
+<h3 id="适用对象"><a href="#适用对象" class="headerlink" title="适用对象"></a>适用对象</h3><p>博主此次一心想要搭建一个与其他人不一样的 OpenWebRX 站点，故，本文重点主要是在 Linux 及 CDN 上的操作。如果您对 Linux 不太熟悉，那么请酌情参考此教程后半部分的内容。</p>
+<ul>
+<li>适用对象：女装大佬、Linux 狂热者、折腾帝、抠脚大汉……</li>
+<li>不适用对象：小白、小学生、妹子……</li>
+<li>对了，那位名叫沈厚任的大佬，这篇文章同样不适合您……</li>
+</ul>
+<p>前面扯了这么多，那么下面就正式开始吧！</p>
+<h2 id="RTL-SDR"><a href="#RTL-SDR" class="headerlink" title="RTL-SDR"></a>RTL-SDR</h2><h3 id="芯片与灵敏度"><a href="#芯片与灵敏度" class="headerlink" title="芯片与灵敏度"></a>芯片与灵敏度</h3><p>只是一个普通的 RTL-SDR 而已，所以灵敏度肯定好不到哪里去，就不要期望有什么奇迹发生了……</p>
+<p>网络上所售卖的 RTL-SDR，其价格一般在 CNY 20-100+ 不等，博主所购买的是 CNY 42（不含运费）的那一款，其芯片是 RTL2832U+R820T2。</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/1.jpg" alt="RTL-SDR" title="RTL-SDR"></p>
+<p>至于 CNY 20 就能买到的 RTL-SDR，其芯片采用的是 RTL2832U+FC0013，如果不进行改装，其效果奇差，不建议购买。</p>
+<p>下面是从网上抄来的一份表格，内容是 RTL-SDR 所采用的几种常见的芯片方案。</p>
+<table>
+<thead>
+<tr>
+<th align="left">芯片方案</th>
+<th align="left">频率范围</th>
+<th align="left">情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">RTL2832U+E4000</td>
+<td align="left">54-2200 MHz</td>
+<td align="left">已停产</td>
+</tr>
+<tr>
+<td align="left">RTL2832U+R820T</td>
+<td align="left">24-1766 MHz</td>
+<td align="left">最容易取得</td>
+</tr>
+<tr>
+<td align="left">RTL2832U+R820T2</td>
+<td align="left">24-1766 MHz</td>
+<td align="left">接收能力最强</td>
+</tr>
+<tr>
+<td align="left">RTL2832U+FC0013</td>
+<td align="left">22-1100 MHz</td>
+<td align="left">灵敏度最差</td>
+</tr>
+<tr>
+<td align="left">RTL2832U+FC0012</td>
+<td align="left">22-948 MHz</td>
+<td align="left">未知</td>
+</tr>
+</tbody></table>
+<p>当然，网上也有已经改装好的 RTL-SDR，其方案采用的是 RTL2832U+R820T2，但是由于价格太贵，所以并不建议有改装能力的人购买。</p>
+<h3 id="改造-Q-通道接收短波"><a href="#改造-Q-通道接收短波" class="headerlink" title="改造 Q 通道接收短波"></a>改造 Q 通道接收短波</h3><ol>
+<li>拆开 RTL-SDR 塑料外壳，让 RTL2832U 的标志正对自己，从左往右数，RTL2832U 的第四根针脚即为 Q 通道；</li>
+<li>找一根细铜丝，用电烙铁在 Q 通道处焊上即可，然后用双面胶将细铜丝固定住，以免断开；</li>
+<li>将细铜丝接到巴伦上；</li>
+<li>改装成功。</li>
+</ol>
+<p>看起来好像很简单的样子，实际上，您需要注意这些细节：</p>
+<ol>
+<li>新版的RTL-SDR 已经预留好了 Q 通道的焊盘，所以没有必要白费力气拿放大镜去找针脚；</li>
+<li>其实 RTL2832U 挺不经折腾的，为了防止烙铁焊针带电，建议将烙铁烧热后断电再操作。</li>
+</ol>
+<p>对应的，附上图片，左边的焊盘对应第四根针脚，即 Q+。</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/2.jpg" alt="左部焊盘为 Q+" title="左部焊盘为 Q+"></p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/3.jpg" alt="焊于左部焊盘" title="焊于左部焊盘"></p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/4.jpg" alt="盖上盖子" title="盖上盖子"></p>
+<h3 id="绕制巴伦"><a href="#绕制巴伦" class="headerlink" title="绕制巴伦"></a>绕制巴伦</h3><p>前面有提到巴伦，这是使用长线做天线接收短波时必不可少的一个物件。</p>
+<p>网上也有零售 9：1 巴伦，但是博主不想再等了，所以打算自己绕制一个。不过效果可能不如成品好……</p>
+<p>所使用的材料，在普通的电子整流器中就可以找到，如图。</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/5.jpg" alt="电子整流器" title="电子整流器"></p>
+<p>其实仅仅那一堆漆包线和一个磁环就够了，有点杀鸡取卵的味道。</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/6.jpg" alt="漆包线" title="漆包线"></p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/7.jpg" alt="磁环" title="磁环"></p>
+<p>贴出对应图纸。</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/8.jpg" alt="图纸" title="图纸"></p>
+<p>为了防止绕制过程中混淆了漆包线之间的对应关系，建议在对应的线头做上相应记号。</p>
+<p>看看博主的半成品，献丑了……</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/9.jpg" alt="博主的作品" title="博主的作品"></p>
+<h3 id="Mini-Whip-值不值"><a href="#Mini-Whip-值不值" class="headerlink" title="Mini Whip 值不值"></a>Mini Whip 值不值</h3><p>绕巴伦好麻烦，还不如买一个现成短波天线，但是一般的短波天线都太庞大，不便于在居民楼内使用。有什么好的天线方案呢？</p>
+<p>或许 Mini Whip 是一个不错的方案。Mini Whip 是一款小巧的有源天线，从市场的评价来看，Mini Whip 好评如潮。唯一不足的是，该天线需要 12V 以上的直流供电才能运行。</p>
+<p>现在博主也有一个，将其挂在窗户上，可以获得比使用拉杆天线好数倍的效果，尤其对于弱电台有很好的放大作用，但是在放大信号的同时，也放大了博主房间内的交流干扰。</p>
+<p>从总体上来说，Mini Whip 还是很优秀的，值得一试。</p>
+<h2 id="开发板"><a href="#开发板" class="headerlink" title="开发板"></a>开发板</h2><h3 id="优势何在"><a href="#优势何在" class="headerlink" title="优势何在"></a>优势何在</h3><p>比起笨重的 PC，使用开发板可以节省不少的空间，另外，从功率、能耗的角度来看，开发板明显要比 PC 更胜一筹。另外，开发板在运行过程中所产生的噪音也比 PC 少得多得多。</p>
+<h3 id="预算与选择"><a href="#预算与选择" class="headerlink" title="预算与选择"></a>预算与选择</h3><p>如果预算充足，Raspberry Pi 2、Raspberry Pi 3 无疑是最佳选择，只可惜博主口袋里没这么厚的一沓钞票（笑），只好作罢，转而选择比 Raspberry Pi 便宜得多的 Orange Pi。</p>
+<p><del>在廉价两位数的诱惑之下，博主买了 Orange Pi Lite……</del></p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/10.jpg" alt="Orange Pi Lite" title="Orange Pi Lite"></p>
+<h3 id="Debian-大法好"><a href="#Debian-大法好" class="headerlink" title="Debian 大法好"></a>Debian 大法好</h3><p>Orange Pi 官方提供的系统实在不靠谱，遂打算使用 <span class="exturl" data-url="aHR0cHM6Ly93d3cuYXJtYmlhbi5jb20vb3JhbmdlLXBpLWxpdGUv">Armbian<i class="fa fa-external-link-alt"></i></span>。然后，博主选择了 Armbian Stretch，这是 Armbian 为 Orange Pi Lite 重新编译的 Debian 轻量版。</p>
+<p>下载完成之后，使用 <span class="exturl" data-url="aHR0cHM6Ly93d3cuYmFsZW5hLmlvL2V0Y2hlci8=">balenaEtcher<i class="fa fa-external-link-alt"></i></span> 将系统烧录到 SD 卡中，切勿使用软碟通一类的工具烧录。然后，插入 SD 卡到 Orange Pi Lite 的 SD 卡槽，接上 HDMI 后通电，初始化完成后，用户名输入 <code>root</code>，密码输入 <code>1234</code>，进入系统，随后会提示更新密码。</p>
+<p>密码更新之后，系统会引导创建一个新用户，博主懒得创建，直接按 <code>Ctrl+C</code> 跳过，又不是 VPS，就不必这么麻烦了。</p>
+<h3 id="连-Wifi"><a href="#连-Wifi" class="headerlink" title="连 Wifi"></a>连 Wifi</h3><p>很栽的是，Orange Pi Lite 居然没有提供 LAN 口，只有通过 Wifi 连接网络。</p>
+<p>好在新版的 Armbian 提供了方便的 Wifi 连接方案，只需运行命令 <code>armbian-config</code> 即可设置。</p>
+<p>在命令行输入 <code>armbian-config</code>，由于没有连接网络，所以会出现一个警告，直接 Enter 确认，随即来到一个伪图形化的界面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# armbian-config</span><br></pre></td></tr></table></figure>
+
+<p>用键盘上下键选择，进入 Network，看到有 Wifi 字样的选项，选中进入，随后系统会扫描 SSID，然后将所有无线网列出。</p>
+<p>用上下键选中要连接到的 SSID，然后输入密码即可连接。</p>
+<p>按下 Esc 键退出 SSID 列表，博主想要给 Orange Pi 分配一个固定的内网 IP，于是，在刚刚的 Network 菜单中选择 IP 一项，Address 和 Netmask 填入相应内容，光标移动到 OK 并保存。</p>
+<p>完成操作后，再连续按下 Esc 退出 armbian-config，使用 <code>ping</code> 命令，测试网络是否连通。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# ping bing.com</span><br><span class="line">PING bing.com (204.79.197.200) 56(84) bytes of data.</span><br><span class="line">64 bytes from a-0001.a-msedge.net (204.79.197.200): icmp_seq=1 ttl=114 time=51.8 ms</span><br><span class="line">64 bytes from a-0001.a-msedge.net (204.79.197.200): icmp_seq=2 ttl=114 time=47.7 ms</span><br><span class="line">64 bytes from a-0001.a-msedge.net (204.79.197.200): icmp_seq=3 ttl=114 time=52.7 ms</span><br><span class="line">^C</span><br><span class="line">--- bing.com ping statistics ---</span><br><span class="line">3 packets transmitted, 3 received, 0% packet loss, time 2003ms</span><br><span class="line">rtt min/avg/max/mdev = 47.717/50.777/52.738/2.192 ms</span><br></pre></td></tr></table></figure>
+
+<p>得到回应，按下 <code>Ctrl+C</code> 停止 Ping，可以确定，已经连上网络了。</p>
+<p>通过这种方法配置的网络，在重启或掉线之后也会自动尝试再次连接。</p>
+<p>那么重启看看是不是已经连网了呢？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# reboot</span><br></pre></td></tr></table></figure>
+
+<p>在路由器管理页中开放了开发板的 22 端口后，接下来便是通过 SSH 与开发板连接，而不再使用 HDMI。</p>
+<h3 id="NAT-穿透"><a href="#NAT-穿透" class="headerlink" title="NAT 穿透"></a>NAT 穿透</h3><h4 id="VPS-上的操作"><a href="#VPS-上的操作" class="headerlink" title="VPS 上的操作"></a>VPS 上的操作</h4><p>前往 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZhdGVkaWVyL2ZycC9yZWxlYXNlcw==">https://github.com/fatedier/frp/releases<i class="fa fa-external-link-alt"></i></span> 获取最新版本的 Frps。对于 VPS，如果不是安装的 32 位的操作系统，就下载 <code>amd64</code> 架构的版本，解压后将二进制文件 <code>frps</code> 和配置文件 <code>frps.ini</code> 用 WinSCP 上传到 VPS，前面提到过，VPS 已被 TCP 阻断，所以这里要挂上梯子。</p>
+<p>先修改 <code>frps.ini</code>，用 Notepad++ 打开，博主的配置文件内容如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_addr = 0.0.0.0</span><br><span class="line">bind_port = 3000</span><br><span class="line">kcp_bind_port = 3000</span><br><span class="line">token = ibcl.us</span><br><span class="line">authentication_timeout = 0</span><br></pre></td></tr></table></figure>
+
+<p>保存，然后在 VPS 新建 <code>/usr/local/frps</code> 目录，一并将 <code>frps</code>、<code>frps.ini</code> 上传至该目录下，并为 <code>frps</code> 赋予 <code>755</code> 权限。</p>
+<p>为了方便控制 frps 的启动与停止，博主写了一个控制 <code>frps</code> 的 <code>Shell</code> 脚本，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/bash</span><br><span class="line"># chkconfig: 2345 55 25</span><br><span class="line"># Description: Startup script for frps on Debian. Place in /etc/init.d and</span><br><span class="line"># run &#x27;update-rc.d -f frps defaults&#x27;, or use the appropriate command on your</span><br><span class="line"># distro. For CentOS/Redhat run: &#x27;chkconfig --add frps&#x27;</span><br><span class="line">#=============================================================</span><br><span class="line">#   System Required:  CentOS/Debian/Ubuntu (32bit/64bit)</span><br><span class="line">#   Description:  Manager for frps, Written by Yukiho Kikuchi.</span><br><span class="line">#   Author: Yukiho Kikuchi</span><br><span class="line">#=============================================================</span><br><span class="line">### BEGIN INIT INFO</span><br><span class="line"># Provides:          frps</span><br><span class="line"># Provides:          frps</span><br><span class="line"># Required-Start:    $all</span><br><span class="line"># Required-Stop:     $all</span><br><span class="line"># Default-Start:     2 3 4 5</span><br><span class="line"># Default-Stop:      0 1 6</span><br><span class="line"># Short-Description: starts the frps</span><br><span class="line"># Description:       starts frps using start-stop</span><br><span class="line">### END INIT INFO</span><br><span class="line"></span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">ProgramName=&quot;Frps&quot;</span><br><span class="line">ProgramPath=&quot;/usr/local/frps&quot;</span><br><span class="line">NAME=frps</span><br><span class="line">BIN=$&#123;ProgramPath&#125;/$&#123;NAME&#125;</span><br><span class="line">CONFIGFILE=$&#123;ProgramPath&#125;/frps.ini</span><br><span class="line">SCRIPTNAME=/etc/init.d/$&#123;NAME&#125;</span><br><span class="line">version=&quot;1.0&quot;</span><br><span class="line">program_version=`$&#123;BIN&#125; --version`</span><br><span class="line">RET_VAL=0</span><br><span class="line"></span><br><span class="line">[ -x $&#123;BIN&#125; ] || exit 0</span><br><span class="line">strLog=&quot;&quot;</span><br><span class="line">fun_clangcn()</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;&quot;</span><br><span class="line">    echo &quot;+--------------------------------------------------------+&quot;</span><br><span class="line">    echo &quot;| Manager for $&#123;ProgramName&#125;, Written by Yukiho Kikuchi. |&quot;</span><br><span class="line">    echo &quot;+--------------------------------------------------------+&quot;</span><br><span class="line">    echo &quot;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun_check_run()&#123;</span><br><span class="line">    PID=`ps -ef | grep -v grep | grep -i &quot;$&#123;BIN&#125;&quot; | awk &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line">    if [ ! -z $PID ]; then</span><br><span class="line">        return 0</span><br><span class="line">    else</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">fun_load_config()&#123;</span><br><span class="line">    if [ ! -r $&#123;CONFIGFILE&#125; ]; then</span><br><span class="line">        echo &quot;config file $&#123;CONFIGFILE&#125; not found&quot;</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">fun_start()</span><br><span class="line">&#123;</span><br><span class="line">    if [ &quot;$&#123;arg1&#125;&quot; = &quot;start&quot; ]; then</span><br><span class="line">      fun_clangcn</span><br><span class="line">    fi</span><br><span class="line">    if fun_check_run; then</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; (pid $PID) already running.&quot;</span><br><span class="line">        return 0</span><br><span class="line">    fi</span><br><span class="line">    fun_load_config</span><br><span class="line">    echo -n &quot;Starting $&#123;ProgramName&#125;($&#123;program_version&#125;)...&quot;</span><br><span class="line">    $&#123;BIN&#125; -c $&#123;CONFIGFILE&#125; &gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">    sleep 1</span><br><span class="line">    if ! fun_check_run; then</span><br><span class="line">        echo &quot;start failed&quot;</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">    echo &quot; done&quot;</span><br><span class="line">    echo &quot;$&#123;ProgramName&#125; (pid $PID)is running.&quot;</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun_stop()&#123;</span><br><span class="line">    if [ &quot;$&#123;arg1&#125;&quot; = &quot;stop&quot; ] || [ &quot;$&#123;arg1&#125;&quot; = &quot;restart&quot; ]; then</span><br><span class="line">      fun_clangcn</span><br><span class="line">    fi</span><br><span class="line">    if fun_check_run; then</span><br><span class="line">        echo -n &quot;Stoping $&#123;ProgramName&#125; (pid $PID)... &quot;</span><br><span class="line">        kill $PID</span><br><span class="line">        if [ &quot;$?&quot; != 0 ] ; then</span><br><span class="line">            echo &quot; failed&quot;</span><br><span class="line">            return 1</span><br><span class="line">        else</span><br><span class="line">            echo &quot; done&quot;</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; is not running.&quot;</span><br><span class="line">    fi</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line">fun_restart()&#123;</span><br><span class="line">    fun_stop</span><br><span class="line">    fun_start</span><br><span class="line">&#125;</span><br><span class="line">fun_status()&#123;</span><br><span class="line">    PID=`ps -ef | grep -v grep | grep -i &quot;$&#123;BIN&#125;&quot; | awk &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line">    if [ ! -z $PID ]; then</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; (pid $PID) is running...&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; is stopped&quot;</span><br><span class="line">        exit 0</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">checkos()&#123;</span><br><span class="line">    if grep -Eqi &quot;CentOS&quot; /etc/issue || grep -Eq &quot;CentOS&quot; /etc/*-release; then</span><br><span class="line">        OS=CentOS</span><br><span class="line">    elif grep -Eqi &quot;Debian&quot; /etc/issue || grep -Eq &quot;Debian&quot; /etc/*-release; then</span><br><span class="line">        OS=Debian</span><br><span class="line">    elif grep -Eqi &quot;Ubuntu&quot; /etc/issue || grep -Eq &quot;Ubuntu&quot; /etc/*-release; then</span><br><span class="line">        OS=Ubuntu</span><br><span class="line">    elif grep -Eqi &quot;Alpine&quot; /etc/issue || grep -Eq &quot;Alpine&quot; /etc/*-release; then</span><br><span class="line">        OS=Alpine</span><br><span class="line">    else</span><br><span class="line">        echo &quot;Not support OS, Please reinstall OS and retry!&quot;</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">fun_config()&#123;</span><br><span class="line">    if [ -s $&#123;CONFIGFILE&#125; ]; then</span><br><span class="line">        vi $&#123;CONFIGFILE&#125;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; configuration file not found!&quot;</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">fun_version()&#123;</span><br><span class="line">    echo &quot;$&#123;ProgramName&#125; version $&#123;program_version&#125;&quot;</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line">fun_help()&#123;</span><br><span class="line">    $&#123;BIN&#125; --help</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">arg1=$1</span><br><span class="line">[  -z $&#123;arg1&#125; ]</span><br><span class="line">case &quot;$&#123;arg1&#125;&quot; in</span><br><span class="line">    start|stop|restart|status|config)</span><br><span class="line">        fun_$&#123;arg1&#125;</span><br><span class="line">    ;;</span><br><span class="line">    [vV][eE][rR][sS][iI][oO][nN]|-[vV][eE][rR][sS][iI][oO][nN]|--[vV][eE][rR][sS][iI][oO][nN]|-[vV]|--[vV])</span><br><span class="line">        fun_version</span><br><span class="line">    ;;</span><br><span class="line">    [Cc]|[Cc][Oo][Nn][Ff]|[Cc][Oo][Nn][Ff][Ii][Gg]|-[Cc]|-[Cc][Oo][Nn][Ff]|-[Cc][Oo][Nn][Ff][Ii][Gg]|--[Cc]|--[Cc][Oo][Nn][Ff]|--[Cc][Oo][Nn][Ff][Ii][Gg])</span><br><span class="line">        fun_config</span><br><span class="line">    ;;</span><br><span class="line">    [Hh]|[Hh][Ee][Ll][Pp]|-[Hh]|-[Hh][Ee][Ll][Pp]|--[Hh]|--[Hh][Ee][Ll][Pp])</span><br><span class="line">        fun_help</span><br><span class="line">    ;;</span><br><span class="line">    *)</span><br><span class="line">        fun_clangcn</span><br><span class="line">        echo &quot;Usage: $SCRIPTNAME &#123;start|stop|restart|status|config|version&#125;&quot;</span><br><span class="line">        RET_VAL=1</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line">exit $RET_VAL</span><br></pre></td></tr></table></figure>
+
+<p>复制到 Notepad++，换行符选用 <code>UNIX (LF)</code>，保存文件为 <code>frps</code> 并上传至 VPS 的 <code>/etc/init.d</code> 目录下，赋予 <code>755</code> 权限。</p>
+<p>然后，将其加入 VPS 的开机启动项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho-vps:~# cd /etc</span><br><span class="line">root@yukiho-vps:/etc# vi rc.local</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh -e</span><br><span class="line">#</span><br><span class="line"># rc.local</span><br><span class="line">#</span><br><span class="line"># This script is executed at the end of each multiuser runlevel.</span><br><span class="line"># Make sure that the script will &quot;exit 0&quot; on success or any other</span><br><span class="line"># value on error.</span><br><span class="line">#</span><br><span class="line"># In order to enable or disable this script just change the execution</span><br><span class="line"># bits.</span><br><span class="line">#</span><br><span class="line"># By default this script does nothing.</span><br><span class="line"></span><br><span class="line">/etc/init.d/frps start</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<p><em>几天前才把 <code>init.d</code> 批判了一番，今天却还用 <code>init.d</code> 来控制进程，真香(</em>/ω＼*)。*</p>
+<h4 id="开发板上的操作"><a href="#开发板上的操作" class="headerlink" title="开发板上的操作"></a>开发板上的操作</h4><p>与 VPS 的操作大致相同，只不过 <code>frps</code> 变成了 <code>frpc</code>。</p>
+<p>附上博主的配置文件 <code>frpc.ini</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = example.org</span><br><span class="line">server_port = 3000</span><br><span class="line">token = ibcl.us</span><br><span class="line">tcp_mux = true</span><br><span class="line">login_fail_exit = false</span><br><span class="line">protocol = kcp</span><br><span class="line">[RTL-SDR]</span><br><span class="line">type = tcp</span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 80</span><br><span class="line">use_encryption = true</span><br><span class="line">use_compression = true</span><br><span class="line">remote_port = 8073</span><br></pre></td></tr></table></figure>
+
+<p><code>server_addr</code>、<code>token</code>、<code>server_port</code> 等请根据真实情况自行修改。此外，博主打算让 OpenWebRX 使用开发板的 80 端口。</p>
+<p>然后，贴出 <code>frpc</code> 的控制脚本。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line">#! /bin/bash</span><br><span class="line"># chkconfig: 2345 55 25</span><br><span class="line"># Description: Startup script for frpc on Debian. Place in /etc/init.d and</span><br><span class="line"># run &#x27;update-rc.d -f frpc defaults&#x27;, or use the appropriate command on your</span><br><span class="line"># distro. For CentOS/Redhat run: &#x27;chkconfig --add frpc&#x27;</span><br><span class="line">#=============================================================</span><br><span class="line">#   System Required:  CentOS/Debian/Ubuntu (32bit/64bit)</span><br><span class="line">#   Description:  Manager for frps, Written by Yukiho Kikuchi.</span><br><span class="line">#   Author: Yukiho Kikuchi</span><br><span class="line">#=============================================================</span><br><span class="line">### BEGIN INIT INFO</span><br><span class="line"># Provides:          frps</span><br><span class="line"># Provides:          frps</span><br><span class="line"># Required-Start:    $all</span><br><span class="line"># Required-Stop:     $all</span><br><span class="line"># Default-Start:     2 3 4 5</span><br><span class="line"># Default-Stop:      0 1 6</span><br><span class="line"># Short-Description: starts the frps</span><br><span class="line"># Description:       starts frps using start-stop</span><br><span class="line">### END INIT INFO</span><br><span class="line"></span><br><span class="line">PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin</span><br><span class="line">ProgramName=&quot;Frpc&quot;</span><br><span class="line">ProgramPath=&quot;/usr/local/frpc&quot;</span><br><span class="line">NAME=frpc</span><br><span class="line">BIN=$&#123;ProgramPath&#125;/$&#123;NAME&#125;</span><br><span class="line">CONFIGFILE=$&#123;ProgramPath&#125;/frpc.ini</span><br><span class="line">SCRIPTNAME=/etc/init.d/$&#123;NAME&#125;</span><br><span class="line">version=&quot;1.0&quot;</span><br><span class="line">program_version=`$&#123;BIN&#125; --version`</span><br><span class="line">RET_VAL=0</span><br><span class="line"></span><br><span class="line">[ -x $&#123;BIN&#125; ] || exit 0</span><br><span class="line">strLog=&quot;&quot;</span><br><span class="line">fun_clangcn()</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;&quot;</span><br><span class="line">    echo &quot;+--------------------------------------------------------+&quot;</span><br><span class="line">    echo &quot;| Manager for $&#123;ProgramName&#125;, Written by Yukiho Kikuchi. |&quot;</span><br><span class="line">    echo &quot;+--------------------------------------------------------+&quot;</span><br><span class="line">    echo &quot;&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun_check_run()&#123;</span><br><span class="line">    PID=`ps -ef | grep -v grep | grep -i &quot;$&#123;BIN&#125;&quot; | awk &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line">    if [ ! -z $PID ]; then</span><br><span class="line">        return 0</span><br><span class="line">    else</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">fun_load_config()&#123;</span><br><span class="line">    if [ ! -r $&#123;CONFIGFILE&#125; ]; then</span><br><span class="line">        echo &quot;config file $&#123;CONFIGFILE&#125; not found&quot;</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">fun_start()</span><br><span class="line">&#123;</span><br><span class="line">    if [ &quot;$&#123;arg1&#125;&quot; = &quot;start&quot; ]; then</span><br><span class="line">      fun_clangcn</span><br><span class="line">    fi</span><br><span class="line">    if fun_check_run; then</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; (pid $PID) already running.&quot;</span><br><span class="line">        return 0</span><br><span class="line">    fi</span><br><span class="line">    fun_load_config</span><br><span class="line">    echo -n &quot;Starting $&#123;ProgramName&#125;($&#123;program_version&#125;)...&quot;</span><br><span class="line">    $&#123;BIN&#125; -c $&#123;CONFIGFILE&#125; &gt;/dev/null 2&gt;&amp;1 &amp;</span><br><span class="line">    sleep 1</span><br><span class="line">    if ! fun_check_run; then</span><br><span class="line">        echo &quot;start failed&quot;</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">    echo &quot; done&quot;</span><br><span class="line">    echo &quot;$&#123;ProgramName&#125; (pid $PID)is running.&quot;</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">fun_stop()&#123;</span><br><span class="line">    if [ &quot;$&#123;arg1&#125;&quot; = &quot;stop&quot; ] || [ &quot;$&#123;arg1&#125;&quot; = &quot;restart&quot; ]; then</span><br><span class="line">      fun_clangcn</span><br><span class="line">    fi</span><br><span class="line">    if fun_check_run; then</span><br><span class="line">        echo -n &quot;Stoping $&#123;ProgramName&#125; (pid $PID)... &quot;</span><br><span class="line">        kill $PID</span><br><span class="line">        if [ &quot;$?&quot; != 0 ] ; then</span><br><span class="line">            echo &quot; failed&quot;</span><br><span class="line">            return 1</span><br><span class="line">        else</span><br><span class="line">            echo &quot; done&quot;</span><br><span class="line">        fi</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; is not running.&quot;</span><br><span class="line">    fi</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line">fun_restart()&#123;</span><br><span class="line">    fun_stop</span><br><span class="line">    fun_start</span><br><span class="line">&#125;</span><br><span class="line">fun_status()&#123;</span><br><span class="line">    PID=`ps -ef | grep -v grep | grep -i &quot;$&#123;BIN&#125;&quot; | awk &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line">    if [ ! -z $PID ]; then</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; (pid $PID) is running...&quot;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; is stopped&quot;</span><br><span class="line">        exit 0</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">checkos()&#123;</span><br><span class="line">    if grep -Eqi &quot;CentOS&quot; /etc/issue || grep -Eq &quot;CentOS&quot; /etc/*-release; then</span><br><span class="line">        OS=CentOS</span><br><span class="line">    elif grep -Eqi &quot;Debian&quot; /etc/issue || grep -Eq &quot;Debian&quot; /etc/*-release; then</span><br><span class="line">        OS=Debian</span><br><span class="line">    elif grep -Eqi &quot;Ubuntu&quot; /etc/issue || grep -Eq &quot;Ubuntu&quot; /etc/*-release; then</span><br><span class="line">        OS=Ubuntu</span><br><span class="line">    elif grep -Eqi &quot;Alpine&quot; /etc/issue || grep -Eq &quot;Alpine&quot; /etc/*-release; then</span><br><span class="line">        OS=Alpine</span><br><span class="line">    else</span><br><span class="line">        echo &quot;Not support OS, Please reinstall OS and retry!&quot;</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">fun_config()&#123;</span><br><span class="line">    if [ -s $&#123;CONFIGFILE&#125; ]; then</span><br><span class="line">        vi $&#123;CONFIGFILE&#125;</span><br><span class="line">    else</span><br><span class="line">        echo &quot;$&#123;ProgramName&#125; configuration file not found!&quot;</span><br><span class="line">        return 1</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line">fun_version()&#123;</span><br><span class="line">    echo &quot;$&#123;ProgramName&#125; version $&#123;program_version&#125;&quot;</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line">fun_help()&#123;</span><br><span class="line">    $&#123;BIN&#125; --help</span><br><span class="line">    return 0</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">arg1=$1</span><br><span class="line">[  -z $&#123;arg1&#125; ]</span><br><span class="line">case &quot;$&#123;arg1&#125;&quot; in</span><br><span class="line">    start|stop|restart|status|config)</span><br><span class="line">        fun_$&#123;arg1&#125;</span><br><span class="line">    ;;</span><br><span class="line">    [vV][eE][rR][sS][iI][oO][nN]|-[vV][eE][rR][sS][iI][oO][nN]|--[vV][eE][rR][sS][iI][oO][nN]|-[vV]|--[vV])</span><br><span class="line">        fun_version</span><br><span class="line">    ;;</span><br><span class="line">    [Cc]|[Cc][Oo][Nn][Ff]|[Cc][Oo][Nn][Ff][Ii][Gg]|-[Cc]|-[Cc][Oo][Nn][Ff]|-[Cc][Oo][Nn][Ff][Ii][Gg]|--[Cc]|--[Cc][Oo][Nn][Ff]|--[Cc][Oo][Nn][Ff][Ii][Gg])</span><br><span class="line">        fun_config</span><br><span class="line">    ;;</span><br><span class="line">    [Hh]|[Hh][Ee][Ll][Pp]|-[Hh]|-[Hh][Ee][Ll][Pp]|--[Hh]|--[Hh][Ee][Ll][Pp])</span><br><span class="line">        fun_help</span><br><span class="line">    ;;</span><br><span class="line">    *)</span><br><span class="line">        fun_clangcn</span><br><span class="line">        echo &quot;Usage: $SCRIPTNAME &#123;start|stop|restart|status|config|version&#125;&quot;</span><br><span class="line">        RET_VAL=1</span><br><span class="line">    ;;</span><br><span class="line">esac</span><br><span class="line">exit $RET_VAL</span><br></pre></td></tr></table></figure>
+
+<p>同样的，复制到 Notepad++，换行符选用 <code>UNIX (LF)</code>，保存文件为 <code>frpc</code> 并上传至开发板的 <code>/etc/init.d</code> 目录下，赋予 <code>755</code> 权限。</p>
+<p>加入到开机启动项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho-vps:~# cd /etc</span><br><span class="line">root@yukiho-vps:/etc# vi rc.local</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh -e</span><br><span class="line">#</span><br><span class="line"># rc.local</span><br><span class="line">#</span><br><span class="line"># This script is executed at the end of each multiuser runlevel.</span><br><span class="line"># Make sure that the script will &quot;exit 0&quot; on success or any other</span><br><span class="line"># value on error.</span><br><span class="line">#</span><br><span class="line"># In order to enable or disable this script just change the execution</span><br><span class="line"># bits.</span><br><span class="line">#</span><br><span class="line"># By default this script does nothing.</span><br><span class="line"></span><br><span class="line">/etc/init.d/frpc start</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><h3 id="一键脚本"><a href="#一键脚本" class="headerlink" title="一键脚本"></a>一键脚本</h3><p>对 OpenWebRX 爱得深沉，所以写了一个一键脚本（笑）……</p>
+<p><em>补充：使用 PHICOMM N1 等 ARMv8 架构的设备，一键脚本不可用，请使用手动安装。</em></p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/11.gif" alt="说到一键脚本，有些想笑..." title="说到一键脚本，有些想笑..."></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:/home# curl https://raw.githubusercontent.com/bclswl0827/openwebrx-installer/master/rtl-sdr_installer.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>然后，RTL-SDR 之驱动和 OpenWebRX 会安装在您当前的目录下，博主安装在了 <code>/home</code> 下。</p>
+<h3 id="手动安装"><a href="#手动安装" class="headerlink" title="手动安装"></a>手动安装</h3><blockquote>
+<p>要是有个妹子在旁边看着俺操作，俺一定会选手动安装的。</p>
+</blockquote>
+<p>那么，下面来介绍手动安装 OpenWenRX。</p>
+<p>安装编译时必要的包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# apt install build-essential git libfftw3-dev cmake libusb-1.0-0-dev -y</span><br></pre></td></tr></table></figure>
+
+<p>拉取 RTL-SDR 之驱动源码并编译。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:/home# git clone https://github.com/keenerd/rtl-sdr.git</span><br><span class="line">root@yukiho:/home# cd rtl-sdr</span><br><span class="line">root@yukiho:/home/rtl-sdr# mkdir build</span><br><span class="line">root@yukiho:/home/rtl-sdr# cd build</span><br><span class="line">root@yukiho:/home/rtl-sdr/build# cmake ../ -DDETACH_KERNEL_DRIVER=ON -DINSTALL_UDEV_RULES=ON</span><br><span class="line">root@yukiho:/home/rtl-sdr/build# make</span><br><span class="line">root@yukiho:/home/rtl-sdr/build# make install</span><br><span class="line">root@yukiho:/home/rtl-sdr/build# ldconfig</span><br><span class="line">root@yukiho:/home/rtl-sdr/build# cd /home</span><br></pre></td></tr></table></figure>
+
+<p>然后拉取 OpenWebRX 及其依赖项 csdr 的源码，并编译 csdr。</p>
+<p>针对 ARMv8 等设备编译 csdr，请参考博主关于 OpenWebRX 的另一篇文章：<a href="https://ibcl.us/ARMv8-csdr_20190729/">《在 ARMv8 架构设备上编译 csdr》</a>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:/home# git clone https://github.com/simonyiszk/openwebrx.git</span><br><span class="line">root@yukiho:/home# git clone https://github.com/jketterl/csdr</span><br><span class="line">root@yukiho:/home# cd csdr</span><br><span class="line">root@yukiho:/home/csdr# git checkout 32958ce37eb765f7f5511fe5f7c2c244c13f264b</span><br><span class="line">root@yukiho:/home/csdr# make</span><br><span class="line">root@yukiho:/home/csdr# make install</span><br><span class="line">root@yukiho:/home/csdr# cd /home</span><br></pre></td></tr></table></figure>
+
+<p>某些内核模块会锁定 USB 设备，需要在使用 SDR 设备之前将其禁用。</p>
+<p>如果内核模块未正确列入黑名单，则可能会出现 Device not found 的错误。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:/home# bash -c &#x27;echo -e &quot;\n# for RTL-SDR:\nblacklist dvb_usb_rtl28xxu\n&quot; &gt;&gt; /etc/modprobe.d/blacklist.conf&#x27;</span><br><span class="line">root@yukiho:/home# update-initramfs -u</span><br><span class="line">root@yukiho:/home# rmmod dvb_usb_rtl28xxu</span><br></pre></td></tr></table></figure>
+
+<p>然后，安装完成。</p>
+<p>值得一提的是，在执行第三条命令时报错属正常现象。</p>
+<h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><p>贴出博主的配置文件，该配置文件中已经设置了使用 Q 通道进行直采，并附上了相关中文注释。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">web_port=80 # 使用端口，博主在此使用 :80</span><br><span class="line">server_hostname=&quot;s.ibcl.us&quot; # 主机名</span><br><span class="line">max_clients=5 # 使用人数上限</span><br><span class="line">receiver_name=&quot;SDR | I BCL.&quot; # 接收机名称</span><br><span class="line">receiver_location=&quot;Kaizhou, Chungking, China&quot; # 地点</span><br><span class="line">receiver_qra=&quot;OM41ee&quot; # QTH 定位 http://www.levinecentral.com/ham/grid_square.php</span><br><span class="line">receiver_asl=200 # 天线海平面高度</span><br><span class="line">receiver_ant=&quot;20 Metres Wire&quot; # 天线种类</span><br><span class="line">receiver_device=&quot;RTL-SDR&quot; # 设备</span><br><span class="line">receiver_admin=&quot;bclswl0827@yahoo.co.jp&quot; # 管理者邮箱</span><br><span class="line">receiver_gps=(31.177417, 108.398250) # Google 地图坐标</span><br><span class="line">photo_height=350 # 背景图高度（px）</span><br><span class="line">photo_title=&quot;Hanfeng Lake of Twilight, Kaizhou.&quot; # 背景图标题</span><br><span class="line">photo_desc=&quot;&quot;&quot;</span><br><span class="line">This is Hanfeng Lake, in Kaizhou, Chungking, China.&lt;br /&gt;</span><br><span class="line">It&#x27;s where my receiver be located.&lt;br /&gt;</span><br><span class="line">Please contact me by the following e-mail: &lt;a href=&quot;mailto:%[RX_ADMIN]&quot;&gt;%[RX_ADMIN]&lt;/a&gt;&lt;br/&gt;</span><br><span class="line">Device: %[RX_DEVICE]&lt;br /&gt;</span><br><span class="line">Antenna: %[RX_ANT]&lt;br /&gt;</span><br><span class="line">Welcome to visit my blog: &lt;a href=&quot;https://ibcl.us&quot; target=&quot;_blank&quot;&gt;https://ibcl.us&lt;/a&gt;</span><br><span class="line">&quot;&quot;&quot; # 站点介绍</span><br><span class="line">sdrhu_key = &quot;&quot; # SDR.hu 列出设备之 API Key</span><br><span class="line">sdrhu_public_listing = False</span><br><span class="line">fft_fps=3 # 瀑布帧率</span><br><span class="line">fft_size=4096 # 瀑布大小，大于等于 2048</span><br><span class="line">fft_voverlap_factor=0.1 # 瀑布重叠系数</span><br><span class="line">samp_rate = 2048000 # 采样率</span><br><span class="line">center_freq = 9500000 # 中心频率，频率范围为“中心频率±（采样率/2）”</span><br><span class="line">rf_gain = 0 # 增益，以 dB 为单位，RTL-SDR 设置成 0 为自动模式</span><br><span class="line">ppm = -9 # 偏频纠正，负值为左移瀑布，正值为右移瀑布，需要自行调试</span><br><span class="line">audio_compression=&quot;adpcm&quot; # 可用值：“adpcm”、“none”</span><br><span class="line">fft_compression=&quot;adpcm&quot; # 可用值：“adpcm”、“none”</span><br><span class="line">digimodes_enable=True # 解码 Digimodes 会占用更高的 CPU</span><br><span class="line">digimodes_fft_size=2048 # Digimodes 之瀑布大小</span><br><span class="line">start_rtl_thread=True # 启用 RTL 线程</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">注意：当 CPU 使用率高达 100％ 时会遇到音频欠载，您可以：</span><br><span class="line"> - 减少 `samp_rate` 的值；</span><br><span class="line"> - 将 `fft_voverlap_factor` 设置为 0；</span><br><span class="line"> - 减少 `fft_fps` 和 `fft_size` 的值；</span><br><span class="line"> - 通过减少 `max_clients` 来限制最大用户数量。</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">start_rtl_command=&quot;rtl_sdr -D2 -s &#123;samp_rate&#125; -f &#123;center_freq&#125; -p &#123;ppm&#125; -g &#123;rf_gain&#125; -&quot;.format(rf_gain=rf_gain, center_freq=center_freq, samp_rate=samp_rate, ppm=ppm) # RTL-SDR 启动命令</span><br><span class="line">format_conversion=&quot;csdr convert_u8_f&quot; # 转换格式</span><br><span class="line">shown_center_freq = center_freq # 使用上变频器时可以更改此设定</span><br><span class="line">client_audio_buffer_size = 8 # 音频缓冲大小，通过改大数值以减少音频欠载的次数，但同时会增加延迟</span><br><span class="line">start_freq = 9750000 # 起始频率</span><br><span class="line">start_mod = &quot;am&quot; # 可用值：“nfm”、“am”、“lsb”、“usb”、“cw”</span><br><span class="line">iq_server_port = 4951 # 用于监听 netcat 的 TCP 端口。I/Q 数据由此发送，并供 OpenWebRX 使用。默认情况下，只对 127.0.0.1 开放</span><br><span class="line">#access_log = &quot;~/openwebrx_access.log&quot; # 访问日志</span><br><span class="line">waterfall_colors = &quot;[0x000000ff,0x0000ffff,0x00ffffff,0x00ff00ff,0xffff00ff,0xff0000ff,0xff00ffff,0xffffffff]&quot; # 颜色</span><br><span class="line">waterfall_min_level = -89 # 以 dB 为单位</span><br><span class="line">waterfall_max_level = -18 # 以 dB 为单位</span><br><span class="line">waterfall_auto_level_margin = (5, 40) # 自动模式下的瀑布幅度</span><br><span class="line">mathbox_waterfall_frequency_resolution = 128 # 位数（3D 瀑布设置）</span><br><span class="line">mathbox_waterfall_history_length = 10 # 秒（3D 瀑布设置）</span><br><span class="line">mathbox_waterfall_colors = &quot;[0x000000ff,0x2e6893ff, 0x69a5d0ff, 0x214b69ff, 0x9dc4e0ff,  0xfff775ff, 0xff8a8aff, 0xb20000ff]&quot; # 颜色（3D 瀑布设置）</span><br><span class="line">csdr_dynamic_bufsize = False # 定义 csdr 的缓冲模式</span><br><span class="line">csdr_print_bufsizes = False  # 显示用于 csdr 进程的缓冲区大小</span><br><span class="line">csdr_through = False # 如果设置为 True，将显示进入 DSP 链的数据量</span><br><span class="line">nmux_memory = 32 # 以 MiB 为单位。定义 nmux 使用的循环缓冲区之大小</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>插入 RTL-SDR，然后重启系统。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# lsusb</span><br><span class="line">Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br><span class="line">Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 001 Device 002: ID 0bda:2838 Realtek Semiconductor Corp. RTL2838 DVB-T</span><br><span class="line">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br></pre></td></tr></table></figure>
+
+<p>列出 USB 设备，RTL-SDR 位列其中。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# cd /home/openwebrx</span><br><span class="line">root@yukiho:/home/openwebrx# ./openwebrx.py</span><br></pre></td></tr></table></figure>
+
+<p>运行 OpenWebRX 以测试，如果没有任何报错，即安装成功，其回显应该像下面这样。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">OpenWebRX - Open Source SDR Web App for Everyone!  | for license see LICENSE file in the package</span><br><span class="line">_________________________________________________________________________________________________</span><br><span class="line"></span><br><span class="line">Author contact info:    Andras Retzler, HA7ILM &lt;randras@sdr.hu&gt;</span><br><span class="line"></span><br><span class="line">[openwebrx-main] Configuration script not specified. I will use: &quot;config_webrx.py&quot;</span><br><span class="line">[openwebrx-main] nmux_bufsize = 253952, nmux_bufcnt = 505</span><br><span class="line">[openwebrx-main] Started rtl_thread: rtl_sdr -D2 -s 2048000 -f 9500000 -p 0 -g 90 -| nmux --bufsize 253952 --bufcnt 505 --port 4951 --address 127.0.0.1</span><br><span class="line">[openwebrx-main] Waiting for I/Q server to start...</span><br><span class="line">nmux: listening on 127.0.0.1:4951</span><br><span class="line">Found 1 device(s):</span><br><span class="line">  0:  Realtek, RTL2838UHIDIR, SN: 00000001</span><br><span class="line"></span><br><span class="line">Using device 0: Generic RTL2832U OEM</span><br><span class="line">[openwebrx-main] I/Q server started.</span><br><span class="line">[openwebrx-main] Starting watchdog threads.</span><br><span class="line">nmux: pthread_create() done, clients now: 1</span><br><span class="line">client 0x231a0f8: started!</span><br><span class="line">[openwebrx-main] Starting spectrum thread.</span><br><span class="line">[openwebrx-spectrum] Spectrum thread initialized successfully.</span><br><span class="line">[openwebrx-dsp-plugin:csdr] Command = nc -v 127.0.0.1 4951 | csdr convert_u8_f | csdr fft_cc 2048 204 | csdr logaveragepower_cf -70 2048 1628 | csdr fft_exchange_sides_ff 2048 | csdr compress_fft_adpcm_f_u8 2048</span><br><span class="line">[openwebrx-main] Starting HTTP server.</span><br><span class="line">[openwebrx-spectrum] Spectrum thread started.</span><br><span class="line">nmux: pthread_create() done, clients now: 2</span><br><span class="line">client 0x231a1e0: started!</span><br><span class="line">Connection to 127.0.0.1 4951 port [tcp/*] succeeded!</span><br><span class="line">Found Rafael Micro R820T tuner</span><br><span class="line">Enabled direct sampling mode, input 2</span><br><span class="line">Enabled direct sampling mode, input 2/Q.</span><br><span class="line">Exact sample rate is: 20480000.026491 Hz</span><br><span class="line">Sampling at 20480000 S/s.</span><br><span class="line">Tuned to 9500000 Hz.</span><br><span class="line">Tuner gain set to 49.60 dB.</span><br><span class="line">Reading samples in async mode...</span><br><span class="line">Allocating 15 zero-copy buffers</span><br><span class="line">client 0x231a0f8: CS_THREAD_FINISHED, client_goto_source = 2, errno = 32</span><br></pre></td></tr></table></figure>
+
+<h3 id="映射至外网"><a href="#映射至外网" class="headerlink" title="映射至外网"></a>映射至外网</h3><p>前面已经在 VPS 和开发板上安装好了 Frp，使用只需要在上面运行相关的启动命令即可。为安全起见，博主的 VPS 没有开放 Frps 对应的 HTTP 8080 端口，所以不能通过端口号加域名访问，故在下文博主将通过 Nginx 反向代理将 8080 端口代理至 80 端口。</p>
+<h2 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h2><h3 id="添加启动项"><a href="#添加启动项" class="headerlink" title="添加启动项"></a>添加启动项</h3><p>官方推荐使用 <code>tmux</code> 来控制进程，博主在此基础上也写了一个控制 OpenWebRX 的 <code>init.d</code> 脚本，复制到 Notepad++，换行符选用 <code>UNIX (LF)</code>，保存文件为 <code>openwebrx</code> 并上传至 VPS 的 <code>/etc/init.d</code> 目录下，赋予 <code>755</code> 权限。</p>
+<p>注意在复制时检查 OpenWebRX 安装路径是否与此脚本中的相同。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line"></span><br><span class="line">### BEGIN INIT INFO</span><br><span class="line"># System Required:   CentOS/Debian/Ubuntu (32bit/64bit)</span><br><span class="line"># Description:       Manager for OpenWebRX, Written by Yukiho Kikuchi</span><br><span class="line"># Author:            Yukiho Kikuchi</span><br><span class="line"># Provides:          OpenWebRX</span><br><span class="line"># Required-Start:    $network $local_fs $remote_fs</span><br><span class="line"># Required-Stop:     $network $local_fs $remote_fs</span><br><span class="line"># Default-Start:     2 3 4 5</span><br><span class="line"># Default-Stop:      0 1 6</span><br><span class="line"># Description:       Open source, multi-user SDR receiver software with a web interface</span><br><span class="line">### END INIT INFO</span><br><span class="line"></span><br><span class="line">NAME=&quot;OpenWebRX&quot;</span><br><span class="line">NAME_BIN=&quot;openwebrx&quot;</span><br><span class="line">Info_font_prefix=&quot;\033[32m&quot; &amp;&amp; Error_font_prefix=&quot;\033[31m&quot; &amp;&amp; Info_background_prefix=&quot;\033[42;37m&quot; &amp;&amp; Error_background_prefix=&quot;\033[41;37m&quot; &amp;&amp; Font_suffix=&quot;\033[0m&quot;</span><br><span class="line">RETVAL=0</span><br><span class="line"></span><br><span class="line">check_running()&#123;</span><br><span class="line">	PID=`ps -ef |grep &quot;$&#123;NAME_BIN&#125;&quot; |grep -v &quot;grep&quot; |grep -v &quot;init.d&quot; |grep -v &quot;service&quot; |awk &#x27;&#123;print $2&#125;&#x27;`</span><br><span class="line">	if [[ ! -z $&#123;PID&#125; ]]; then</span><br><span class="line">		return 0</span><br><span class="line">	else</span><br><span class="line">		return 1</span><br><span class="line">	fi</span><br><span class="line">&#125;</span><br><span class="line">do_start()&#123;</span><br><span class="line">	check_running</span><br><span class="line">	if [[ $? -eq 0 ]]; then</span><br><span class="line">		echo -e &quot;$&#123;Info_font_prefix&#125;[Info]$&#123;Font_suffix&#125; $NAME Has been running...&quot; &amp;&amp; exit 0</span><br><span class="line">	else</span><br><span class="line">		ulimit -n 51200</span><br><span class="line">		tmux new -d -s openwebrx-session &#x27;bash -c &quot;cd /home/openwebrx; ./openwebrx.py; bash&quot;&#x27;</span><br><span class="line">		sleep 2s</span><br><span class="line">		check_running</span><br><span class="line">		if [[ $? -eq 0 ]]; then</span><br><span class="line">			echo -e &quot;$&#123;Info_font_prefix&#125;[Info]$&#123;Font_suffix&#125; $NAME Start successed!&quot;</span><br><span class="line">		else</span><br><span class="line">			echo -e &quot;$&#123;Error_font_prefix&#125;[Error]$&#123;Font_suffix&#125; $NAME Failed to start!&quot;</span><br><span class="line">		fi</span><br><span class="line">	fi</span><br><span class="line">&#125;</span><br><span class="line">do_stop()&#123;</span><br><span class="line">	check_running</span><br><span class="line">	if [[ $? -eq 0 ]]; then</span><br><span class="line">		kill -9 $&#123;PID&#125;</span><br><span class="line">		RETVAL=$?</span><br><span class="line">		if [[ $RETVAL -eq 0 ]]; then</span><br><span class="line">			echo -e &quot;$&#123;Info_font_prefix&#125;[Info]$&#123;Font_suffix&#125; $NAME Stop successed!&quot;</span><br><span class="line">		else</span><br><span class="line">			echo -e &quot;$&#123;Error_font_prefix&#125;[Error]$&#123;Font_suffix&#125;$NAME Failed to stop!&quot;</span><br><span class="line">		fi</span><br><span class="line">	else</span><br><span class="line">		echo -e &quot;$&#123;Info_font_prefix&#125;[Info]$&#123;Font_suffix&#125; $NAME isn&#x27;t running!&quot;</span><br><span class="line">		RETVAL=1</span><br><span class="line">	fi</span><br><span class="line">&#125;</span><br><span class="line">do_status()&#123;</span><br><span class="line">	check_running</span><br><span class="line">	if [[ $? -eq 0 ]]; then</span><br><span class="line">		echo -e &quot;$&#123;Info_font_prefix&#125;[Info]$&#123;Font_suffix&#125; $NAME has been running...&quot;</span><br><span class="line">		echo -e &quot;$&#123;Info_font_prefix&#125;[Info]$&#123;Font_suffix&#125; Listed PID:\n$&#123;PID&#125;&quot;</span><br><span class="line">	else</span><br><span class="line">		echo -e &quot;$&#123;Info_font_prefix&#125;[Info]$&#123;Font_suffix&#125; $NAME isn&#x27;t running!&quot;</span><br><span class="line">		RETVAL=1</span><br><span class="line">	fi</span><br><span class="line">&#125;</span><br><span class="line">do_restart()&#123;</span><br><span class="line">	do_stop</span><br><span class="line">	do_start</span><br><span class="line">&#125;</span><br><span class="line">case &quot;$1&quot; in</span><br><span class="line">	start|stop|restart|status)</span><br><span class="line">	do_$1</span><br><span class="line">	;;</span><br><span class="line">	*)</span><br><span class="line">	echo &quot;Usage: $0 &#123; start | stop | restart | status &#125;&quot;</span><br><span class="line">	RETVAL=1</span><br><span class="line">	;;</span><br><span class="line">esac</span><br><span class="line">exit $RETVAL</span><br></pre></td></tr></table></figure>
+
+<p>因为是基于官方的 <code>tmux</code> 来写的，所以事先要安装 <code>tmux</code> 才可以正常使用此脚本。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:/home/openwebrx# apt install tmux -y</span><br></pre></td></tr></table></figure>
+
+<p>然后，将其加入开机启动项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# cd /etc</span><br><span class="line">root@yukiho:/etc# vi rc.local</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh -e</span><br><span class="line">#</span><br><span class="line"># rc.local</span><br><span class="line">#</span><br><span class="line"># This script is executed at the end of each multiuser runlevel.</span><br><span class="line"># Make sure that the script will &quot;exit 0&quot; on success or any other</span><br><span class="line"># value on error.</span><br><span class="line">#</span><br><span class="line"># In order to enable or disable this script just change the execution</span><br><span class="line"># bits.</span><br><span class="line">#</span><br><span class="line"># By default this script does nothing.</span><br><span class="line"></span><br><span class="line">/etc/init.d/frpc start</span><br><span class="line"></span><br><span class="line">/etc/init.d/openwebrx start</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h3><p>80 端口已经被 Nginx 占用，所以 Frp 只好用了 8073 端口做映射，但是博主想让 OpenWebRX 不加端口号访问，所以需要反向代理。</p>
+<p>修改 Nginx 的网站配置文件，设置反向代理，将 8073 端口反向代理到 80 端口上去。</p>
+<p>贴出配置文件，实际情况需要做相应调整。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name s.ibcl.us;</span><br><span class="line">        location / &#123;</span><br><span class="line">          proxy_pass http://127.0.0.1:8073/;</span><br><span class="line">        &#125;</span><br><span class="line">        location /ws/ &#123;</span><br><span class="line">          proxy_redirect off;</span><br><span class="line">          proxy_pass http://127.0.0.1:8073/ws/;</span><br><span class="line">          proxy_http_version 1.1;</span><br><span class="line">          proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">          proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">          proxy_set_header Host $http_host;</span><br><span class="line">        &#125;</span><br><span class="line">    access_log  off;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="启用-CloudFlare-CDN-和-HTTPS"><a href="#启用-CloudFlare-CDN-和-HTTPS" class="headerlink" title="启用 CloudFlare CDN 和 HTTPS"></a>启用 CloudFlare CDN 和 HTTPS</h3><p>启用 CDN 和 HTTPS，一是可以隐藏自己的真实 IP，也可以减缓 DDOS 攻击，至于 HTTPS 更是大势所趋。</p>
+<p>但是用于穿透的小鸡已经被墙，所以为了复活博主的那台吃灰小鸡，<span class="exturl" data-url="aHR0cHM6Ly9zLmliY2wudXMv">s.ibcl.us<i class="fa fa-external-link-alt"></i></span> 只好用上了 CDN。</p>
+<p>不过需要注意的是，启用 CDN 是有代价的：启用 CDN 之后，由于发送 POST 数据的 IP（开发板一方的 IP）与域名对应的 IP 不同，所以会被 SDR.hu 判定为恶意站点而不予列出……另外，大内网用户使用内网穿透服务也可能遇到此类问题。</p>
+<p>所以如果您也启用了 CDN 或是 NAT 穿透，就没有必要去申请 API Key 了，因为 SDR.hu 的报错会使 OpenWebRX 无法运行。</p>
+<p>下面是如何启用 CDN 的说明，您需要事先注册 CloudFlare 的账户，并将域名托管到 CloudFlare。</p>
+<p>首先在 CloudFlare 中添加一条记录，指向 VPS，并点亮“云朵”。</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/12.jpg" alt="添加记录" title="添加记录"></p>
+<p>切换到 CloudFlare 的 Network 选项卡，然后打开 WebSocket 功能。</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/13.jpg" alt="启用 WebSocket" title="启用 WebSocket"></p>
+<p>等待记录生效，SDR 站点便会处于 CDN 的保护之下了。</p>
+<p>然后切换到 CloudFlare 的 Crypt 选项卡，选择“SSL”为“Flexible”,随即可用 <code>HTTPS://</code> 的形式访问。</p>
+<p>如需用户在访问时自动跳转，勾选“Always Use HTTPS”。</p>
+<p>完成了吗？其实还没有，纵然 CloudFlare 已经要求用户与服务器通信实现底层安全协议传输，但是 OpenWebRX 仍然会让用户与后端建立未加密的 WebSocket 连接，即 <code>ws://</code>，而不是 <code>wss://</code>。</p>
+<p>所以，接下来修改 <code>openwebrx.js</code> 这个文件（位于 OpenWebRX 目录的 htdocs 文件夹）第 1698 行，将 <code>ws_url=&quot;ws://&quot;+(window.location.origin.split(&quot;://&quot;)[1])+&quot;/ws/&quot;;</code> 修改为 <code>ws_url=&quot;wss://s.ibcl.us/ws/&quot;;</code>，这里的 <code>s.ibcl.us</code> 视情况而定。</p>
+<p>然后，修改 OpenWebRX 的核心文件（位于 OpenWebRX 根目录） <code>openwebrx.py</code>，第 673 行，将 <code>ws_url=&quot;ws://&quot;+(window.location.origin.split(&quot;://&quot;)[1])+&quot;/ws/&quot;;</code> 修改为 <code>ws_url=&quot;wss://s.ibcl.us/ws/&quot;;</code>。</p>
+<p>重启 OpenWebRX。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# /etc/init.d/openwebrx restart</span><br></pre></td></tr></table></figure>
+
+<p>访问 <span class="exturl" data-url="aHR0cHM6Ly9zLmliY2wudXMv">s.ibcl.us<i class="fa fa-external-link-alt"></i></span>，出现了久违的绿锁标志，也没有“混合内容”的警告。</p>
+<p><img data-src="https://c.ibcl.us/RTLSDR-Modifying_20190323/14.jpg" alt="有效证书" title="有效证书"></p>
+<h3 id="移动端页面"><a href="#移动端页面" class="headerlink" title="移动端页面"></a>移动端页面</h3><p>位于 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4Mjcvd2Vicng0bW9iaWxl">github.com/bclswl0827/webrx4mobile<i class="fa fa-external-link-alt"></i></span>，这时博主修改后的，适用于手机页面的 OpenWebRX 页面。</p>
+<p>由于精简了一些功能，所以博主称她为 OpenWebRX Lite。</p>
+<h2 id="步入生产环境"><a href="#步入生产环境" class="headerlink" title="步入生产环境"></a>步入生产环境</h2><h3 id="SDR-hu-申请列出设备"><a href="#SDR-hu-申请列出设备" class="headerlink" title="SDR.hu 申请列出设备"></a>SDR.hu 申请列出设备</h3><p>这条是针对有公网 IP 搭建 SDR 站点的同学来说的。</p>
+<p>前往 <span class="exturl" data-url="aHR0cHM6Ly9zZHIuaHUvcmVnaXN0ZXI=">sdr.hu/register<i class="fa fa-external-link-alt"></i></span> 注册账户，得到 API Key 并填入 <code>config_webrx.py</code> 中，执行重启 OpenWebRX 的命令，稍等一会儿，设备就可以在 SDR.hu 的地图上列出了。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>博主折腾了三个小时，然后又花了三个小时记下了此次折腾，不知道对您是否有帮助呢？这应该是比较全面的一篇 OpenWebRX 进阶使用攻略了吧？</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%83%85%E5%86%B5"><span class="nav-number">1.2.</span> <span class="nav-text">情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B9%E6%A1%88"><span class="nav-number">1.3.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%82%E7%94%A8%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.4.</span> <span class="nav-text">适用对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RTL-SDR"><span class="nav-number">2.</span> <span class="nav-text">RTL-SDR</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%AF%E7%89%87%E4%B8%8E%E7%81%B5%E6%95%8F%E5%BA%A6"><span class="nav-number">2.1.</span> <span class="nav-text">芯片与灵敏度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B9%E9%80%A0-Q-%E9%80%9A%E9%81%93%E6%8E%A5%E6%94%B6%E7%9F%AD%E6%B3%A2"><span class="nav-number">2.2.</span> <span class="nav-text">改造 Q 通道接收短波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%95%E5%88%B6%E5%B7%B4%E4%BC%A6"><span class="nav-number">2.3.</span> <span class="nav-text">绕制巴伦</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mini-Whip-%E5%80%BC%E4%B8%8D%E5%80%BC"><span class="nav-number">2.4.</span> <span class="nav-text">Mini Whip 值不值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF"><span class="nav-number">3.</span> <span class="nav-text">开发板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8A%BF%E4%BD%95%E5%9C%A8"><span class="nav-number">3.1.</span> <span class="nav-text">优势何在</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%84%E7%AE%97%E4%B8%8E%E9%80%89%E6%8B%A9"><span class="nav-number">3.2.</span> <span class="nav-text">预算与选择</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian-%E5%A4%A7%E6%B3%95%E5%A5%BD"><span class="nav-number">3.3.</span> <span class="nav-text">Debian 大法好</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E-Wifi"><span class="nav-number">3.4.</span> <span class="nav-text">连 Wifi</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NAT-%E7%A9%BF%E9%80%8F"><span class="nav-number">3.5.</span> <span class="nav-text">NAT 穿透</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#VPS-%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">3.5.1.</span> <span class="nav-text">VPS 上的操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E6%9D%BF%E4%B8%8A%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">3.5.2.</span> <span class="nav-text">开发板上的操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-number">4.</span> <span class="nav-text">环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E9%94%AE%E8%84%9A%E6%9C%AC"><span class="nav-number">4.1.</span> <span class="nav-text">一键脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E5%AE%89%E8%A3%85"><span class="nav-number">4.2.</span> <span class="nav-text">手动安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">4.3.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">4.4.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%A0%E5%B0%84%E8%87%B3%E5%A4%96%E7%BD%91"><span class="nav-number">4.5.</span> <span class="nav-text">映射至外网</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">5.</span> <span class="nav-text">优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="nav-number">5.1.</span> <span class="nav-text">添加启动项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">5.2.</span> <span class="nav-text">反向代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E7%94%A8-CloudFlare-CDN-%E5%92%8C-HTTPS"><span class="nav-number">5.3.</span> <span class="nav-text">启用 CloudFlare CDN 和 HTTPS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E9%A1%B5%E9%9D%A2"><span class="nav-number">5.4.</span> <span class="nav-text">移动端页面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AD%A5%E5%85%A5%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83"><span class="nav-number">6.</span> <span class="nav-text">步入生产环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SDR-hu-%E7%94%B3%E8%AF%B7%E5%88%97%E5%87%BA%E8%AE%BE%E5%A4%87"><span class="nav-number">6.1.</span> <span class="nav-text">SDR.hu 申请列出设备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/archive/RTLSDR-Modifying_20190323.html',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

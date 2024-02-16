@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="引子出了这么大一事儿，博主才想起自己还有个博客…… 直到有人开始传博主也是因为被喝了茶，才金盆洗手同无线电一刀两断时，博主这才觉得有必要出来冒个泡了。  继 ADS-B、AIS 玩家挨个被慰问过后，各种另类版本也冒了出来，有说自己建气象站被喝茶的，有说玩 FT8 会被喝茶的，还有说用别人 KiwiSDR 也会被喝茶的（这都什么牛马？）…… 照这趋势，以后是不是车上听个对岸中波电台也要被喝茶了？ 既">
+<meta property="og:type" content="article">
+<meta property="og:title" content="今天继续手把手教大家如何喝茶">
+<meta property="og:url" content="https://ibcl.us/FY-2x_20211104/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="引子出了这么大一事儿，博主才想起自己还有个博客…… 直到有人开始传博主也是因为被喝了茶，才金盆洗手同无线电一刀两断时，博主这才觉得有必要出来冒个泡了。  继 ADS-B、AIS 玩家挨个被慰问过后，各种另类版本也冒了出来，有说自己建气象站被喝茶的，有说玩 FT8 会被喝茶的，还有说用别人 KiwiSDR 也会被喝茶的（这都什么牛马？）…… 照这趋势，以后是不是车上听个对岸中波电台也要被喝茶了？ 既">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/3.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/4.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/5.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/6.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/7.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/8.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/9.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/10.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/11.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/12.jpg">
+<meta property="og:image" content="https://c.ibcl.us/FY-2x_20211104/13.jpg">
+<meta property="article:published_time" content="2021-11-04T02:58:08.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="广播">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="SDR">
+<meta property="article:tag" content="软件无线电">
+<meta property="article:tag" content="风云二号">
+<meta property="article:tag" content="气象卫星">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/FY-2x_20211104/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/FY-2x_20211104/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>今天继续手把手教大家如何喝茶 | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/FY-2x_20211104/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          今天继续手把手教大家如何喝茶
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-11-04 10:58:08" itemprop="dateCreated datePublished" datetime="2021-11-04T10:58:08+08:00">2021-11-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDR/" itemprop="url" rel="index"><span itemprop="name">SDR</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/FY-2x_20211104/" class="post-meta-item leancloud_visitors" data-flag-title="今天继续手把手教大家如何喝茶" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/FY-2x_20211104/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/FY-2x_20211104/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h1><p>出了这么大一事儿，博主才想起自己还有个博客…… 直到有人开始传博主也是因为被喝了茶，才金盆洗手同无线电一刀两断时，博主这才觉得有必要出来冒个泡了。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/1.jpg" alt="1" title="1"></p>
+<p>继 ADS-B、AIS 玩家挨个被慰问过后，各种另类版本也冒了出来，有说自己建气象站被喝茶的，有说玩 FT8 会被喝茶的，还有说用别人 KiwiSDR 也会被喝茶的（这都什么牛马？）…… 照这趋势，以后是不是车上听个对岸中波电台也要被喝茶了？</p>
+<p>既然干啥都会被喝茶，那喝茶就得喝得有逼格，鉴于以上种种，博主这次就来手把手教大家如何通过“架设气象观测设备”喝茶。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/2.jpg" alt="2" title="2"></p>
+<h1 id="境外势力的风云二号观测设备"><a href="#境外势力的风云二号观测设备" class="headerlink" title="境外势力的风云二号观测设备"></a>境外势力的风云二号观测设备</h1><span id="more"></span>
+
+<p><a href="https://ibcl.us/">I BCL.</a> 网站从没备过案，服务器也一直丢国外，所以博主是妥妥的境外势力。博主这次接收风云二号的全盘云图，相当于泄漏国家敏感气象资讯，就是妥妥的给境外势力递刀子行为。如此惊天地泣鬼神，拜登看了都恨不得哭着给博主转账 500 万作气象战经费。</p>
+<p>500 万气象战经费，附赠一杯国安局清茶，美中两边便宜都占了，看官的你是否心动？</p>
+<h1 id="刺探风云二号情报"><a href="#刺探风云二号情报" class="headerlink" title="刺探风云二号情报"></a>刺探风云二号情报</h1><p>就在刚刚，博主接到了 CIA 探员发来的信息，目前中国的风云二号系列全是静轨卫星，并有如下卫星仍在工作。</p>
+<ul>
+<li>风云二号 F 星（112° E）（快挂了）</li>
+<li>风云二号 G 星（99° E）</li>
+<li>风云二号 H 星（79° E）</li>
+</ul>
+<p>不过这位探员眼看时间来到三点几，不得不去饮茶，所以没做细致调查，剩下的工作就得全部交由博主一人做。</p>
+<p>在动用各种社会工程学人际关系网络后，博主得知，目前开源的风云二号收图方案，是接收 1687.5 MHz，位于 L 波段的 VISSR 业务。</p>
+<p>VISSR 全称 Visible and Infrared Spin Scan，中文名可见与红外自旋扫描辐射计，下传高解析度的云图数据，这对于博主这种境外势力，这可是巨大的诱惑，因为只有高解析度的气象云图，才能更精准地发动气象战。</p>
+<h1 id="风云二号发播形式"><a href="#风云二号发播形式" class="headerlink" title="风云二号发播形式"></a>风云二号发播形式</h1><p>买通了中国国家卫星气象中心的高层后，博主总算掌握到了风云二号的基本发播格式，只有拿到全盘图的发播时间和规律，才能更有针对性地分析天气，发动气象战。</p>
+<table>
+<thead>
+<tr>
+<th align="left">全盘图</th>
+<th align="left">信标</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0’ - 30’</td>
+<td align="left">30’ - 60’</td>
+</tr>
+</tbody></table>
+<p>博主写到这里，门突然被撞开，吓得博主立马盖上笔记本，转头一看，原来是室友，门本来也没锁，看来做境外势力可比粉红难多了。</p>
+<h1 id="博主开始暗地采购了"><a href="#博主开始暗地采购了" class="headerlink" title="博主开始暗地采购了"></a>博主开始暗地采购了</h1><p>以科研为由，博主从某位商家那里买下了口径 180 公分的四威牌 C 波段大锅，和商家闲聊数句，得知到最近买这样大锅的人突然多了起来，这不禁让博主怀疑，身边的境外势力会不会不止博主一个？</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/3.jpg" alt="3" title="3"></p>
+<p>通过拜托不相干的人从咸鱼代购，博主弄到了一块 SAWBird LNA 板子，售价 360 元。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/4.jpg" alt="4" title="4"></p>
+<p>普通的 C 波段馈源不适用于 L 波段的接收，所以需要对馈源进行改造。正值那位 CIA 探员饮茶返来，他建议博主做个探针天线，博主忙活了一个晚上，信了他的邪，啥也收不到。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/5.jpg" alt="5" title="5"></p>
+<p>最后博主从网上找了个菱形天线的制作方法，依葫芦画瓢整了个简陋馈源出来。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/6.jpg" alt="6" title="6"></p>
+<p>线径 1.5 mm，菱边 40 mm，菱角相互垂直，反射面铺铜箔并接地，丑是丑了点，可最后居然把棒子国的 GK-2A 给收下了。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/7.jpg" alt="7" title="7"></p>
+<p>SDR 部分，CIA 探员不晓得从哪弄来个 Airspy Mini……</p>
+<p>Spy？这不摆明了博主间谍行为？不行，得改，名字得改成 Airclean Mini。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/8.jpg" alt="8" title="8"></p>
+<p>差不多了，博主将这些零件拆分打包，找了个人少的楼，三天分三次运到了楼顶天台。</p>
+<h1 id="部署软件"><a href="#部署软件" class="headerlink" title="部署软件"></a>部署软件</h1><p>那个 CIA 探员又告诉博主，他通过检索 GitHub，已经看到已经有现成的开源解码软件 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FsdGlsbGltaXR5L1NhdER1bXA=">SatDump<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>好，安排上。</p>
+<p>连上 Tor，找了个非洲的 Debian 镜像站，下了三天三夜，终于把 Debian 拖下来，作为境外势力，匿名上网是基本操作，多等几天也没问题。</p>
+<p>装上 Debian，换上非洲的软件源，开始安装桌面环境，LXDE 又花了三天，好了，终于轮到部署 SatDump 了。</p>
+<p>先完善软件依赖。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yuki@yuki-pc:~$ sudo apt install git build-essential cmake g++ pkgconf libfftw3-dev libvolk1-dev libjpeg-dev libpng-dev librtlsdr-dev libhackrf-dev libairspy-dev libairspyhf-dev libglew-dev libglfw3-dev</span><br></pre></td></tr></table></figure>
+
+<p>博主用的 Debian 11，结果完善依赖时报错了，原因是 Debian 11 中，<code>libvolk1-dev</code> 已被 <code>libvolk2-dev</code> 取代（Ubuntu 也是如此）。</p>
+<p>依赖补齐后，从源码编译安装 <code>libnng-dev</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yuki@yuki-pc:~$ git clone https://github.com/nanomsg/nng.git ~/nng</span><br><span class="line">yuki@yuki-pc:~$ mkdir -p ~/nng/build; cd ~/nng</span><br><span class="line">yuki@yuki-pc:~/nng/build$ cmake .. -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=/usr</span><br><span class="line">yuki@yuki-pc:~/nng/build$ make -j4</span><br><span class="line">yuki@yuki-pc:~/nng/build$ sudo make install</span><br><span class="line">yuki@yuki-pc:~/nng/build$ cd ~</span><br></pre></td></tr></table></figure>
+
+<p>从 GitHub 拉取 SatDump 源码，从源码编译 SatDump。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yuki@yuki-pc:~$ git clone https://github.com/altillimity/SatDump.git --depth 1 ~/SatDump</span><br><span class="line">yuki@yuki-pc:~$ mkdir -p ~/SatDump/build; cd ~/SatDump</span><br><span class="line">yuki@yuki-pc:~/SatDump/build$ cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr</span><br><span class="line">yuki@yuki-pc:~/SatDump/build$ make -j4</span><br><span class="line">yuki@yuki-pc:~/SatDump/build$ ln -s ../pipelines .</span><br><span class="line">yuki@yuki-pc:~/SatDump/build$ ln -s ../resources .</span><br><span class="line">yuki@yuki-pc:~/SatDump/build$ ln -s ../Ro* .</span><br></pre></td></tr></table></figure>
+
+<p>运行 SatDump，不出意外，带 GUI 的 SatDump 已经成功启动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yuki@yuki-pc:~/SatDump/build$ ./satdump-ui</span><br></pre></td></tr></table></figure>
+
+<h1 id="拜登经费到账"><a href="#拜登经费到账" class="headerlink" title="拜登经费到账"></a>拜登经费到账</h1><p>来到天台，支起大锅，按如下流程安装设备。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">锅 --&gt; 馈源 --&gt; 馈线 --&gt; LNA（需额外供电） --&gt; SDR --&gt; 电脑</span><br></pre></td></tr></table></figure>
+
+<p>和收听敌台、翻墙不一样，敌台能躲在被窝里边听，墙能躺在沙发上翻，气象数据却得跑外边去收集，或许这就是作为境外势力默默承受的压力吧。</p>
+<p>想到这里，博主叹一口气，然而想到拜登的经费就快要到账，博主又振作了起来。</p>
+<p>插入 Airclean Mini，将 SatDump 标签页切换到 Live processing，指定 Pipeline 为 FengYun-2 S-VISSR，然后选择云图输出目录。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/9.jpg" alt="9" title="9"></p>
+<p>将 Samplerate 改为 1000000，然后按下 Start，启动解码器，一坨绿色的星座图出现。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/10.jpg" alt="10" title="10"></p>
+<p>要成功收集气象数据，这坨星座图就得分成两半才行。博主打算先干位于 99° E 的风云 2G，无奈不知道方位角该转到多少，只得拿出一台随身携带的菊花牌备用机，打开 <span class="exturl" data-url="aHR0cHM6Ly9kaXNocG9pbnRlci5jb20v">dishpointer.com<i class="fa fa-external-link-alt"></i></span>，在线计算方位角。</p>
+<p>输入博主所在坐标，得出接收风云 2G 方位角是 212.5°，借助罗盘 APP，转动天线到相应位置。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/11.jpg" alt="11" title="11"></p>
+<p>正值整点，博主看到了星座图有分离的趋势，把增益开最大，解码器上的 SNR 来到了 10 dB，解码正式开始，拜登经费即将到账。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/12.jpg" alt="12" title="12"></p>
+<p>根据气象中心的高层的说法，风云下传的图像数据有如下类型。</p>
+<table>
+<thead>
+<tr>
+<th align="left">通道</th>
+<th align="left">类型</th>
+<th>解析度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">FY-2x_1</td>
+<td align="left">可见光</td>
+<td>9160 x 10004</td>
+</tr>
+<tr>
+<td align="left">FY-2x_2</td>
+<td align="left">红外线</td>
+<td>2291 x 2501</td>
+</tr>
+<tr>
+<td align="left">FY-2x_3</td>
+<td align="left">水蒸气</td>
+<td>2291 x 2501</td>
+</tr>
+<tr>
+<td align="left">FY-2x_4</td>
+<td align="left">红外线</td>
+<td>2291 x 2501</td>
+</tr>
+<tr>
+<td align="left">FY-2x_5</td>
+<td align="left">红外线</td>
+<td>2291 x 2501</td>
+</tr>
+</tbody></table>
+<p>等待 Receiving 进度条到 100%，接收完成。打开此前指定的云图输出目录，可以看到六个文件，前五个文件和上表中图像类型一一对应，多出来的一张，是 SatDump 自动根据 Colour Look-Up Table 生成的假彩色图片。</p>
+<p>六张图用去 163 MB，可见光和假彩图占了大头。而其中由可见光通道生成的假彩色图片中，中国全境云层情况清晰可见。</p>
+<p><img data-src="https://c.ibcl.us/FY-2x_20211104/13.jpg" alt="13" title="13"></p>
+<p>支付宝传来拜登的到账提示，境外势力的风云二号观测设备完成了他的使命，博主笑麻了。</p>
+<h1 id="笑麻过后该被喝茶了"><a href="#笑麻过后该被喝茶了" class="headerlink" title="笑麻过后该被喝茶了"></a>笑麻过后该被喝茶了</h1><p>CCAV 的对无线电爱好者的“深入调查”一推出，就受到广泛关注，可造成的负面影响是：无线电爱好者现在不论玩什么，都会被当作间谍、境外势力。这其中，媒体不专业的配图和解说和以偏概全的话术，占了不可估量的功劳，不愧是外行领导内行的典范。</p>
+<p>在这玩 FT8 都可能被当作间谍的年头，博主不禁陷入沉思：某些人一边喊“中国全世界最安全”，一边却又说“境外势力已经入侵中国”，这岂不自相矛盾？</p>
+<p>也许吧，管他毛不矛盾，反正最大赢家肯定又是中国，中国又赢麻了。</p>
+<p>忽然间想起一句话，想要赠予本站所有读者朋友共勉之。</p>
+<blockquote>
+<p>无知即力量，战争即和平，自由即奴役。</p>
+</blockquote>
+<p>麻了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B9%BF%E6%92%AD/" rel="tag"># 广播</a>
+              <a href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag"># 原创</a>
+              <a href="/tags/SDR/" rel="tag"># SDR</a>
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%97%A0%E7%BA%BF%E7%94%B5/" rel="tag"># 软件无线电</a>
+              <a href="/tags/%E9%A3%8E%E4%BA%91%E4%BA%8C%E5%8F%B7/" rel="tag"># 风云二号</a>
+              <a href="/tags/%E6%B0%94%E8%B1%A1%E5%8D%AB%E6%98%9F/" rel="tag"># 气象卫星</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/GSM-Sniffing_20200826/" rel="prev" title="偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历">
+      <i class="fa fa-chevron-left"></i> 偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/OrangePi-MMAP_20230520/" rel="next" title="Orange Pi 使用 mmap 控制 GPIO">
+      Orange Pi 使用 mmap 控制 GPIO <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A2%83%E5%A4%96%E5%8A%BF%E5%8A%9B%E7%9A%84%E9%A3%8E%E4%BA%91%E4%BA%8C%E5%8F%B7%E8%A7%82%E6%B5%8B%E8%AE%BE%E5%A4%87"><span class="nav-number">2.</span> <span class="nav-text">境外势力的风云二号观测设备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%BA%E6%8E%A2%E9%A3%8E%E4%BA%91%E4%BA%8C%E5%8F%B7%E6%83%85%E6%8A%A5"><span class="nav-number">3.</span> <span class="nav-text">刺探风云二号情报</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A3%8E%E4%BA%91%E4%BA%8C%E5%8F%B7%E5%8F%91%E6%92%AD%E5%BD%A2%E5%BC%8F"><span class="nav-number">4.</span> <span class="nav-text">风云二号发播形式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%9A%E4%B8%BB%E5%BC%80%E5%A7%8B%E6%9A%97%E5%9C%B0%E9%87%87%E8%B4%AD%E4%BA%86"><span class="nav-number">5.</span> <span class="nav-text">博主开始暗地采购了</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E8%BD%AF%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">部署软件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%9C%E7%99%BB%E7%BB%8F%E8%B4%B9%E5%88%B0%E8%B4%A6"><span class="nav-number">7.</span> <span class="nav-text">拜登经费到账</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%91%E9%BA%BB%E8%BF%87%E5%90%8E%E8%AF%A5%E8%A2%AB%E5%96%9D%E8%8C%B6%E4%BA%86"><span class="nav-number">8.</span> <span class="nav-text">笑麻过后该被喝茶了</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/FY-2x_20211104/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="引子博主第一次收到光华之声是在小学的时候，在那遥远的 2013 年，当时光华之声的 9745 kHz 还没有被挂掉，每天夜里，伴随着民乐火龙和隔壁 NHK 的强力轰炸，博主只能凭借想象力，艰难地猜测节目在讲什么。   欢迎收听 … 我是黄萱 … 两岸 … 大不同 在中国，没有 50 万以上 … 几乎免谈 … 台湾好行征文活动 … … 我们的电邮地址是 &amp;#x6c;&amp;#105;&amp;#x6c;&amp;#x69">
+<meta property="og:type" content="website">
+<meta property="og:title" content="拜托，让我清楚地听一回光华之声">
+<meta property="og:url" content="https://ibcl.us/archive/KHmusic-Relay_20220507.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="引子博主第一次收到光华之声是在小学的时候，在那遥远的 2013 年，当时光华之声的 9745 kHz 还没有被挂掉，每天夜里，伴随着民乐火龙和隔壁 NHK 的强力轰炸，博主只能凭借想象力，艰难地猜测节目在讲什么。   欢迎收听 … 我是黄萱 … 两岸 … 大不同 在中国，没有 50 万以上 … 几乎免谈 … 台湾好行征文活动 … … 我们的电邮地址是 &amp;#x6c;&amp;#105;&amp;#x6c;&amp;#x69">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/KHmusic-Relay_20220507/1.png">
+<meta property="og:image" content="https://c.ibcl.us/KHmusic-Relay_20220507/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/KHmusic-Relay_20220507/3.jpg">
+<meta property="article:published_time" content="2022-05-07T02:58:08.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.382Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="广播">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="FFmpeg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/KHmusic-Relay_20220507/1.png">
+
+<link rel="canonical" href="https://ibcl.us/archive/KHmusic-Relay_20220507">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>拜托，让我清楚地听一回光华之声 | I BCL.
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">拜托，让我清楚地听一回光华之声
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h1 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h1><p>博主第一次收到光华之声是在小学的时候，在那遥远的 2013 年，当时光华之声的 9745 kHz 还没有被挂掉，每天夜里，伴随着民乐火龙和隔壁 NHK 的强力轰炸，博主只能凭借想象力，艰难地猜测节目在讲什么。</p>
+<blockquote>
+<ul>
+<li>欢迎收听 … 我是黄萱</li>
+<li>… 两岸 … 大不同</li>
+<li>在中国，没有 50 万以上 … 几乎免谈</li>
+<li>… 台湾好行征文活动 …</li>
+<li>… 我们的电邮地址是 <span class="exturl" data-url="bWFpbHRvOiYjeDZjOyYjMTA1OyYjeDZjOyYjeDY5OyYjeDMzOyYjNTA7JiN4Mzk7JiM2NDsmI3g2ZDsmIzExNTsmIzUyOyYjNTM7JiM0NjsmI3g2ODsmI3g2OTsmI3g2ZTsmI3g2NTsmI3g3NDsmIzQ2OyYjMTEwOyYjMTAxOyYjMTE2Ow==">&#x6c;&#105;&#x6c;&#x69;&#x33;&#50;&#x39;&#64;&#x6d;&#115;&#52;&#53;&#46;&#x68;&#x69;&#x6e;&#x65;&#x74;&#46;&#110;&#101;&#116;<i class="fa fa-external-link-alt"></i></span> …</li>
+</ul>
+</blockquote>
+<p>就这样，博主陆陆续续听到 2017 年，但是在 2017 年的某一天，9745 kHz 突然从短波频率上消失了，他走得如此地突然，没有通知，没有人谈论，博主一度怀疑是自己设备出了问题。</p>
+<p>在此后的几年里，博主只在中波频率中收到过两三次光华之声的信号。作为一个反贼后浪，光华之声无疑是博主的启蒙导师，他用快、准、狠的手段，将一个祖国未来的小韭菜扼杀在了摇篮中，对于博主来说，实在是意义重大。</p>
+<p>一个偶然的机会，去年在网际互联网冲浪时，发现了光华之声主持人陈彦的 Facebook 帐号，在打过招呼过后，博主和她聊了起来，重拾了曾经的回忆。</p>
+<p>正值光华网站改版，博主也顺便向她提了建议，希望光华能够自建流媒体服务器，来让中国听友能够顺利地线上收听，陈彦也答应向博主会向电台主管转达建议。</p>
+<p><img data-src="https://c.ibcl.us/KHmusic-Relay_20220507/1.png" alt="1" title="1"></p>
+<p>前几日博主无意中打开光华之声网站，发现光华之声网站已经加上自家的直播了。但美中不足的是，直播流的 HLS 链接被加上了 Token，还被限制了有效期，这让博主很难受。</p>
+<p>要是能拿到一个永久固定的，不需要 Token 就能用的 HLS 地址，那该多好啊。</p>
+<span id="more"></span>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>光华的直播网站位于 <span class="exturl" data-url="aHR0cHM6Ly9hdWRpby52b2guY29tLnR3L0t3b25nV2FoL20zdTguYXNweA==">audio.voh.com.tw/KwongWah/m3u8.aspx<i class="fa fa-external-link-alt"></i></span>，网站语言为 ASP.NET，HLS 直播地址是由后端分配好 Token 后，嵌入到 <code>&lt;source&gt;</code> 标签中的。</p>
+<p>换句话说，用户请求 <span class="exturl" data-url="aHR0cHM6Ly9hdWRpby52b2guY29tLnR3L0t3b25nV2FoL20zdTguYXNweA==">audio.voh.com.tw/KwongWah/m3u8.aspx<i class="fa fa-external-link-alt"></i></span> 后，服务器会返回整个渲染好的 HTML 页面。由于 Token 构造不是在前端完成的，这就让用户没有了自行构造 Token 的机会。</p>
+<p>正因为没有自行构造 Token 的机会，所以只能透过解析 HTML 的方式，来获取带有 Token 的 HLS 地址。</p>
+<p>最后，博主决定用 Golang 的 Goquery 包来获取带 Token 的 HLS 地址。Goquery 类似 jQuery，它是 jQuery 的 Go 版本实现，使用它，可以很方便的对 HTML 进行处理，同时，鉴于 Golang 的 WORA 特性（Write Once Run Anywhere）, 也极大方便部署。</p>
+<p>在获取到 HLS 地址过后，博主打算调用 FFmpeg 自动做转发，并将 TS 分片输出到指定位置，由于光华之声的 HLS 流地址具有时效性，所以还需要计算出 HLS 地址的可用时长，然后在 Token 将要过期时获取新地址，重启 FFmpeg 进程，开始新一轮的转发。</p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><p>综上所述，需要实现如下功能。</p>
+<ul>
+<li>透过 Goquery 解析网站，取到 <code>&lt;source&gt;</code> 标签中 <code>src</code> 的属性，并在 HTTP 请求失败时重试，直到成功为止（一定程度上解决 GFW 干扰）</li>
+<li>解析获取到的 HLS 流的 URL 所带的参数，取到 <code>expires</code> 参数的值，并同当前时间比较求差值，得到 HLS 地址的有效时长</li>
+<li>透过循环来调用 FFmpeg，在 HLS 流快要过期时获取新 URL，并重启 FFmpeg</li>
+<li>若 FFmpeg 输出文件夹不存在，则自动创建一个</li>
+</ul>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><h2 id="保存数据"><a href="#保存数据" class="headerlink" title="保存数据"></a>保存数据</h2><p>创建一个全局结构体，用于保存数据。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> config mediaInfo</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> mediaInfo <span class="keyword">struct</span> &#123;</span><br><span class="line">	hlsLink    <span class="type">string</span> <span class="comment">// 用于保存获取到的 HLS 链接</span></span><br><span class="line">	hoursAvail <span class="type">int64</span>  <span class="comment">// 用于保存 HLS 可用的时长</span></span><br><span class="line">	m3u8Dir    <span class="type">string</span> <span class="comment">// 指定 FFmpeg 输出文件夹</span></span><br><span class="line">	ffmpegPath <span class="type">string</span> <span class="comment">// 指定 FFmpeg 程序路径</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取-HLS-地址"><a href="#获取-HLS-地址" class="headerlink" title="获取 HLS 地址"></a>获取 HLS 地址</h2><p>从 <code>&lt;source&gt;</code> 标签中获取 <code>src</code> 的属性值，若失败，则始终重试。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getLink</span><span class="params">()</span></span> &#123;</span><br><span class="line">	log.Println(<span class="string">&quot;开始解析并获取流媒体地址&quot;</span>)</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="comment">// 设置 3 秒超时</span></span><br><span class="line">		client := http.Client&#123;Timeout: <span class="number">3</span> * time.Second&#125;</span><br><span class="line">		res, err := client.Get(<span class="string">&quot;https://audio.voh.com.tw/KwongWah/m3u8.aspx&quot;</span>)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Println(<span class="string">&quot;因网络超时而重试中&quot;</span>)</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">defer</span> res.Body.Close()</span><br><span class="line"></span><br><span class="line">		doc, _ := goquery.NewDocumentFromReader(res.Body)</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 保存数据</span></span><br><span class="line">		doc.Find(<span class="string">&quot;source&quot;</span>).Each(<span class="function"><span class="keyword">func</span><span class="params">(i <span class="type">int</span>, s *goquery.Selection)</span></span> &#123;</span><br><span class="line">			<span class="comment">// 获取 HLS 地址</span></span><br><span class="line">			config.hlsLink, _ = s.Attr(<span class="string">&quot;src&quot;</span>)</span><br><span class="line">			log.Println(config.hlsLink)</span><br><span class="line">			<span class="comment">// 获取过期日期</span></span><br><span class="line">			config.hoursAvail = validTime(urlPraser(config.hlsLink, <span class="string">&quot;expires&quot;</span>))</span><br><span class="line">			log.Println(<span class="string">&quot;上述地址在&quot;</span>, config.hoursAvail+<span class="number">1</span>, <span class="string">&quot;小时后过期&quot;</span>)</span><br><span class="line">		&#125;)</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="解析-URL-参数"><a href="#解析-URL-参数" class="headerlink" title="解析 URL 参数"></a>解析 URL 参数</h2><p>从 URL 提取参数，取到过期时间。</p>
+<p>例如 <code>https://vohradiow-hichannel.cdn.hinet.net/live/RA000077/playlist.m3u8?token=JKAVpqhl4YsInEsqFkFI_g&amp;expires=1652028980</code>，则取到过期时间为 1652028980（Unix 时间戳）。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">urlPraser</span><span class="params">(myUrl <span class="type">string</span>, urlParam <span class="type">string</span>)</span></span> <span class="type">int64</span> &#123;</span><br><span class="line">	u, err := url.Parse(myUrl)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	p, _ := url.ParseQuery(u.RawQuery)</span><br><span class="line">	<span class="comment">// string 转成 int64 类型</span></span><br><span class="line">	r, _ := strconv.ParseInt(p[urlParam][<span class="number">0</span>], <span class="number">10</span>, <span class="number">64</span>)</span><br><span class="line">	<span class="keyword">return</span> r</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="计算可用时长"><a href="#计算可用时长" class="headerlink" title="计算可用时长"></a>计算可用时长</h2><p>获取直播流可用时长，并提前一小时。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">validTime</span><span class="params">(uTime <span class="type">int64</span>)</span></span> <span class="type">int64</span> &#123;</span><br><span class="line">	<span class="comment">// 获取本地 UTC 时间</span></span><br><span class="line">	currentTime := time.Now().Local().UTC()</span><br><span class="line">	<span class="comment">// 解析传入的 Unix 时间戳，转为 UTC 时间</span></span><br><span class="line">	futureTime := time.Unix(uTime, <span class="number">0</span>).Add(<span class="number">-8</span> * time.Hour).Local().UTC()</span><br><span class="line">	<span class="comment">// 求差值，并将 time.Duration 类型转为 int64 类型</span></span><br><span class="line">	validHours, _ := strconv.ParseInt(fmt.Sprintf(<span class="string">&quot;%.f&quot;</span>, futureTime.Sub(currentTime).Hours()), <span class="number">10</span>, <span class="number">64</span>)</span><br><span class="line">	<span class="comment">// 提前一个小时</span></span><br><span class="line">	<span class="keyword">return</span> validHours - <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="运行-FFmpeg"><a href="#运行-FFmpeg" class="headerlink" title="运行 FFmpeg"></a>运行 FFmpeg</h2><p>在成功获取相关资讯后，调用系统 FFmpeg，开始转发，并将 TS 分片输出到指定位置。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 运行 FFmpeg</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ffmpeg</span><span class="params">(hlsLink <span class="type">string</span>, hoursAvail <span class="type">int64</span>, ffmpegPath <span class="type">string</span>, m3u8Dir <span class="type">string</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="comment">// 启动 FFmpeg</span></span><br><span class="line">		args := []<span class="type">string</span>&#123;<span class="string">&quot;-y&quot;</span>, <span class="string">&quot;-nostats&quot;</span>, <span class="string">&quot;-nostdin&quot;</span>, <span class="string">&quot;-hide_banner&quot;</span>,</span><br><span class="line">			<span class="string">&quot;-reconnect&quot;</span>, <span class="string">&quot;1&quot;</span>, <span class="string">&quot;-reconnect_at_eof&quot;</span>, <span class="string">&quot;1&quot;</span>, <span class="string">&quot;-reconnect_streamed&quot;</span>, <span class="string">&quot;1&quot;</span>,</span><br><span class="line">			<span class="string">&quot;-reconnect_delay_max&quot;</span>, <span class="string">&quot;0&quot;</span>, <span class="string">&quot;-timeout&quot;</span>, <span class="string">&quot;2000000000&quot;</span>, <span class="string">&quot;-thread_queue_size&quot;</span>, <span class="string">&quot;5512&quot;</span>,</span><br><span class="line">			<span class="string">&quot;-fflags&quot;</span>, <span class="string">&quot;+genpts&quot;</span>, <span class="string">&quot;-probesize&quot;</span>, <span class="string">&quot;10000000&quot;</span>, <span class="string">&quot;-analyzeduration&quot;</span>, <span class="string">&quot;15000000&quot;</span>,</span><br><span class="line">			<span class="string">&quot;-i&quot;</span>, hlsLink, <span class="string">&quot;-c&quot;</span>, <span class="string">&quot;copy&quot;</span>, <span class="string">&quot;-segment_list_flags&quot;</span>, <span class="string">&quot;+live&quot;</span>, <span class="string">&quot;-hls_time&quot;</span>, <span class="string">&quot;4&quot;</span>,</span><br><span class="line">			<span class="string">&quot;-hls_list_size&quot;</span>, <span class="string">&quot;6&quot;</span>, <span class="string">&quot;-hls_wrap&quot;</span>, <span class="string">&quot;10&quot;</span>, <span class="string">&quot;-segment_list_type&quot;</span>, <span class="string">&quot;m3u8&quot;</span>,</span><br><span class="line">			<span class="string">&quot;-segment_time&quot;</span>, <span class="string">&quot;4&quot;</span>, m3u8Dir + <span class="string">&quot;/index.m3u8&quot;</span>&#125;</span><br><span class="line">		cmd := exec.Command(ffmpegPath, args...)</span><br><span class="line">		err := cmd.Start()</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			log.Fatalf(<span class="string">&quot;%s\n&quot;</span>, err)</span><br><span class="line">		&#125;</span><br><span class="line">		log.Println(<span class="string">&quot;已启动 FFmpeg 做流媒体转发&quot;</span>)</span><br><span class="line">		<span class="comment">// 等待指定时长，然后结束 FFmpeg 进程</span></span><br><span class="line">		time.Sleep(time.Duration(hoursAvail) * time.Hour)</span><br><span class="line">		cmd.Process.Kill()</span><br><span class="line">		cmd.Wait()</span><br><span class="line">		<span class="comment">// 获取新链接</span></span><br><span class="line">		getLink()</span><br><span class="line">		log.Println(<span class="string">&quot;FFmpeg 因流媒体链接变更而重启&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断文件夹是否存在，若不存在则创建</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">pathExists</span><span class="params">(path <span class="type">string</span>)</span></span> (<span class="type">bool</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	_, err := os.Stat(path)</span><br><span class="line">	<span class="keyword">if</span> err == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>, <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> os.IsNotExist(err) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>, <span class="literal">nil</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="literal">false</span>, err</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h2><p>引入 flag 包，获取用户指定的命令行参数，这里设置 <code>-p</code> 和 <code>-o</code> 两个选项，分别对应 FFmpeg 程序路径和 FFmpeg 转发的流输出路径。</p>
+<p>默认情况下，默认 FFmpeg 路径为 <code>/usr/bin/ffmpeg</code>，FFmpeg 转发的流输出路径为 <code>/www/khmusic</code>。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 指定命令行默认参数</span></span><br><span class="line">	flag.StringVar(&amp;config.ffmpegPath, <span class="string">&quot;p&quot;</span>, <span class="string">&quot;/usr/bin/ffmpeg&quot;</span>, <span class="string">&quot;FFmpeg 绝对路径&quot;</span>)</span><br><span class="line">	flag.StringVar(&amp;config.m3u8Dir, <span class="string">&quot;o&quot;</span>, <span class="string">&quot;/www/khmusic&quot;</span>, <span class="string">&quot;TS 分片输出路径&quot;</span>)</span><br><span class="line">	flag.Parse()</span><br><span class="line">	log.Println(<span class="string">&quot;FFmpeg 路径为&quot;</span>, config.ffmpegPath)</span><br><span class="line">	log.Println(<span class="string">&quot;HLS 流将会存放至&quot;</span>, config.m3u8Dir)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 若输出文件夹不存在则创建</span></span><br><span class="line">	dirExist, err := pathExists(config.m3u8Dir)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> !dirExist &#123;</span><br><span class="line">		<span class="comment">// 创建多级文件夹</span></span><br><span class="line">		err := os.MkdirAll(config.m3u8Dir, os.ModePerm)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="built_in">panic</span>(err)</span><br><span class="line">		&#125;</span><br><span class="line">		log.Println(<span class="string">&quot;指定文件夹不存在，将会自动创建&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 获取流媒体链接</span></span><br><span class="line">	getLink()</span><br><span class="line">	<span class="comment">// 启动 FFmpeg</span></span><br><span class="line">	ffmpeg(config.hlsLink, config.hoursAvail, config.ffmpegPath, config.m3u8Dir)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="HTTP-服务器"><a href="#HTTP-服务器" class="headerlink" title="HTTP 服务器"></a>HTTP 服务器</h2><p>最后，还需要一个 HTTP 服务来向用户提供串流服务。博主这里使用 Python 自带的 <code>http.server</code> 模块来实现。</p>
+<p>启动 Python 自带的 HTTP 服务非常简单，只需要一行命令即可，其中，<code>/www</code> 是 FFmpeg 转发的流输出路径，<code>8080</code> 是监听的 HTTP 端口，<code>::</code> 代表监听了所有地址（包含 IPv6）。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">python3 -m http.server -d /www 8080 --<span class="built_in">bind</span> ::</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p>博主已将仓库开源至 GitHub，欢迎 Star。</p>
+<p>点击 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4Mjcva2htdXNpYy1mb3J3YXJkZXIvYmxvYi9tYXN0ZXIvUkVBRE1FLm1k">README.md<i class="fa fa-external-link-alt"></i></span> 中的部署按钮，可以直接部署到 Heroku 上。</p>
+<p>博主部署了一个，用着还不错，配合 CloudFlare Workers + 自选 IP 应该会更爽。</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9raG11c2ljLmhlcm9rdWFwcC5jb20va2htdXNpYy9pbmRleC5tM3U4">khmusic.herokuapp.com/khmusic/index.m3u8<i class="fa fa-external-link-alt"></i></span>（暂未被屏蔽）</li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9raG11c2ljLmExLndvcmtlcnMuZGV2L2tobXVzaWMvaW5kZXgubTN1OA==">khmusic.a1.workers.dev/khmusic/index.m3u8<i class="fa fa-external-link-alt"></i></span>（2022 年 5 月 9 日，CloudFlare Workers 已被屏蔽）</li>
+</ul>
+<p>如果是部署到自己的服务器上，则只需要将仓库拉取下来用 Docker 构建一下就行了，步骤也很简单。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">git <span class="built_in">clone</span> https://github.com/bclswl0827/khmusic-forwarder</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash"><span class="built_in">cd</span> khmusic-forwarder</span></span><br><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker build -t khmusic .</span></span><br></pre></td></tr></table></figure>
+
+<p>部署应用时，如果服务器上已经运行有 HTTP 进程，可以直接将容器的 <code>/www</code> 目录挂载到既有的网站目录中，也可选择启动自带的 HTTP 服务，并开放对应端口。</p>
+<p>例如直接部署应用到 80 端口，使用自带的 HTTP 服务，需要注意，指定运行自带 HTTP 服务的端口号和指定开放的需要保证相同。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -d \</span></span><br><span class="line"><span class="language-bash">             --<span class="built_in">env</span> HTTP_ENABLED=<span class="literal">true</span> \</span></span><br><span class="line"><span class="language-bash">             --<span class="built_in">env</span> HTTP_PORT=80 \</span></span><br><span class="line"><span class="language-bash">             --name khmusic \</span></span><br><span class="line"><span class="language-bash">             --restart always \</span></span><br><span class="line"><span class="language-bash">             --publish 80:80 \</span></span><br><span class="line"><span class="language-bash">             khmusic:latest</span></span><br></pre></td></tr></table></figure>
+
+<p>又如利用既有的 HTTP 服务，将容器的 <code>/www</code> 目录挂载到既有的网站目录中（例如 <code>/var/www/live</code>）。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">docker run -d \</span></span><br><span class="line"><span class="language-bash">             --name khmusic \</span></span><br><span class="line"><span class="language-bash">             --restart always \</span></span><br><span class="line"><span class="language-bash">             --volume /var/www/live:/www \</span></span><br><span class="line"><span class="language-bash">             khmusic:latest</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>和光华的一位老听友聊天，才知道他以前已经反馈了很多次，希望光华能有自己的串流。没想到这么多年了才给安排上，想必光华的内部也是一堆鸽王吧。</p>
+<p><img data-src="https://c.ibcl.us/KHmusic-Relay_20220507/2.jpg" alt="2" title="2"></p>
+<p>同时也要感谢陈彦，在帮忙反馈听友建议之余，还帮博主联系到了已经离职的廖恒。</p>
+<p><img data-src="https://c.ibcl.us/KHmusic-Relay_20220507/3.jpg" alt="3" title="3"></p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E5%AD%90"><span class="nav-number">1.</span> <span class="nav-text">引子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E6%B1%82"><span class="nav-number">3.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="nav-number">4.1.</span> <span class="nav-text">保存数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96-HLS-%E5%9C%B0%E5%9D%80"><span class="nav-number">4.2.</span> <span class="nav-text">获取 HLS 地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-URL-%E5%8F%82%E6%95%B0"><span class="nav-number">4.3.</span> <span class="nav-text">解析 URL 参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E5%8F%AF%E7%94%A8%E6%97%B6%E9%95%BF"><span class="nav-number">4.4.</span> <span class="nav-text">计算可用时长</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C-FFmpeg"><span class="nav-number">4.5.</span> <span class="nav-text">运行 FFmpeg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%87%BD%E6%95%B0"><span class="nav-number">4.6.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">4.7.</span> <span class="nav-text">HTTP 服务器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">5.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-number">6.</span> <span class="nav-text">后记</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/archive/KHmusic-Relay_20220507.html',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="起因博主的同桌在去年年底入手了一台 Switch，但最近他发现联网游戏的掉线次数越来越多，eShop 也经常连接不上。在博主的安利下，他决定买一台极路由 4 增强版刷 OpenWRT 做透明代理，蹭博主的 VPS 来加速游戏，顺便看看 YouTube…… 情况考虑到 Shadowsocks 的安全性，所以博主的 VPS 上并未部署这一类软件，而是部署的是更加复杂的 V2Ray。 也正因为 V2Ra">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HC5962 运行 V2Ray 透明代理">
+<meta property="og:url" content="https://ibcl.us/archive/HC5962-V2Ray_20190518.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="起因博主的同桌在去年年底入手了一台 Switch，但最近他发现联网游戏的掉线次数越来越多，eShop 也经常连接不上。在博主的安利下，他决定买一台极路由 4 增强版刷 OpenWRT 做透明代理，蹭博主的 VPS 来加速游戏，顺便看看 YouTube…… 情况考虑到 Shadowsocks 的安全性，所以博主的 VPS 上并未部署这一类软件，而是部署的是更加复杂的 V2Ray。 也正因为 V2Ra">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-05-18T15:22:00.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.382Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="杂谈">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ibcl.us/archive/HC5962-V2Ray_20190518">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HC5962 运行 V2Ray 透明代理 | I BCL.
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">HC5962 运行 V2Ray 透明代理
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>博主的同桌在去年年底入手了一台 Switch，但最近他发现联网游戏的掉线次数越来越多，eShop 也经常连接不上。在博主的安利下，他决定买一台极路由 4 增强版刷 OpenWRT 做透明代理，蹭博主的 VPS 来加速游戏，顺便看看 YouTube……</p>
+<h2 id="情况"><a href="#情况" class="headerlink" title="情况"></a>情况</h2><p>考虑到 Shadowsocks 的安全性，所以博主的 VPS 上并未部署这一类软件，而是部署的是更加复杂的 V2Ray。</p>
+<p>也正因为 V2Ray 配置的复杂，博主踩了些坑。最终博主决定记下这次折腾，即如何在 OpenWRT 路由器上运行并设置透明代理，同时也希望这篇文章帮到一部分有同样需求的人。</p>
+<span id="more"></span>
+
+<h2 id="做好准备工作"><a href="#做好准备工作" class="headerlink" title="做好准备工作"></a>做好准备工作</h2><p>以下的操作，都是在刷好了 Breed 的前提下操作的，至于怎么刷 Breed，本文不做介绍。</p>
+<h2 id="固件的选用"><a href="#固件的选用" class="headerlink" title="固件的选用"></a>固件的选用</h2><p>不太喜欢 PandoraBOX 这一类的固件，太臃肿了，作为一个有心理洁癖的人，博主更加愿意自行编译固件，但这样太浪费时间，所以只好将就用用 OpenWRT 官方提供的固件，也比较纯净了。</p>
+<p>极路由 4 增强版的型号是 HC5962，处理器是 MT7621，所以前往 <span class="exturl" data-url="aHR0cDovL2Rvd25sb2Fkcy5vcGVud3J0Lm9yZy9yZWxlYXNlcy8xOC4wNi4wL3RhcmdldHMvcmFtaXBzL210NzYyMS8=">downloads.openwrt.org/releases/18.06.0/targets/ramips/mt7621<i class="fa fa-external-link-alt"></i></span> 下载，博主选择的是 18.06.0 版本。</p>
+<p>由于是在 Breed 中刷入，所以对应的固件文件应该是 <code>hc5962-squashfs-factory.bin</code>，而非 <code>hc5962-squashfs-sysupgrade.bin</code>。</p>
+<p>刷机操作博主也不做赘述，请自行 Google。</p>
+<p>完成后务必为路由器设定管理密码，以便后续可以使用 vsftpd 连接上传文件。</p>
+<h2 id="软件和软件源"><a href="#软件和软件源" class="headerlink" title="软件和软件源"></a>软件和软件源</h2><p>和众多 Linux 发行版一样，OpenWRT 虽小，但也提供了比较完善的软件包，位于 <span class="exturl" data-url="aHR0cDovL2Rvd25sb2Fkcy5vcGVud3J0Lm9yZy8=">downloads.openwrt.org<i class="fa fa-external-link-alt"></i></span>，但国内访问 <span class="exturl" data-url="aHR0cDovL2Rvd25sb2Fkcy5vcGVud3J0Lm9yZy8=">downloads.openwrt.org<i class="fa fa-external-link-alt"></i></span> 速度感人，所以有必要替换成镜像源，可惜的是，OpenWRT 的软件镜像源极少，在重庆地区稍微快的是加拿大的 <span class="exturl" data-url="aHR0cDovL29wZW53cnQuZnJlZW1pcnJvci5vcmcv">openwrt.freemirror.org<i class="fa fa-external-link-alt"></i></span>。此外，上述的固件也可以前往此镜像站下载。</p>
+<p>在 LuCI &gt; System &gt; Software &gt; Configuration &gt; Distribution feeds 中，这样替换软件源：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">src/gz openwrt_core http://openwrt.freemirror.org/releases/18.06.0/targets/ramips/mt7621/packages</span><br><span class="line">src/gz openwrt_base http://openwrt.freemirror.org/releases/18.06.0/packages/mipsel_24kc/base</span><br><span class="line">src/gz openwrt_luci http://openwrt.freemirror.org/releases/18.06.0/packages/mipsel_24kc/luci</span><br><span class="line">src/gz openwrt_packages http://openwrt.freemirror.org/releases/18.06.0/packages/mipsel_24kc/packages</span><br><span class="line">src/gz openwrt_routing http://openwrt.freemirror.org/releases/18.06.0/packages/mipsel_24kc/routing</span><br><span class="line">src/gz openwrt_telephony http://openwrt.freemirror.org/releases/18.06.0/packages/mipsel_24kc/telephony</span><br></pre></td></tr></table></figure>
+
+<p>根据自己的网络状况，可以将 <code>option check_signature 1</code>（检查签名）一行注释或是删除掉。</p>
+<p>使用 PuTTY 连接路由器，在终端中执指令，更新软件列表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# opkg update</span><br></pre></td></tr></table></figure>
+
+<p>安装 vsftpd、iptables-mod-tproxy、kmod-ipt-tproxy、ca-certificates</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# opkg install vsftpd iptables-mod-tproxy kmod-ipt-tproxy ca-certificates</span><br></pre></td></tr></table></figure>
+
+<p>使用 FileZilla 的 FTP 协议与路由器建立连接，分别在 <code>/usr/bin/</code>、<code>/etc/</code> 下新建名为 <code>v2ray</code> 的文件夹，上传事先下载并已经解压（v2ray-linux-mipsle.zip）的预编译 V2Ray 二进制文件（v2ray_softfloat、v2ctl_softfloat）到 <code>/usr/bin/v2ray/</code>，更名为 v2ray、v2ctl。</p>
+<p>需要注意的是，文件必须以<strong>二进制（Binary）</strong>形式上传，博主在这里被坑了半个多小时……</p>
+<p>为了节省空间可以事先使用 upx 对文件压缩，upx 的压缩命令如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@yukiho:~# upx -o [compressed] [original]</span><br></pre></td></tr></table></figure>
+
+<p>方便起见，博主将压缩好的 V2Ray 分享出来（4.18.1 版、Linux Mipsle 架构适用、Softfloat 软件浮点）。</p>
+<p><em><span class="exturl" data-url="aHR0cHM6Ly9jLmliY2wudXMvSEM1OTYyLVYyUmF5XzIwMTkwNTE4L3YycmF5LWxpbnV4LW1pcHNsZS1zb2Z0ZmxvYXQtY29tcHJlc3NlZC56aXA=">下载<i class="fa fa-external-link-alt"></i></span></em></p>
+<p>赋予 755 权限。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# chmod +x /usr/bin/v2ray/v2ray /usr/bin/v2ray/v2ctl</span><br></pre></td></tr></table></figure>
+
+<p>博主习惯使用 screen 后台运行程序，但由于 OpenWRT 没有 screen，所以博主只好自行编译了一份 ipk，也分享出来。</p>
+<p><em><span class="exturl" data-url="aHR0cHM6Ly9jLmliY2wudXMvSEM1OTYyLVYyUmF5XzIwMTkwNTE4L3NjcmVlbl80LjYuMi0xX21pcHNlbF8yNGtjLmlwaw==">下载<i class="fa fa-external-link-alt"></i></span></em></p>
+<p>上传 ipk 到路由器 <code>/tmp</code> 目录下，然后安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# opkg install /tmp/screen_4.6.2-1_mipsel_24kc.ipk</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>博主的 VPS 选用了 WebSocket + Nginx + TLS 的方案，所以配置文件示范如下，酌情更改。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;inbounds&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;port&quot;: 1080,</span><br><span class="line">      &quot;listen&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">      &quot;protocol&quot;: &quot;socks&quot;,</span><br><span class="line">      &quot;sniffing&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: true,</span><br><span class="line">        &quot;destOverride&quot;: [&quot;http&quot;, &quot;tls&quot;]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;auth&quot;: &quot;noauth&quot;,</span><br><span class="line">        &quot;udp&quot;: true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;port&quot;: 8080,</span><br><span class="line">      &quot;listen&quot;: &quot;0.0.0.0&quot;,</span><br><span class="line">      &quot;protocol&quot;: &quot;http&quot;,</span><br><span class="line">      &quot;sniffing&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: true,</span><br><span class="line">        &quot;destOverride&quot;: [&quot;http&quot;, &quot;tls&quot;]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;timeout&quot;: 300</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;port&quot;: 12345,</span><br><span class="line">      &quot;protocol&quot;: &quot;dokodemo-door&quot;,</span><br><span class="line">      &quot;sniffing&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: true,</span><br><span class="line">        &quot;destOverride&quot;: [&quot;http&quot;, &quot;tls&quot;]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;network&quot;: &quot;tcp,udp&quot;,</span><br><span class="line">        &quot;timeout&quot;: 0,</span><br><span class="line">        &quot;followRedirect&quot;: true</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;protocol&quot;: &quot;dokodemo-door&quot;,</span><br><span class="line">      &quot;port&quot;: 5353,</span><br><span class="line">      &quot;listen&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;address&quot;: &quot;1.0.0.1&quot;,</span><br><span class="line">        &quot;port&quot;: 53,</span><br><span class="line">        &quot;network&quot;: &quot;udp&quot;,</span><br><span class="line">        &quot;timeout&quot;: 0</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;outbounds&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;protocol&quot;: &quot;vmess&quot;,</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;vnext&quot;: [</span><br><span class="line">          &#123;</span><br><span class="line">            &quot;address&quot;: &quot;example.org&quot;,</span><br><span class="line">            &quot;port&quot;: 443,</span><br><span class="line">            &quot;users&quot;: [</span><br><span class="line">              &#123;</span><br><span class="line">                &quot;id&quot;: &quot;ad335920-7932-11e9-b475-0800200c9a66&quot;,</span><br><span class="line">                &quot;security&quot;: &quot;aes-128-gcm&quot;,</span><br><span class="line">                &quot;alterId&quot;: 64</span><br><span class="line">              &#125;</span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;streamSettings&quot;: &#123;</span><br><span class="line">        &quot;network&quot;: &quot;ws&quot;,</span><br><span class="line">        &quot;security&quot;: &quot;tls&quot;,</span><br><span class="line">        &quot;wsSettings&quot;: &#123;</span><br><span class="line">          &quot;path&quot;: &quot;/internal-proxy&quot;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>配置文件使用 UTF-8 编码、UNIX LF 换行符上传到 <code>/etc/v2ray</code>。</p>
+<p>编辑 <code>/etc/hosts</code>，填入服务器 IP 地址。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">12.34.56.78 example.org</span><br></pre></td></tr></table></figure>
+
+<h2 id="加入开机启动项"><a href="#加入开机启动项" class="headerlink" title="加入开机启动项"></a>加入开机启动项</h2><p>编辑 <code>/etc/rc.local</code>，于 <code>exit 0</code> 前加入以下命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sleep 5 &amp;&amp; screen -dmS v2ray /usr/bin/v2ray/v2ray -config=/etc/v2ray/config.json</span><br></pre></td></tr></table></figure>
+
+<p>保存。</p>
+<h2 id="DNS-转发设置"><a href="#DNS-转发设置" class="headerlink" title="DNS 转发设置"></a>DNS 转发设置</h2><p>LuCI &gt; Network &gt; Interfaces &gt; WAN &gt; Advanced Settings &gt; 取消勾选 Use DNS servers advertised by peer。其余设置不变，保存并应用（Save &amp; Apply）。</p>
+<p>LuCI &gt; Interfaces &gt; LAN &gt; DHCP Server &gt; 将 <code>6,192.168.1.1</code> 填入 DHCP-Options 项中 。192.168.1.1 是设备的管理地址。其余设置不变，保存并应用（Save &amp; Apply）。此举是向每台连接到路由器的设备通告 DNS 地址为网关地址。</p>
+<p>LuCI &gt; Network &gt; DHCP and DNS &gt; General Settings &gt; 将 <code>127.0.0.1#5353</code> 填入 DNS forwardings。其余设置不变，保存并应用（Save &amp; Apply）。此举是将所有 DNS 解析请求全部转发到服务器，防止本地 ISP 投毒。</p>
+<h2 id="iptables-转发设置"><a href="#iptables-转发设置" class="headerlink" title="iptables 转发设置"></a>iptables 转发设置</h2><p>LuCI &gt; Network &gt; Firewall &gt; Custom Rules &gt; 复制以下内容，其中，12345 是 <code>dokodemo-door</code> 的端口。另外，需要修改 12.34.56.78 为服务器的真实 IP。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"># Chain TCP</span><br><span class="line">iptables -t nat -N V2RAY</span><br><span class="line"># Reserved IP TCP</span><br><span class="line">iptables -t nat -A V2RAY -d 0.0.0.0/8 -j RETURN</span><br><span class="line">iptables -t nat -A V2RAY -d 10.0.0.0/8 -j RETURN</span><br><span class="line">iptables -t nat -A V2RAY -d 127.0.0.0/8 -j RETURN</span><br><span class="line">iptables -t nat -A V2RAY -d 169.254.0.0/16 -j RETURN</span><br><span class="line">iptables -t nat -A V2RAY -d 172.16.0.0/12 -j RETURN</span><br><span class="line">iptables -t nat -A V2RAY -d 192.168.0.0/16 -j RETURN</span><br><span class="line">iptables -t nat -A V2RAY -d 224.0.0.0/4 -j RETURN</span><br><span class="line">iptables -t nat -A V2RAY -d 240.0.0.0/4 -j RETURN</span><br><span class="line"># VPS IP</span><br><span class="line">iptables -t nat -A V2RAY -d 12.34.56.78 -j RETURN</span><br><span class="line"># Apply Forwarding Rules TCP</span><br><span class="line">iptables -t nat -A V2RAY -p tcp -j REDIRECT --to-ports 12345</span><br><span class="line">iptables -t nat -A PREROUTING -p tcp -j V2RAY</span><br><span class="line">iptables -t nat -A OUTPUT -p tcp -j V2RAY</span><br><span class="line"># Chain UDP</span><br><span class="line">iptables -t mangle -N V2RAYUDP</span><br><span class="line"># Reserved IP UDP</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 0.0.0.0/8 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 10.0.0.0/8 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 127.0.0.0/8 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 169.254.0.0/16 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 172.16.0.0/12 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 192.168.0.0/16 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 224.0.0.0/4 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 240.0.0.0/4 -j RETURN</span><br><span class="line"># NTP IP</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 133.243.238.163 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 133.243.238.243 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 133.243.238.244 -j RETURN</span><br><span class="line">iptables -t mangle -A V2RAYUDP -d 133.243.238.244 -j RETURN</span><br><span class="line"># Apply Forwarding Rules UDP</span><br><span class="line">iptables -t mangle -A V2RAYUDP -p udp -j TPROXY --on-port 12345 --tproxy-mark 0x01/0x01</span><br><span class="line">iptables -t mangle -A PREROUTING -p udp -j V2RAYUDP</span><br><span class="line">ip rule add fwmark 1 table 100</span><br><span class="line">ip route add local default dev lo table 100</span><br></pre></td></tr></table></figure>
+
+<p>然后，点击 Restart Firewall，应用设置</p>
+<p>这样便转发了 TCP、UDP 流量。</p>
+<p>由于 V2Ray 需要本地与服务器的时间误差不超过三分钟，所以必须设置 NTP 服务器直连以对时。博主使用的是日本 NICT 的 NTP 服务器。所以在 LuCI &gt; System &gt; System &gt; Time Synchronization 中勾选 Enable NTP client ，并更改 NTP 服务器为以下地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">133.243.238.163</span><br><span class="line">133.243.238.243</span><br><span class="line">133.243.238.244</span><br><span class="line">133.243.238.164</span><br></pre></td></tr></table></figure>
+
+<p>保存。</p>
+<h2 id="大功告成"><a href="#大功告成" class="headerlink" title="大功告成"></a>大功告成</h2><p>LuCI &gt; System &gt; Reboot &gt; Perform Reboot</p>
+<p>等待路由器重启之后，试试 Google 能不能使用了呢？回头看，V2Ray 透明代理的实现其实也不是想象中那么困难。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%83%85%E5%86%B5"><span class="nav-number">2.</span> <span class="nav-text">情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%9A%E5%A5%BD%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">做好准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BA%E4%BB%B6%E7%9A%84%E9%80%89%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">固件的选用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%92%8C%E8%BD%AF%E4%BB%B6%E6%BA%90"><span class="nav-number">5.</span> <span class="nav-text">软件和软件源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">6.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8%E9%A1%B9"><span class="nav-number">7.</span> <span class="nav-text">加入开机启动项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DNS-%E8%BD%AC%E5%8F%91%E8%AE%BE%E7%BD%AE"><span class="nav-number">8.</span> <span class="nav-text">DNS 转发设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#iptables-%E8%BD%AC%E5%8F%91%E8%AE%BE%E7%BD%AE"><span class="nav-number">9.</span> <span class="nav-text">iptables 转发设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%A7%E5%8A%9F%E5%91%8A%E6%88%90"><span class="nav-number">10.</span> <span class="nav-text">大功告成</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/archive/HC5962-V2Ray_20190518.html',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

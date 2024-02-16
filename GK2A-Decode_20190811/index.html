@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="一天，BH4ERB 给我发来消息他说：“你敢不敢和我接收 GK2A 气象卫星”，我豪爽的答应了：“我当然敢”，周日下午在 xx 路 xx 大厦举行，谁不来谁就是怂货。   我原本以为我恐吓了 BH4ERB，BH4ERB 应该躲在家，不敢找我，可正当这时，我听见了音乐声，原来是我手机响了，一看，竟然是 BH4ERB 发来的消息，他还真有勇气，我接通了电话，听道电话那头骂道：“小废物，你怎么还不来，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="别样的 GK2A 气象卫星接收大战">
+<meta property="og:url" content="https://ibcl.us/GK2A-Decode_20190811/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="一天，BH4ERB 给我发来消息他说：“你敢不敢和我接收 GK2A 气象卫星”，我豪爽的答应了：“我当然敢”，周日下午在 xx 路 xx 大厦举行，谁不来谁就是怂货。   我原本以为我恐吓了 BH4ERB，BH4ERB 应该躲在家，不敢找我，可正当这时，我听见了音乐声，原来是我手机响了，一看，竟然是 BH4ERB 发来的消息，他还真有勇气，我接通了电话，听道电话那头骂道：“小废物，你怎么还不来，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/GK2A-Decode_20190811/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/GK2A-Decode_20190811/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/GK2A-Decode_20190811/3.jpg">
+<meta property="og:image" content="https://c.ibcl.us/GK2A-Decode_20190811/4.jpg">
+<meta property="og:image" content="https://c.ibcl.us/GK2A-Decode_20190811/5.png">
+<meta property="og:image" content="https://c.ibcl.us/GK2A-Decode_20190811/6.gif">
+<meta property="article:published_time" content="2019-08-10T16:10:06.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="广播">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="SDR">
+<meta property="article:tag" content="瞎搞">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/GK2A-Decode_20190811/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/GK2A-Decode_20190811/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>别样的 GK2A 气象卫星接收大战 | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/GK2A-Decode_20190811/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          别样的 GK2A 气象卫星接收大战
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-11 00:10:06" itemprop="dateCreated datePublished" datetime="2019-08-11T00:10:06+08:00">2019-08-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B9%BF%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">广播</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/GK2A-Decode_20190811/" class="post-meta-item leancloud_visitors" data-flag-title="别样的 GK2A 气象卫星接收大战" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/GK2A-Decode_20190811/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/GK2A-Decode_20190811/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>一天，BH4ERB 给我发来消息他说：“你敢不敢和我接收 GK2A 气象卫星”，我豪爽的答应了：“我当然敢”，周日下午在 xx 路 xx 大厦举行，谁不来谁就是怂货。</p>
+</blockquote>
+<blockquote>
+<p>我原本以为我恐吓了 BH4ERB，BH4ERB 应该躲在家，不敢找我，可正当这时，我听见了音乐声，原来是我手机响了，一看，竟然是 BH4ERB 发来的消息，他还真有勇气，我接通了电话，听道电话那头骂道：“<del>小废物，你怎么还不来，再不来你妈的泌尿系统就被我搞坏了。</del>”我听到他对我的毒骂之后，我回骂道：“<del>我要把你挂到同性恋网站上，帮你炒作一番，你说好不好啊。</del>”</p>
+</blockquote>
+<blockquote>
+<p>他吓得没再回应我，可是到了周日，BH4ERB 竟然又给我发消息了，他还真要和我举行接收大战，于是我按照约定，到达了 xx 大厦，可他已经等我很久了。</p>
+</blockquote>
+<p>……</p>
+<p>GK2A 是韩国的气象卫星，由韩国气象厅开发，KARI 制造。于 2018 年 12 月 4 日由欧洲航天局的阿丽亚娜 5 号将其送上轨道，属于地球同步卫星。</p>
+<p>最近 HAM 大佬  BH4ERB 对这颗卫星感上了兴趣，决定尝试接收并解码 GK2A 下传的数据。</p>
+<p>接收数据需要使用到一个名为 Goestools 的工具，钦定在 Linux 下运行。由于 BH4ERB 对 Linux 并不熟悉，在多次尝试编译安装，却报错无法启动之后，找到了博主帮忙，希望跟博主一起合作填完这个巨坑。</p>
+<span id="more"></span>
+
+<h2 id="准备设备"><a href="#准备设备" class="headerlink" title="准备设备"></a>准备设备</h2><ul>
+<li>树莓派或 x86 主机（钦定 Linux 系统）</li>
+<li>RTL-SDR 或 Airspy（钦定接收设备）</li>
+<li>LNA 放大器</li>
+<li>强烈安利 2.4G 栅格天线（大锅盖+螺旋天线亦可）</li>
+</ul>
+<p>BH4ERB 选用的是一台 x86 主机，在博主的安利下装了 Debian Buster 服务器版，SDR 选用的是 Airspy R2，搭配 2.4G 栅格天线，方位角对准 160 度。</p>
+<p><img data-src="https://c.ibcl.us/GK2A-Decode_20190811/1.jpg" alt="x86 旧主机" title="x86 旧主机"></p>
+<p><img data-src="https://c.ibcl.us/GK2A-Decode_20190811/2.jpg" alt="Airspy R2 + 1.7GHz LNA" title="Airspy R2 + 1.7GHz LNA"></p>
+<p><img data-src="https://c.ibcl.us/GK2A-Decode_20190811/3.jpg" alt="2.4G 栅格天线" title="2.4G 栅格天线"></p>
+<p>值得注意的是，栅格天线前端需要反方向安装。</p>
+<p>由于篇幅所限，安装天线、Linux 系统等过程和安装完成后的更换软件源等操作不再赘述（其实是懒得写）。</p>
+<h2 id="安装软件"><a href="#安装软件" class="headerlink" title="安装软件"></a>安装软件</h2><p>首先 SSH 连上主机，更新一波软件源。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ sudo apt update</span><br></pre></td></tr></table></figure>
+
+<p>由于是采用编译安装，所以要准备编译的环境。</p>
+<p>一次性安装所有需要的包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ sudo apt install wget build-essential cmake zlib1g-dev git python3 python3-pip unzip libusb-1.0-0-dev pkg-config libairspy-dev rtl-sdr librtlsdr-dev libopencv-dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="编译安装-Goestools"><a href="#编译安装-Goestools" class="headerlink" title="编译安装 Goestools"></a>编译安装 Goestools</h3><p>此外，Goestools 还需要依赖于 Airspy、RTL-SDR 的驱动才能正常工作，所以在编译安装 Goestools 之前还需要手动编译安装 Airspy、RTL-SDR 的相关驱动及支持库。</p>
+<p>编译 Airspy 的驱动及支持库。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ git clone https://github.com/airspy/airspyone_host</span><br><span class="line">BH4ERB@pc:~$ cd airspyone_host</span><br><span class="line">BH4ERB@pc:~/airspyone_host$ mkdir build</span><br><span class="line">BH4ERB@pc:~/airspyone_host$ cd build</span><br><span class="line">BH4ERB@pc:~/airspyone_host/build$ cmake ../ -DINSTALL_UDEV_RULES=ON</span><br><span class="line">BH4ERB@pc:~/airspyone_host/build$ make</span><br><span class="line">BH4ERB@pc:~/airspyone_host/build$ sudo make install</span><br><span class="line">BH4ERB@pc:~/airspyone_host/build$ sudo ldconfig</span><br><span class="line">BH4ERB@pc:~/airspyone_host/build$ cd ../..</span><br></pre></td></tr></table></figure>
+
+<p>接着编译安装 RTL-SDR 的驱动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ git clone https://github.com/osmocom/rtl-sdr.git</span><br><span class="line">BH4ERB@pc:~$ cd rtl-sdr</span><br><span class="line">BH4ERB@pc:~/rtl-sdr$ mkdir build</span><br><span class="line">BH4ERB@pc:~/rtl-sdr$ cd build</span><br><span class="line">BH4ERB@pc:~/rtl-sdr/build$ cmake ../ -DINSTALL_UDEV_RULES=ON</span><br><span class="line">BH4ERB@pc:~/rtl-sdr/build$ make</span><br><span class="line">BH4ERB@pc:~/rtl-sdr/build$ sudo make install</span><br><span class="line">BH4ERB@pc:~/rtl-sdr/build$ sudo ldconfig</span><br><span class="line">BH4ERB@pc:~/rtl-sdr/build$ cd ../..</span><br></pre></td></tr></table></figure>
+
+<p>接下来才是编译 Goestools。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ git clone --recursive https://github.com/sam210723/goestools</span><br><span class="line">BH4ERB@pc:~$ cd goestools</span><br><span class="line">BH4ERB@pc:~/goestools$ mkdir build</span><br><span class="line">BH4ERB@pc:~/goestools$ cd build</span><br><span class="line">BH4ERB@pc:~/goestools/build$ cmake ../ -DCMAKE_INSTALL_PREFIX=/usr/local</span><br><span class="line">BH4ERB@pc:~/goestools/build$ make</span><br><span class="line">BH4ERB@pc:~/goestools/build$ sudo make install</span><br><span class="line">BH4ERB@pc:~/goestools/build$ cd ../..</span><br></pre></td></tr></table></figure>
+
+<p><em>由于 BH4ERB 没有意识到需要先安装驱动和支持库的这个问题，于是毫不犹豫地跳进了这个坑…（反面教材</em></p>
+<p><em>所以在启动 Goestools 时，他得到了类似于这样的报错。</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">terminate called after throwing an instance of &#x27;std::runtime_error&#x27;</span><br><span class="line">  what():  You configured goesrecv to use the &quot;airspy&quot; source, but goesrecv was not compiled with Airspy support. Make sure to install the Airspy library before compiling goestools, and look for a message saying &#x27;Found libairspy&#x27; when running cmake.</span><br><span class="line">Aborted</span><br></pre></td></tr></table></figure>
+
+<p><em>要解决这个问题，只有安装了 Airspy 和 RTL-SDR 的驱动和支持库后，重新编译一次 Goestools。</em></p>
+<p>Goestools 的配置文件位于 <code>~/goestools/etc/</code> 目录下，如果使用 RTL-SDR，需要对 <code>goesrecv.conf</code> 做一番修改，将第六行的 <code>source = &quot;airspy&quot;</code> 改为 <code>source = &quot;rtlsdr&quot;</code>，并注释掉 16～27 行的内容，在 29～34 行做相应调整，此外，配置文件中接收的频率保持默认就好。</p>
+<h3 id="编译安装-xrit-rx"><a href="#编译安装-xrit-rx" class="headerlink" title="编译安装 xrit-rx"></a>编译安装 xrit-rx</h3><h4 id="什么鬼"><a href="#什么鬼" class="headerlink" title="什么鬼"></a>什么鬼</h4><p>这是专门用于接收 · 解码 GK2A 下行数据的一个工具，解码的数据以 <code>.lrit</code> 或是 <code>.jpg</code>、<code>.png</code>、<code>.gif</code> 的形式输出。xrit-rx 需要搭配 Goestools 食用。</p>
+<h4 id="编译安装-踩坑"><a href="#编译安装-踩坑" class="headerlink" title="编译安装 + 踩坑"></a>编译安装 + 踩坑</h4><p>xrit-rx 用 Python 3 编写，开箱即用，<del>灰常方便</del>。</p>
+<p>博主先把仓库 Clone 到了本地，启动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ git clone https://github.com/sam210723/xrit-rx</span><br><span class="line">BH4ERB@pc:~$ cd xrit-rx/src</span><br><span class="line">BH4ERB@pc:~/xrit-rx/src$ chmod +x xrit-rx.py</span><br><span class="line">BH4ERB@pc:~/xrit-rx/src$ python3 xrit-rx.py</span><br></pre></td></tr></table></figure>
+
+<p>然后… 报错了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File &quot;xrit-rx.py&quot;, line 10, in &lt;module&gt;</span><br><span class="line">    from demuxer import Demuxer</span><br><span class="line">  File &quot;/home/xrit-rx/src/demuxer.py&quot;, line 6, in &lt;module&gt;</span><br><span class="line">    import ccsds as CCSDS</span><br><span class="line">  File &quot;/home/xrit-rx/src/ccsds.py&quot;, line 8, in &lt;module&gt;</span><br><span class="line">    from Crypto.Cipher import DES</span><br><span class="line">ImportError: No module named &#x27;Crypto&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>原来是缺失模块，安装就好了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~/xrit-rx/src$ pip3 install -r ~/xrit-rx/requirements.txt </span><br></pre></td></tr></table></figure>
+
+<p>安装好缺失模块后再试一次… 成功了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~/xrit-rx/src$ python3 xrit-rx.py</span><br><span class="line">┌──────────────────────────────────────────────┐</span><br><span class="line">│    xrit-rx - LRIT/HRIT Downlink Processor    │</span><br><span class="line">│         github.com/sam210723/xrit-rx         │</span><br><span class="line">└──────────────────────────────────────────────┘</span><br><span class="line"></span><br><span class="line">SPACECRAFT:       GK-2A</span><br><span class="line">DOWNLINK:         LRIT (64 kbps)</span><br><span class="line">INPUT SOURCE:     goesrecv (github.com/sam210723/goestools)</span><br><span class="line">OUTPUT PATH:      /root/xrit-rx/received</span><br><span class="line">KEY FILE:         EncryptionKeyMessage.bin.dec</span><br><span class="line">VERSION:          1.0.2</span><br><span class="line"></span><br><span class="line">Connecting to goesrecv (127.0.0.1)...[Errno 111] Connection refused</span><br><span class="line"></span><br><span class="line">Exiting...</span><br></pre></td></tr></table></figure>
+
+<h4 id="导入密钥"><a href="#导入密钥" class="headerlink" title="导入密钥"></a>导入密钥</h4><p>解码 GK2A 的数据需要用到一个密钥，直至目前，该密钥适用于 GK2A 卫星所有的下传数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~/xrit-rx/src$ wget --no-check-certificate https://c.ibcl.us/GK2A-Decode_20190811/EncryptionKeyMessage_001F2904C905.bin</span><br></pre></td></tr></table></figure>
+
+<p>然而这个密钥本身也是加密的，所以在食用前，还需要对密钥解密一次。</p>
+<p>好在 xrit-rx 已经预置了解密的工具。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~/xrit-rx/src$ python3 tools/keymsg-decrypt.py EncryptionKeyMessage_001F2904C905.bin 001F2904C905</span><br></pre></td></tr></table></figure>
+
+<p>解密后生成的密钥名为 <code>EncryptionKeyMessage.bin.dec</code>，位于 xrit-rx 的 src 目录下。</p>
+<h2 id="万事俱备"><a href="#万事俱备" class="headerlink" title="万事俱备"></a>万事俱备</h2><h3 id="运行软件"><a href="#运行软件" class="headerlink" title="运行软件"></a>运行软件</h3><p>已经安装好了解码必须的软件，只需要运行对应的软件就可以了。</p>
+<p>打开一个终端，先运行 Goesrecv，正常的话应该得到类似下面的回显。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ goesrecv -i 1 -c ~/goestools/etc/goesrecv.conf</span><br><span class="line">2019-08-10T13:12:29Z [monitor] gain: 15.41, freq:    -8.7, omega: 19.531, vit(avg): 1983, rs(sum):    0, packets:  0, drops:  5</span><br><span class="line">2019-08-10T13:12:30Z [monitor] gain: 40.18, freq:  -101.0, omega: 19.531, vit(avg): 1684, rs(sum):    0, packets:  0, drops:  5</span><br><span class="line">2019-08-10T13:12:31Z [monitor] gain: 60.61, freq: -1051.0, omega: 19.531, vit(avg): 1425, rs(sum):    0, packets:  0, drops:  8</span><br><span class="line">2019-08-10T13:12:32Z [monitor] gain: 77.26, freq: -3263.5, omega: 19.531, vit(avg):  736, rs(sum):    0, packets:  2, drops:  4</span><br><span class="line">2019-08-10T13:12:33Z [monitor] gain: 90.99, freq: -4634.3, omega: 19.531, vit(avg):   43, rs(sum):    0, packets:  8, drops:  0</span><br><span class="line">2019-08-10T13:12:34Z [monitor] gain: 102.21, freq: -4609.4, omega: 19.531, vit(avg):   41, rs(sum):    0, packets:  8, drops:  0</span><br><span class="line">2019-08-10T13:12:35Z [monitor] gain: 111.27, freq: -4615.9, omega: 19.531, vit(avg):   38, rs(sum):    0, packets:  8, drops:  0</span><br><span class="line">2019-08-10T13:12:36Z [monitor] gain: 118.72, freq: -4596.9, omega: 19.531, vit(avg):   43, rs(sum):    0, packets:  8, drops:  0</span><br><span class="line">2019-08-10T13:12:37Z [monitor] gain: 124.84, freq: -4568.5, omega: 19.531, vit(avg):   37, rs(sum):    0, packets:  7, drops:  0</span><br><span class="line">2019-08-10T13:12:38Z [monitor] gain: 129.86, freq: -4592.8, omega: 19.531, vit(avg):   44, rs(sum):    0, packets:  8, drops:  0</span><br><span class="line">2019-08-10T13:12:39Z [monitor] gain: 134.01, freq: -4578.2, omega: 19.531, vit(avg):   43, rs(sum):    0, packets:  8, drops:  0</span><br><span class="line">2019-08-10T13:12:40Z [monitor] gain: 137.48, freq: -4583.3, omega: 19.531, vit(avg):   39, rs(sum):    0, packets:  8, drops:  0</span><br></pre></td></tr></table></figure>
+
+<p>然后另开一个终端，运行 xrit-rx，xrit-rx 随即会与 Goesrecv 模块建立连接，这时便开始解码了。</p>
+<p>如果一切顺利，回显应该像下面这样。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ cd xrit-rx/src</span><br><span class="line">BH4ERB@pc:~/xrit-rx/src$ python3 xrit-rx.py</span><br><span class="line">┌──────────────────────────────────────────────┐</span><br><span class="line">│    xrit-rx - LRIT/HRIT Downlink Processor    │</span><br><span class="line">│         github.com/sam210723/xrit-rx         │</span><br><span class="line">└──────────────────────────────────────────────┘</span><br><span class="line"></span><br><span class="line">SPACECRAFT:       GK-2A</span><br><span class="line">DOWNLINK:         LRIT (64 kbps)</span><br><span class="line">INPUT SOURCE:     goesrecv (github.com/sam210723/goestools)</span><br><span class="line">OUTPUT PATH:      /home/BH4ERB/xrit-rx/src/received</span><br><span class="line">KEY FILE:         EncryptionKeyMessage.bin.dec</span><br><span class="line">VERSION:          1.0.2</span><br><span class="line"></span><br><span class="line">Connecting to goesrecv (127.0.0.1)...CONNECTED</span><br><span class="line">Decryption keys loaded</span><br><span class="line">──────────────────────────────────────────────────────────────────────────────────                                                                           </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[VCID 0] GK-2A: FULL DISK</span><br></pre></td></tr></table></figure>
+
+<h3 id="得到图像"><a href="#得到图像" class="headerlink" title="得到图像"></a>得到图像</h3><p>一段时间后，xrit-rx 会自动将接收到的图片存为 .jpg 和 .gif 图像，生成的图像位于 /home/BH4ERB/xrit-rx/src/received，接收到的图片会自动根据时间来排序。</p>
+<h2 id="Docker-大法"><a href="#Docker-大法" class="headerlink" title="Docker 大法"></a>Docker 大法</h2><p>为（作）了（为）方（Docker）便（的）起（信）见（徒），博主特地制作了一个用接收 GK2A 卫星的 Docker 镜像，以简化部署过程。</p>
+<p>Dockerfile 位于 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvR0syQS1Eb2NrZXI=">bclswl0827/GK2A-Docker<i class="fa fa-external-link-alt"></i></span>，总的来说，部署只需要三步。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">BH4ERB@pc:~$ docker volume create xrit-rx</span><br><span class="line">BH4ERB@pc:~$ sudo chmod -R 777 /var/lib/docker/volumes/xrit-rx</span><br><span class="line">BH4ERB@pc:~$ docker run -d -i -t \</span><br><span class="line">	--restart always \</span><br><span class="line">	--name=GK2A \</span><br><span class="line">	--device /dev/bus/usb \</span><br><span class="line">	-e DEVICE=airspy \</span><br><span class="line">	-e GAIN=50 \</span><br><span class="line">	-p 0.0.0.0:5001:5001 \</span><br><span class="line">	-p 0.0.0.0:5002:5002 \</span><br><span class="line">	-p 0.0.0.0:5004:5004 \</span><br><span class="line">	-p 0.0.0.0:6001:6001 \</span><br><span class="line">	-p 0.0.0.0:6002:6002 \</span><br><span class="line">	-v xrit-rx:/xrit-rx \</span><br><span class="line">	bclswl0827/gk2a-docker:latest</span><br></pre></td></tr></table></figure>
+
+<p>需要注意的是，如果使用的是 RTL-SDR，则需要将部署命令中 <code>airspy</code> 字段替换为 <code>rtlsdr</code>。</p>
+<p>此后，得到的图片便可在 Docker 持久卷路径 <code>/var/lib/docker/volumes/xrit-rx/_data/src/received</code> 下找到。</p>
+<p>附上 BH4ERB 使用体验：</p>
+<blockquote>
+<p>香疯了！！！</p>
+</blockquote>
+<h2 id="成果展示"><a href="#成果展示" class="headerlink" title="成果展示"></a>成果展示</h2><p><img data-src="https://c.ibcl.us/GK2A-Decode_20190811/4.jpg" alt="FD" title="FD"></p>
+<p><img data-src="https://c.ibcl.us/GK2A-Decode_20190811/5.png" alt="TYIA" title="TYIA"></p>
+<p><img data-src="https://c.ibcl.us/GK2A-Decode_20190811/6.gif" alt="UP50A" title="UP50A"></p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><h3 id="续写接收大战"><a href="#续写接收大战" class="headerlink" title="续写接收大战"></a>续写接收大战</h3><blockquote>
+<p>第一回合，我占上风，他比不过我，到了第六回合，他就主动认输了。<br>　　<br>第二局，他开始占上风，我也不甘势弱，我们僵持了一百多个回合，我因为轻敌，被他击败了。<br>　　<br>从那时开始，我就不轻敌了，我认真研究他的套路，于是我总结出了一种方案。<br>　　<br>第二天，我们举行第三局，他使用祖传方案，对我发动猛烈的攻击，我们势均力敌，平分秋色，我们比了 3 个多小时，也没分出胜负。<br>　　<br>后来，他不知不觉的睡着了，我趁着这个好机会，一记 <code>rm -rf /*</code>，打的他不敢还手，对他的打击比砸了他的天线和 SDR 还大。</p>
+</blockquote>
+<p><em>改编自 <span class="exturl" data-url="aHR0cHM6Ly9lc3Uud2lraS8lRTMlODAlOEElRTUlODglQUIlRTYlQTAlQjclRTclOUElODQlRTclQTIlQjAlRTclQTIlQjAlRTglQkQlQTYlRTUlQTQlQTclRTYlODglOTglRTMlODAlOEI=">《别样的碰碰车大战》<i class="fa fa-external-link-alt"></i></span>。《别样的碰碰车大战》是我国作家张祥如创作的短篇小说，也是其代表作。作品讲述主人公凭着聪明才智，在强大敌人仵沉蛋的挑衅下，不畏强暴，敢于反抗，最后在碰碰车大战中取得胜利的故事。小说发表后，当时的社会流传“不读《碰碰车》，就无法在文坛混”的谚语。《别样的碰碰车大战》在叙事深度的挖掘上远远超出了同时代作家所能及的层次。它开创了后世“意识流小说”、“叙事小说”的先河。《别样的碰碰车大战》发表以来，被译成多种文字广为流传，<span class="exturl" data-url="aHR0cHM6Ly9lc3Uud2lraS8=">Esu.wiki<i class="fa fa-external-link-alt"></i></span> 收录了其原版作品。</em></p>
+<h3 id="关于-BH4ERB-大佬"><a href="#关于-BH4ERB-大佬" class="headerlink" title="关于 BH4ERB 大佬"></a>关于 BH4ERB 大佬</h3><p>希望大佬别找我麻烦…</p>
+<p>BH4ERB 大佬现居上海，折腾 GK2A 卫星时正值台风利奇马过境。</p>
+<p>是大佬果然不一样，说出来的话都辣么有气势…</p>
+<blockquote>
+<p>我要看着台风从我头顶上过去。</p>
+</blockquote>
+<p>博主还能说什么呢，希望天线不要被吹倒吧…</p>
+<p>溜了溜了～～</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B9%BF%E6%92%AD/" rel="tag"># 广播</a>
+              <a href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag"># 原创</a>
+              <a href="/tags/SDR/" rel="tag"># SDR</a>
+              <a href="/tags/%E7%9E%8E%E6%90%9E/" rel="tag"># 瞎搞</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/rtltcp-BranchIQ_20190611/" rel="prev" title="修改 RTL-SDR 驱动使 rtl_tcp 支持从 I/Q 通道直采信号">
+      <i class="fa fa-chevron-left"></i> 修改 RTL-SDR 驱动使 rtl_tcp 支持从 I/Q 通道直采信号
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/PhicommT1-Armbian_20190825/" rel="next" title="某科学的 T1 盒子刷 Armbian 调教笔记">
+      某科学的 T1 盒子刷 Armbian 调教笔记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E8%AE%BE%E5%A4%87"><span class="nav-number">1.</span> <span class="nav-text">准备设备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">安装软件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85-Goestools"><span class="nav-number">2.1.</span> <span class="nav-text">编译安装 Goestools</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85-xrit-rx"><span class="nav-number">2.2.</span> <span class="nav-text">编译安装 xrit-rx</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E9%AC%BC"><span class="nav-number">2.2.1.</span> <span class="nav-text">什么鬼</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85-%E8%B8%A9%E5%9D%91"><span class="nav-number">2.2.2.</span> <span class="nav-text">编译安装 + 踩坑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%BC%E5%85%A5%E5%AF%86%E9%92%A5"><span class="nav-number">2.2.3.</span> <span class="nav-text">导入密钥</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%87%E4%BA%8B%E4%BF%B1%E5%A4%87"><span class="nav-number">3.</span> <span class="nav-text">万事俱备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E8%BD%AF%E4%BB%B6"><span class="nav-number">3.1.</span> <span class="nav-text">运行软件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%97%E5%88%B0%E5%9B%BE%E5%83%8F"><span class="nav-number">3.2.</span> <span class="nav-text">得到图像</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker-%E5%A4%A7%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">Docker 大法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">5.</span> <span class="nav-text">成果展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="nav-number">6.</span> <span class="nav-text">写在最后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%AD%E5%86%99%E6%8E%A5%E6%94%B6%E5%A4%A7%E6%88%98"><span class="nav-number">6.1.</span> <span class="nav-text">续写接收大战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E-BH4ERB-%E5%A4%A7%E4%BD%AC"><span class="nav-number">6.2.</span> <span class="nav-text">关于 BH4ERB 大佬</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/GK2A-Decode_20190811/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="在剁手斐讯 N1 刷入 Armbian 作为本站的 SDR 服务器之后，博主已经对这个“穷人的树莓派”佩服得五体投地了。 然而人的欲望总是无止境的，所以过了几天，博主又在并夕夕上剁手了斐讯 T1 盒子，也打算刷入 Armbian，作为日常实（瞎）验（搞）之用。 可网上一大堆教程都是在调教 N1，有关 T1 刷机的文章少之又少，一切只能自己摸索。 在害怕踩坑并搞烂 T1，导致自己省下的一百五十来块打">
+<meta property="og:type" content="article">
+<meta property="og:title" content="某科学的 T1 盒子刷 Armbian 调教笔记">
+<meta property="og:url" content="https://ibcl.us/PhicommT1-Armbian_20190825/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="在剁手斐讯 N1 刷入 Armbian 作为本站的 SDR 服务器之后，博主已经对这个“穷人的树莓派”佩服得五体投地了。 然而人的欲望总是无止境的，所以过了几天，博主又在并夕夕上剁手了斐讯 T1 盒子，也打算刷入 Armbian，作为日常实（瞎）验（搞）之用。 可网上一大堆教程都是在调教 N1，有关 T1 刷机的文章少之又少，一切只能自己摸索。 在害怕踩坑并搞烂 T1，导致自己省下的一百五十来块打">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/PhicommT1-Armbian_20190825/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/PhicommT1-Armbian_20190825/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/PhicommT1-Armbian_20190825/3.png">
+<meta property="og:image" content="https://c.ibcl.us/PhicommT1-Armbian_20190825/4.png">
+<meta property="og:image" content="https://c.ibcl.us/PhicommT1-Armbian_20190825/5.png">
+<meta property="og:image" content="https://c.ibcl.us/PhicommT1-Armbian_20190825/6.png">
+<meta property="og:image" content="https://c.ibcl.us/PhicommT1-Armbian_20190825/7.png">
+<meta property="article:published_time" content="2019-08-25T08:22:00.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="瞎搞">
+<meta property="article:tag" content="杂谈">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/PhicommT1-Armbian_20190825/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/PhicommT1-Armbian_20190825/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>某科学的 T1 盒子刷 Armbian 调教笔记 | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/PhicommT1-Armbian_20190825/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          某科学的 T1 盒子刷 Armbian 调教笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-08-25 16:22:00" itemprop="dateCreated datePublished" datetime="2019-08-25T16:22:00+08:00">2019-08-25</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/PhicommT1-Armbian_20190825/" class="post-meta-item leancloud_visitors" data-flag-title="某科学的 T1 盒子刷 Armbian 调教笔记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/PhicommT1-Armbian_20190825/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/PhicommT1-Armbian_20190825/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在剁手斐讯 N1 刷入 Armbian 作为<span class="exturl" data-url="aHR0cHM6Ly9zLmliY2wudXMv">本站的 SDR 服务器<i class="fa fa-external-link-alt"></i></span>之后，博主已经对这个“穷人的树莓派”佩服得五体投地了。</p>
+<p>然而人的欲望总是无止境的，所以过了几天，博主又在并夕夕上剁手了斐讯 T1 盒子，也打算刷入 Armbian，作为日常实（瞎）验（搞）之用。</p>
+<p>可网上一大堆教程都是在调教 N1，有关 T1 刷机的文章少之又少，一切只能自己摸索。</p>
+<p>在害怕踩坑并搞烂 T1，导致自己省下的一百五十来块打水漂的情况下，于是博主带着 T1 去附近的庙里烧了香拜了佛……</p>
+<p>听上去有些扯，但是博主最后顺利地让 T1 运行了 Armbian，并烧写镜像到了自带的 emmc 中。</p>
+<p>这篇文章，便是调教 T1 盒子的笔记。</p>
+<p><img data-src="https://c.ibcl.us/PhicommT1-Armbian_20190825/1.jpg" alt="T1 盒子" title="T1 盒子"></p>
+<span id="more"></span>
+<h2 id="开箱上电"><a href="#开箱上电" class="headerlink" title="开箱上电"></a>开箱上电</h2><p>拿到盒子接上电源，迎面而来便是斐讯俗里俗气的开机画面。启动完成后，是第一次使用前的配置向导，接上鼠标，资料一阵乱填，然后… 来到了手机绑定界面…</p>
+<p><img data-src="https://c.ibcl.us/PhicommT1-Armbian_20190825/2.jpg" alt="绑定手机" title="绑定手机"></p>
+<p>居然还要绑定手机，博主肯定不会用自己号码绑定的，然而又不能填 Google Voice 的号码，于是，博主填了同桌的电话号码…</p>
+<p>按下获取验证码的按钮，博主马上给同桌打了电话。</p>
+<blockquote>
+<p><strong>窝：</strong>刚才有个验证码，你收到没得？<br><strong>同桌：</strong>啥子验证码？我啷个没收到诶？<br><strong>窝：</strong>就是那个… 斐讯的验证码耶，没收到啊，你等一哈…</p>
+</blockquote>
+<p>于是博主按下了重新发送验证码。</p>
+<blockquote>
+<p><strong>窝：</strong>现在收到了嘛？<br><strong>同桌：</strong>还是没有，恁么晚给窝打电话你是不是有病？</p>
+</blockquote>
+<p>挂断了电话，这时博主意识到斐讯可能已经关闭了注册通道…</p>
+<p>难道 T1 就只能吃灰了？</p>
+<p>查阅某屎黄色论坛里各位大佬们的发帖，发现原来可以用手机遥控可以跳过注册直接到设置，并打开 ADB。</p>
+<p>配套的手机遥控器 APP 在盒子底部便可找到下载二维码。借着这种骚操作，跳过注册步骤直接进入设置，博主顺利地打开了 ADB 功能。</p>
+<p><img data-src="https://c.ibcl.us/PhicommT1-Armbian_20190825/3.png" alt="开启 ADB" title="开启 ADB"></p>
+<h2 id="系统降级"><a href="#系统降级" class="headerlink" title="系统降级"></a>系统降级</h2><p>接下来就是正式的调教了。</p>
+<p>实际操作时，博主使用的是 Fedora Linux 系统，至于 Windows 下是否能成功对接 ADB 并进入 Fastboot 模式写入相关降级固件，博主并不清楚（逃。</p>
+<p>事先安装了 <code>android-tools</code>，找到 T1 的 IP 地址，用 <code>adb connect</code> 命令建立连接。此处，博主 T1 分配到的 IP 地址是 <code>10.10.10.214</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ adb connect 10.10.10.214:5555</span><br></pre></td></tr></table></figure>
+
+<p>返回了 Connected to 10.10.10.214:5555 这样的提示，表示连接成功，其他一大堆废话回显就不去管了。</p>
+<p>接着，命令 T1 进入 Fastboot 模式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ adb shell reboot fastboot</span><br></pre></td></tr></table></figure>
+
+<p>这时，就该供出双公头 USB 数据线了，将数据线的一端<del>轻轻地插入 T1 的 USB 小穴中</del>，另一端接到电脑的 USB 接口上。</p>
+<p>检查 T1 是否已被识别。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ fastboot devices</span><br><span class="line">CASDB1154K01740 fastboot # 是设备的序列号</span><br></pre></td></tr></table></figure>
+
+<p><span class="exturl" data-url="aHR0cHM6Ly9mLmliY2wudXMvJUU2JTk2JTkwJUU4JUFFJUFGJUU3JTlCJTkyJUU1JUFEJTkwJUU5JTk5JThEJUU3JUJBJUE3JUU1JTlCJUJBJUU0JUJCJUI2JUU1JTkyJThDJTIwZHRiJTIwJUU3JUFEJTg5L3QxLw==">位于本站的文件库，博主已将相关固件上传至此<i class="fa fa-external-link-alt"></i></span>。下载 <code>boot.img</code>、<code>bootloader.img</code>、<code>recovery.img</code> 降级固件到本地终端所在目录，然后将他们写入 T1。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ fastboot flash boot boot.img</span><br><span class="line">yuki@meow:~$ fastboot flash bootloader bootloader.img</span><br><span class="line">yuki@meow:~$ fastboot flash recovery recovery.img</span><br></pre></td></tr></table></figure>
+
+<p>没有报错就说明降级成功了，重启 T1，赋予她新生罢！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ fastboot reboot</span><br></pre></td></tr></table></figure>
+
+<p>但是重启之后，却发现什么变化都没有。是的，肉体还在，只是灵魂变了。</p>
+<h2 id="刷入-Armbian"><a href="#刷入-Armbian" class="headerlink" title="刷入 Armbian"></a>刷入 Armbian</h2><p>博主从 Armbian 的源码编译了最新的可用于 T1 的 Armbian Buster 镜像，同样的，也于本站的文件库中。</p>
+<p>下载镜像并解压得到 .img 文件过后，用 balenaEtcher 将镜像写入 U 盘，写入完成后重新插拔 U 盘，然后可以看到多出了个卷标名为 Boot 的磁盘。</p>
+<p>编辑 Boot 卷根目录下的 uEnv.txt，修改 dtb 文件名为 <code>meson-gxm-q201.dtb</code>，然后保存。</p>
+<p>不过不要先急着插 U 盘到 T1 上面，因为现在需要电脑上执行命令，让 T1 知道下次应该从 U 盘启动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ adb connect 10.10.10.214:5555</span><br><span class="line">yuki@meow:~$ adb shell reboot update</span><br></pre></td></tr></table></figure>
+
+<p>考验手速的时候到了，在 T1 原系统画面黑下去的一瞬间，插入 U 盘。</p>
+<p>重启了。博主看到了熟悉的 Linux 小企鹅…</p>
+<p>Armbian 的默认 root 密码是 1234，系统会要求更改默认密码。</p>
+<p>密码更新后，会提示创建一个新的子帐户，先按 Ctrl+C 跳过，稍后创建。</p>
+<p>执行 <code>fdisk -l</code> 命令，可以看到 emmc 分区。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Device         Boot   Start      End  Sectors  Size Id Type</span><br><span class="line">/dev/mmcblk1p1      1368064  1617919   249856  122M  c W95 FAT32 (LBA)</span><br><span class="line">/dev/mmcblk1p2      1619968 30535679 28915712 13.8G 83 Linux</span><br></pre></td></tr></table></figure>
+
+<p>现在，可以将系统安装到 emmc 里面了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@aml:~# ./install-aml.sh</span><br></pre></td></tr></table></figure>
+
+<p>写入完成后，用 <code>poweroff</code> 命令关机，取下 U 盘，重新上电开机，此时启动的便会是 Debian 了。</p>
+<h2 id="更换软件源"><a href="#更换软件源" class="headerlink" title="更换软件源"></a>更换软件源</h2><p>除了 Debian 的软件源之外，还有 Armbian 自己的软件源，位于 <code>/etc/sources/sources.list.d/armbian.list</code>。</p>
+<p>由于你国网络具有神奇的特性，上述的两个软件源在使用的时候速度一般不会超过 40 KB/s，如果是第一次更新软件源的话，照这个速度怕是要等上一天。</p>
+<p>国内有大学提供了 Debian 和 Armbian 的镜像源，为了节约时间，一定要换源。</p>
+<p>方便起见，这里提供已经改好的软件源配置文件，可以用 curl 命令写入 <code>/etc/apt/sources.list</code> 和 <code>/etc/sources/sources.list.d/armbian.list</code>（需要联网）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@aml:~# cp /etc/apt/sources.list /etc/apt/sources.list.bak</span><br><span class="line">root@aml:~# cp /etc/apt/sources.list.d/armbian.list /etc/apt/sources.list.d/armbian.list.bak</span><br><span class="line">root@aml:~# curl https://c.ibcl.us/PhicommT1-Armbian_20190825/sources.list &gt; /etc/apt/sources.list</span><br><span class="line">root@aml:~# curl https://c.ibcl.us/PhicommT1-Armbian_20190825/armbian.list &gt; /etc/apt/sources.list.d/armbian.list</span><br></pre></td></tr></table></figure>
+
+<p>然后，更新软件源并升级软件源到最新。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@aml:~# apt update &amp;&amp; apt upgrade</span><br></pre></td></tr></table></figure>
+
+<p><em>而在实际操作，执行到 apt upgrade 时，博主却遇到了 Read only filesystem 的报错，最后通过 U 盘引导，在 U 盘下面的 Armbian 系统下执行 <code>e2fsck /dev/mmcblk1p2</code> 才得以解决。</em></p>
+<h2 id="安装桌面"><a href="#安装桌面" class="headerlink" title="安装桌面"></a>安装桌面</h2><p>完成后，使用 <code>armbian-config</code> 命令配置系统，安装桌面。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@aml:~# armbian-config</span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://c.ibcl.us/PhicommT1-Armbian_20190825/4.png" alt="armbian-config" title="armbian-config"></p>
+<p>进入 System 项，然后选择 Default，系统先会引导创建一个子用户，然后下载相关文件并安装完整桌面。</p>
+<p>大概 20 分钟之后，桌面就安装好了，这时重启一下系统。</p>
+<p>由于 T1 只有一个 USB 口，所以还要接一个 USB Hub，才能容纳键盘和鼠标。推荐使用外部供电的 USB Hub，避免因 T1 电流不够而造成各种各样奇怪的问题。</p>
+<p>此外，Armbian 自带浏览器 Chromium，可是总觉得有些不对劲…</p>
+<p><img data-src="https://c.ibcl.us/PhicommT1-Armbian_20190825/5.png" alt="硬件加速开启时" title="硬件加速开启时"></p>
+<p>经检查，这是开启了硬件加速才导致的。</p>
+<p><img data-src="https://c.ibcl.us/PhicommT1-Armbian_20190825/6.png" alt="硬件加速关闭时" title="硬件加速关闭时"></p>
+<p>前往 <span class="exturl" data-url="Y2hyb21lOi8vc2V0dGluZ3M=">chrome://settings<i class="fa fa-external-link-alt"></i></span>，翻到页面最底部，将 Use hardware acceleration when available 取消勾选，重启 Chromium 后即可正常显示。</p>
+<h2 id="加-Swap"><a href="#加-Swap" class="headerlink" title="加 Swap"></a>加 Swap</h2><p>虽说 T1 有八核，但运行内存只有 2GB，看点视频简直卡成 PPT… 忍无可忍，最后又加了 2GB 的 Swap… 由于 Armbian 是采用的 ZRam 作为 Swap 方案，所以增加 Swap 的方式与一般的 Linux 也有所不同。</p>
+<p>桌面单击右键，选中 Open Terminal Here，修改 ZRam 的配置文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yukiho@aml:~/Desktop$ sudo nano /etc/default/armbian-zram-config</span><br></pre></td></tr></table></figure>
+
+<p>取消掉 <code>ZRAM_PERCENTAGE=50</code> 一行的注释，然后将 <code>50</code> 改至 <code>100</code>，意为定义 ZRam 大小为物理内存的 100%，保存退出后重启 T1。</p>
+<p>在重启过后，执行 free -m，看到 Swap 已经被应用。</p>
+<p>开个视频试试看，Swap 用了不少，不过好在终于不卡顿了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yukiho@aml:~/Desktop$ free -m</span><br><span class="line">              total        used        free      shared  buff/cache   available</span><br><span class="line">Mem:           1845         801         725         117         318         798</span><br><span class="line">Swap:          2047         581        1466</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装中文输入法"><a href="#安装中文输入法" class="headerlink" title="安装中文输入法"></a>安装中文输入法</h2><p>操作系统是英文不算是什么大问题，毕竟自己英语学得有那么好（捂脸</p>
+<p>可是折腾的时候要打中文啊，所以这时中文输入法成了必不可少的组件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yukiho@aml:~/Desktop$ sudo apt install fcitx fcitx-config-gtk im-config fcitx-data fcitx-pinyin fcitx-ui-light fcitx-ui-classic fcitx-frontend-all fcitx-frontend-gtk2 fcitx-frontend-gtk3 fcitx-frontend-qt4 fcitx-frontend-qt5 fcitx-libs fcitx-module-dbus fcitx-module-x11 fcitx-modules fcitx-pinyin</span><br><span class="line">yukiho@aml:~/Desktop$ im-config -s fcitx -z default</span><br><span class="line">yukiho@aml:~/Desktop$ fcitx</span><br></pre></td></tr></table></figure>
+
+<p>然后按下 Ctrl+C，接下来加入 Fcitx 到系统的输入法选项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yukiho@aml:~/Desktop$ fcitx-config-gtk3</span><br></pre></td></tr></table></figure>
+
+<p>在弹出的图形页面左下角按下 + 号，并在对话框中取消 Only Show Current Language 复选框，选中 Pinyin 后保存配置并退出。</p>
+<p>接着重启，不出意外，状态栏已经出现了一个键盘的标志。恭喜，输入法安装成功了！</p>
+<p>使用 Ctrl+Space 切换输入法，然后就可以输入中文了。</p>
+<p><img data-src="https://c.ibcl.us/PhicommT1-Armbian_20190825/7.png" alt="斐讯牛逼惨了" title="斐讯牛逼惨了"></p>
+<p>享受输入的乐趣罢！</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>折腾到这里，文章也接进尾声了，总的来说，T1 与 N1 的操作大同小异，只是由于后续的 Armbian 镜像无法识别 emmc 和 Wifi 模块，而较早的镜像又被原作者删除，只能自己编译镜像…</p>
+<p>另外， 由于 T1 的体积比 N1 小了不少，也导致了 T1 的发热量很高，对于重庆这种夏天动辄 40 摄氏度的地区还是不太友好…</p>
+<p>等到冬天再用罢！</p>
+<p>最后，想说的是…</p>
+<blockquote>
+<p>我买了台斐讯 T1，我发现这破玩意…</p>
+</blockquote>
+<blockquote>
+<p><strong>牛逼惨了。</strong></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%9E%8E%E6%90%9E/" rel="tag"># 瞎搞</a>
+              <a href="/tags/%E6%9D%82%E8%B0%88/" rel="tag"># 杂谈</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/GK2A-Decode_20190811/" rel="prev" title="别样的 GK2A 气象卫星接收大战">
+      <i class="fa fa-chevron-left"></i> 别样的 GK2A 气象卫星接收大战
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/ADSB_Decode_20200118/" rel="next" title="ADS-B：从入门到入狱">
+      ADS-B：从入门到入狱 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E7%AE%B1%E4%B8%8A%E7%94%B5"><span class="nav-number">1.</span> <span class="nav-text">开箱上电</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E9%99%8D%E7%BA%A7"><span class="nav-number">2.</span> <span class="nav-text">系统降级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%B7%E5%85%A5-Armbian"><span class="nav-number">3.</span> <span class="nav-text">刷入 Armbian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%8D%A2%E8%BD%AF%E4%BB%B6%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">更换软件源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2"><span class="nav-number">5.</span> <span class="nav-text">安装桌面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0-Swap"><span class="nav-number">6.</span> <span class="nav-text">加 Swap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%B8%AD%E6%96%87%E8%BE%93%E5%85%A5%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">安装中文输入法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/PhicommT1-Armbian_20190825/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

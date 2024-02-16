@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="博主一年前在网上花了 50 来块，买了 4 台华为 HG255d 路由器，最初只是想在上面运行 Shadowsocks-libev 做透明代理，但是后来由于 SS 开始出现断流现象，保险起见，于是将 SS 换成了 V2Ray，此后 HG255d 再也没开过机… 学校连续补了十二天课之后，终于大发慈悲，决定放一天假。趁着这一天假，博主赶紧打开积了一层灰的 HG255d，看看能折腾些什么。 偶然看到随">
+<meta property="og:type" content="website">
+<meta property="og:title" content="HG255d + RTL-SDR &#x3D; ？">
+<meta property="og:url" content="https://ibcl.us/archive/HG255d-RTLSDR_20190720.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="博主一年前在网上花了 50 来块，买了 4 台华为 HG255d 路由器，最初只是想在上面运行 Shadowsocks-libev 做透明代理，但是后来由于 SS 开始出现断流现象，保险起见，于是将 SS 换成了 V2Ray，此后 HG255d 再也没开过机… 学校连续补了十二天课之后，终于大发慈悲，决定放一天假。趁着这一天假，博主赶紧打开积了一层灰的 HG255d，看看能折腾些什么。 偶然看到随">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/HG255d-RTLSDR_20190720/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/HG255d-RTLSDR_20190720/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/HG255d-RTLSDR_20190720/3.jpg">
+<meta property="og:image" content="https://c.ibcl.us/HG255d-RTLSDR_20190720/4.png">
+<meta property="og:image" content="https://c.ibcl.us/HG255d-RTLSDR_20190720/5.jpg">
+<meta property="og:image" content="https://c.ibcl.us/HG255d-RTLSDR_20190720/6.png">
+<meta property="article:published_time" content="2019-07-20T10:10:06.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.382Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="广播">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="SDR">
+<meta property="article:tag" content="瞎搞">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/HG255d-RTLSDR_20190720/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/archive/HG255d-RTLSDR_20190720">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>HG255d + RTL-SDR = ？ | I BCL.
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">HG255d + RTL-SDR = ？
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>博主一年前在网上花了 50 来块，买了 4 台华为 HG255d 路由器，最初只是想在上面运行 Shadowsocks-libev 做透明代理，但是后来由于 SS 开始出现断流现象，保险起见，于是将 SS 换成了 V2Ray，此后 HG255d 再也没开过机…</p>
+<p>学校连续补了十二天课之后，终于大发慈悲，决定放一天假。趁着这一天假，博主赶紧打开积了一层灰的 HG255d，看看能折腾些什么。</p>
+<p>偶然看到随手扔在书桌上的 RTL-SDR，于是萌生了在 HG255d 上运行 RTL-SDR 的奇怪想法。</p>
+<p><img data-src="https://c.ibcl.us/HG255d-RTLSDR_20190720/1.jpg" alt="HG255d 和 RTL-SDR" title="HG255d 和 RTL-SDR"></p>
+<p><img data-src="https://c.ibcl.us/HG255d-RTLSDR_20190720/2.jpg" alt="RTL-SDR 特写" title="RTL-SDR 特写"></p>
+<span id="more"></span>
+
+<p>先来看看 HG255d 的配置，作为一台低端路由器，拥有这样的配置很常见，就连路由器底部的标签都承认了自己很低端…</p>
+<p><img data-src="https://c.ibcl.us/HG255d-RTLSDR_20190720/3.jpg" alt="低端路由器" title="低端路由器"></p>
+<p><img data-src="https://c.ibcl.us/HG255d-RTLSDR_20190720/4.png" alt="详细参数" title="详细参数"></p>
+<p>纵然配置如此垃圾，可博主还是想试一试…</p>
+<p>在 OpenWRT 选好对应固件并下载，刷入路由器。博主选用的是 OpenWRT 18.06.1 版。</p>
+<p>刷机完成后接上 WAN、LAN 口，开机，登录 LuCI 管理界面，在 System –&gt; Software –&gt; Configuration –&gt; Distribution feeds 一项中配置软件源，这里使用的是加拿大的 <span class="exturl" data-url="aHR0cDovL29wZW53cnQuZnJlZW1pcnJvci5vcmcv">openwrt.freemirror.org<i class="fa fa-external-link-alt"></i></span>，设置完成后，保存配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">src/gz openwrt_core http://openwrt.freemirror.org/releases/18.06.1/targets/ramips/rt305x/packages</span><br><span class="line">src/gz openwrt_base http://openwrt.freemirror.org/releases/18.06.1/packages/mipsel_24kc/base</span><br><span class="line">src/gz openwrt_luci http://openwrt.freemirror.org/releases/18.06.1/packages/mipsel_24kc/luci</span><br><span class="line">src/gz openwrt_packages http://openwrt.freemirror.org/releases/18.06.1/packages/mipsel_24kc/packages</span><br><span class="line">src/gz openwrt_routing http://openwrt.freemirror.org/releases/18.06.1/packages/mipsel_24kc/routing</span><br><span class="line">src/gz openwrt_telephony http://openwrt.freemirror.org/releases/18.06.1/packages/mipsel_24kc/telephony</span><br></pre></td></tr></table></figure>
+
+<p>此外，根据自己的网络状况，可以将 <code>option check_signature 1</code>（检查签名）一行注释或是删除掉。</p>
+<p>为了防止 IP 地址与上级网络设备冲突，所以博主将 HG255d 的 LAN 口改到了 192.168.155.1。</p>
+<p>使用 PuTTY 连接路由器，在终端中执行指令，更新软件列表。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# opkg update</span><br></pre></td></tr></table></figure>
+
+<p>RTL-SDR 通过 USB 连接到路由器，所以需要安装 USB 的相关驱动。以下的 Package，是用于 HG255d 的 USB 驱动。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# opkg install kmod-usb-dwc2 kmod-usb-core kmod-usb-ohci kmod-usb2 kmod-usb-ledtrig-usbport usbutils</span><br></pre></td></tr></table></figure>
+
+<p><strong>需要注意的是，HG255d 存在一个问题：如果短时间写入大量文件到 Flash 中，会出现 I/O 错误，随后整块分区会变成只读，唯有重刷系统才可以解决。</strong></p>
+<p><strong>所以，为了避免踩坑，上述的命令，最好改成一次只安装两个包。</strong></p>
+<p>安装完成，然后进入 LuCI 管理界面，在 System –&gt; LED Configuration –&gt; USB 一项，选中 Trigger 为 usbport，并勾选 USB Ports 的 Hub 1, Port 1，保存配置。</p>
+<p>回到终端，安装 rtl-sdr。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# opkg install rtl-sdr</span><br></pre></td></tr></table></figure>
+
+<p>值得一提的是，OpenWRT 已经内置了 RTL-SDR 的驱动，省去了用户交叉编译再上传到路由器的麻烦。</p>
+<p>重启路由器，并插入 RTL-SDR 设备。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# reboot</span><br></pre></td></tr></table></figure>
+
+<p>重启完成后，HG255d 右下角的 USB 指示灯亮了。</p>
+<p><img data-src="https://c.ibcl.us/HG255d-RTLSDR_20190720/5.jpg" alt="USB 指示灯被点亮" title="USB 指示灯被点亮"></p>
+<p>已经成功了一半…</p>
+<p>再次使用 PuTTY 连接路由器，在终端中执指令，检测是否已经识别了 RTL-SDR 设备…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# lsusb</span><br><span class="line">Bus 001 Device 001: ID 0bda:2838 Realtek Semiconductor Corp. RTL2838 DVB-T</span><br><span class="line">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br></pre></td></tr></table></figure>
+
+<p>看来已经识别了设备。执行命令，测试 <code>rtl_tcp</code> 是否可以正常工作…</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# rtl_tcp -a 0.0.0.0</span><br><span class="line">Found 1 device(s).</span><br><span class="line">Found Elonics E4000 tuner</span><br><span class="line">Using Generic RTL2832U (e.g. hama nano)</span><br><span class="line">Tuned to 100000000 Hz.</span><br><span class="line">listening...</span><br><span class="line"></span><br><span class="line">Use the device argument &#x27;rtl_tcp=0.0.0.0:1234&#x27; in OsmoSDR (gr-osmosdr) source to receive</span><br><span class="line">samples in GRC and control rtl_tcp parameters (frequency, gain, ...).</span><br></pre></td></tr></table></figure>
+
+<p>好开心，运行成功惹！</p>
+<p>由于家里电脑没有安装 HDSDR，所以只有用手机上的 SDRTouch 凑合了… 不过 SDRTouch 也很好用，博主用的是在 Google Play 购买的收费版本…</p>
+<p>在 SDRTouch 的 Pref. 菜单中设置采样率为 256000 Msps，直采 Q 通道信号，广播制式为 AM，频率嘛，找个信号强点的好了，比如 CNR2 经济之声 11.660 MHz… 连接！</p>
+<p>听了一分钟左右，瀑布图和声音突然卡顿起来，紧接着路由器无线网的 SSID 消失了，重启后才恢复。</p>
+<p>或许是内存不足的问题？</p>
+<p>重启后，重新连接到路由器的 SSH，再研究一下稳定运行 rtl_tcp 有什么新的姿势。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# rtl_tcp --help</span><br><span class="line">rtl_tcp, an I/Q spectrum server for RTL2832 based DVB-T receivers.</span><br><span class="line"></span><br><span class="line">Usage:	[-a listen address]</span><br><span class="line">	[-p listen port (default: 1234)]</span><br><span class="line">	[-f frequency to tune to [Hz]]</span><br><span class="line">	[-g gain (default: 0 for auto)]</span><br><span class="line">	[-s samplerate in Hz (default: 2048000 Hz)]</span><br><span class="line">	[-b number of buffers (default: 32, set by library)]</span><br><span class="line">	[-n max number of linked list buffers to keep (default: 500)]</span><br><span class="line">	[-d device index (default: 0)]</span><br><span class="line">	[-P ppm_error (default: 0)]</span><br></pre></td></tr></table></figure>
+
+<p>注意到有一个设置缓冲大小的项，默认值为 32，或许，我可以试着把它调节得很小？？？</p>
+<p>再来一次！这次加上 <code>-b 2</code> 的选项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# rtl_tcp -a 0.0.0.0 -b 2</span><br><span class="line">Found 1 device(s).</span><br><span class="line">Found Elonics E4000 tuner</span><br><span class="line">Using Generic RTL2832U (e.g. hama nano)</span><br><span class="line">Tuned to 100000000 Hz.</span><br><span class="line">listening...</span><br><span class="line"></span><br><span class="line">Use the device argument &#x27;rtl_tcp=0.0.0.0:1234&#x27; in OsmoSDR (gr-osmosdr) source to receive</span><br><span class="line">samples in GRC and control rtl_tcp parameters (frequency, gain, ...).</span><br></pre></td></tr></table></figure>
+
+<p>再次用 SDRTouch 连接到 SDR，最后博主稳定收听了四十多分钟，虽然偶尔还是会有卡顿，不过表现已经很不错了…</p>
+<p><img data-src="https://c.ibcl.us/HG255d-RTLSDR_20190720/6.png" alt="手机上的 SDRTouch" title="手机上的 SDRTouch"></p>
+<p>让 rtl_tcp 开机后台启动，这里需要借助 screen，但是 OpenWRT 没有提供现成的包，于是博主自己编译了一份，适用于 mipsel_24kc 架构的路由器。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jLmliY2wudXMvSEcyNTVkLVJUTFNEUl8yMDE5MDcyMC9zY3JlZW5fNC42LjItMV9taXBzZWxfMjRrYy5pcGs=">下载 screen_4.6.2-1_mipsel_24kc.ipk<i class="fa fa-external-link-alt"></i></span></p>
+<p>用 WinSCP 上传到路由器 /tmp 目录下，安装 screen。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# opkg install /tmp/screen_4.6.2-1_mipsel_24kc.ipk</span><br></pre></td></tr></table></figure>
+
+<p>然后，编辑 <code>/etc/rc.local</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# vi /etc/rc.local</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>exit 0</code> 前加入 rtl_tcp 启动命令。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">screen -dmS rtl_tcp rtl_tcp -a 0.0.0.0 -b 3</span><br></pre></td></tr></table></figure>
+
+<p>第二次启动后，登入终端，可以使用如下命令查看 rtl_tcp 的输出。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@OpenWrt:~# screen -r rtl_tcp</span><br></pre></td></tr></table></figure>
+
+<p>如果这台路由器的上一级的网络设备需要访问到 SDR，则需要在 HG255d 的 firewall 中开放对应的端口，在 Network –&gt; Firewall –&gt; Port Forwards 中开放 192.168.155.1 的 TCP 1234 端口。</p>
+<p>最后是博主总结的一点经验，以供参考。</p>
+<ul>
+<li>不要使用 USB Hub、延长线来连接 RTL-SDR 设备，否则会因供电不足而导致无法打开设备，或是在运行过一段时间后死机。</li>
+<li>对于小内存设备，调小 rtl_tcp 的缓冲值可以提高运行效率，避免死机。</li>
+<li>运行 rtl_tcp 之后，系统负载直接飙到了 1.53 1.88 2.01，所以运行 rtl_tcp 后就不要再在上面运行其他程序了。</li>
+<li>采样率一定要调小，256000 Msps 对于这种垃圾设备刚好合适，过高的采样率也会导致系统直接崩溃。</li>
+</ul>
+<p>折腾成功，完结撒花！祝大家玩得开心。</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/archive/HG255d-RTLSDR_20190720.html',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

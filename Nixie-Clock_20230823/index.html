@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="去年（2022 年） 8 月的某一天，博主逛淘宝时偶然刷到了一个 IN-12 辉光管，看完买家秀中展示的照片后，博主深深地被管子发出的幽幽红光给吸引住了，在 Google 上一番搜寻过后，博主发现大多数人都用它来做时钟。 虽然原理看上去非常简单，但显示时间的载体从液晶屏换到辉光管后，真的很炫酷。博主犹豫片刻过后，随即下单了一个 IN-12 管子和一个升压模块，决定先尝试将其点亮，看看效果如何，再决">
+<meta property="og:type" content="article">
+<meta property="og:title" content="这或许是全网最完善的辉光钟 DIY 指南">
+<meta property="og:url" content="https://ibcl.us/Nixie-Clock_20230823/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="去年（2022 年） 8 月的某一天，博主逛淘宝时偶然刷到了一个 IN-12 辉光管，看完买家秀中展示的照片后，博主深深地被管子发出的幽幽红光给吸引住了，在 Google 上一番搜寻过后，博主发现大多数人都用它来做时钟。 虽然原理看上去非常简单，但显示时间的载体从液晶屏换到辉光管后，真的很炫酷。博主犹豫片刻过后，随即下单了一个 IN-12 管子和一个升压模块，决定先尝试将其点亮，看看效果如何，再决">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/3.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/4.png">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/5.png">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/6.png">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/7.png">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/8.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/9.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/10.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/11.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/12.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/13.png">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/14.gif">
+<meta property="og:image" content="https://c.ibcl.us/Nixie-Clock_20230823/15.gif">
+<meta property="article:published_time" content="2023-08-22T16:07:10.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="硬件">
+<meta property="article:tag" content="单片机">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="辉光钟">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/Nixie-Clock_20230823/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/Nixie-Clock_20230823/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>这或许是全网最完善的辉光钟 DIY 指南 | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Nixie-Clock_20230823/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          这或许是全网最完善的辉光钟 DIY 指南
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-23 00:07:10" itemprop="dateCreated datePublished" datetime="2023-08-23T00:07:10+08:00">2023-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A1%AC%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">硬件</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Nixie-Clock_20230823/" class="post-meta-item leancloud_visitors" data-flag-title="这或许是全网最完善的辉光钟 DIY 指南" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Nixie-Clock_20230823/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Nixie-Clock_20230823/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>去年（2022 年） 8 月的某一天，博主逛淘宝时偶然刷到了一个 IN-12 辉光管，看完买家秀中展示的照片后，博主深深地被管子发出的幽幽红光给吸引住了，在 Google 上一番搜寻过后，博主发现大多数人都用它来做时钟。</p>
+<p>虽然原理看上去非常简单，但显示时间的载体从液晶屏换到辉光管后，真的很炫酷。博主犹豫片刻过后，随即下单了一个 IN-12 管子和一个升压模块，决定先尝试将其点亮，看看效果如何，再决定是否继续。</p>
+<p>几天后，快递如约而至，博主将升压模块和 IN-12 引脚连接好，接通 5V 电源后，辉光管发出了迷人的红光，博主也露出了满意的笑容。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/1.jpg" alt="单只辉光管"></p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/2.jpg" alt="成功点亮 IN-12"></p>
+<p>试水计划顺利完成后，博主也没有闲下来，而是又下单了 3 只 IN-12，决定打造一台属于自己的辉光钟。在历经几个月的不断试错与改进过后，博主终于给交出了一份满意的答卷，<strong>并将整个项目（PCB 文件、单片机程序、授时软件）开源到了 GitHub</strong>，供更多人参考与借鉴。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvT3Blbk5peGll">GitHub - bclswl0827/OpenNixie<i class="fa fa-external-link-alt"></i></span></p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/3.jpg" alt="博主的辉光钟成品"></p>
+<span id="more"></span>
+
+<h1 id="硬件方案"><a href="#硬件方案" class="headerlink" title="硬件方案"></a>硬件方案</h1><h2 id="升压方案"><a href="#升压方案" class="headerlink" title="升压方案"></a>升压方案</h2><p>在网上搜寻后，博主发现 MAX1771 对于这个项目是一个近乎完美的升压方案，其外设极其简单，只需要设计好反馈电阻即可。比较可惜的是，网上现成的 MAX1771 升压电路，输入电压基本都是 12V，而电路中其他模块又需要 5V 供电，所以只能再外加一个 LDO 模块（AMS1117）来实现 12V 转 5V。</p>
+<p>最后，博主画出的完整升压模块原理图长这样。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/4.png" alt="MAX1771 升压原理图"></p>
+<p><strong>需要注意的是，图中代号为 C3 的 10uF 电解电容，耐压值需要在 200V 以上，这样才能承受较高的输出电压。</strong></p>
+<p>值得一提的是，MAX1771 还提供了一个使能引脚（SHDN 引脚），让用户可以通过控制这一引脚的电平高低，从而使能或禁能升压。</p>
+<h2 id="驱动方案"><a href="#驱动方案" class="headerlink" title="驱动方案"></a>驱动方案</h2><p>网络上大多数的辉光钟项目，都采用了 74141 或 K155ID1 译码器芯片来控制辉光管的亮灭，无奈这些芯片要么假货遍地，要么价格太贵，让博主不敢贸然下手。在与一位朋友交流后，这位朋友提到可以使用有高耐压值的 NPN 三极管来控制辉光管亮灭，从而避开这些芯片。</p>
+<p>经过选型，博主发现 MPSA42 三极管恰好符合项目需求，淘宝上这款三极管的售价也非常便宜，不出 10 元就能买到一大包，性价比直接暴打 74141 和 K155ID1。</p>
+<p>但是这一方案又会导致一个新问题，那就是若使用常用的静态扫描方式驱动辉光管，4 个辉光管加一个氖灯符号则将会用去 4 + 4*10 + 1 个 NPN 三极管，如此一来，不光 PCB 装不下这么多器件，即便装下了，布线也是个麻烦事。因此，博主也只能退而求其次，采用动态扫描方式进行驱动，从而也将 NPN 三极管的数量压缩到 4 + 10 + 1 个。解决方法看似很完美，但是这样会导致辉光管的亮度会暗一些。</p>
+<p>在原理图中，博主用分层的方式，单独画出了辉光管段选和位选驱动的原理图。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/5.png" alt="辉光管段选原理图"></p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/6.png" alt="辉光管位选原理图"></p>
+<p>在辉光管位选原理图中，博主使用的是 20k 欧姆的限流电阻，<strong>需要注意的是，这里的限流电阻功率需要比其他电阻稍大一些（如选用功率为 0.5W 的电阻），从而避免长期运行过烫而导致电阻寿命缩短</strong>。</p>
+<h2 id="寄存器组合"><a href="#寄存器组合" class="headerlink" title="寄存器组合"></a>寄存器组合</h2><p>根据前面的描述可以得出，总共有 16 个引脚需要控制（升压模块使能脚、辉光管段选三极管、辉光管位选三极管、氖灯符号三极管）。由于用于控制的单片机片上 GPIO 资源比较宝贵，不可能 16 个控制脚都接去单片机 GPIO 上，所以博主决定使用两个 74HC595 芯片级联组成一个 16 位的寄存器，从而实现只用 3 个片上 GPIO 对辉光钟进行控制。</p>
+<p>原理图如下，博主还附上了一张表格描述寄存器位数对应的功能。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/7.png" alt="74HC595 原理图"></p>
+<table>
+<thead>
+<tr>
+<th align="left">寄存器位</th>
+<th align="left">位功能</th>
+<th align="left">位描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">[0:9]</td>
+<td align="left">辉光钟段选</td>
+<td align="left">高电平使能</td>
+</tr>
+<tr>
+<td align="left">[10:13]</td>
+<td align="left">辉光钟位选</td>
+<td align="left">低电平使能</td>
+</tr>
+<tr>
+<td align="left">[14:15]</td>
+<td align="left">氖灯符号位</td>
+<td align="left">高电平使能</td>
+</tr>
+<tr>
+<td align="left">[15:16]</td>
+<td align="left">MAX1771 使能</td>
+<td align="left">低电平使能</td>
+</tr>
+</tbody></table>
+<h2 id="单片机、串口、RTC"><a href="#单片机、串口、RTC" class="headerlink" title="单片机、串口、RTC"></a>单片机、串口、RTC</h2><p>由于博主的实验室有堆积如山的 STC89C51 工业垃圾，所以博主也就直接选用了这款单片机。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/8.jpg" alt="DIP-40 封装的 STC89C51 单片机"></p>
+<p>STC89C51 单片机带有一个串口，博主将其连接到了 BLE 蓝牙模块，从而实现透过无线蓝牙对辉光钟授时。至于蓝牙模块，博主选用的是 JDY-34-SPP。</p>
+<p>RTC 芯片的选型是 DS3231，和一般的 DS1302 相比，DS3231 有更高的精度。DS3231 使用 I2C 协议与单片机进行通信，但是由于 STC89C51 单片机没有硬件 I2C，所以博主只能使用软件模拟 I2C 的方式来实现与 DS3231 的通信，虽然速度稍慢，不过也完全足够应付需求了。</p>
+<p>提到这里，博主就不得不推一波去年疫情空档期为 8051 单片机打造的一款 Arduino 风格函数库了，这款函数库提供了包含 I2C、SPI、UART 在内的函数，且与 Arduino 的函数功能保持一致，让用户可以在只对代码做少量修改，直接将 Arduino 的项目代码移植到 8051 单片机上。这款函数库目前也以 MIT 协议开源到了 GitHub 上，本项目也将在此库基础上进行开发。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvNTFkdWlubw==">GitHub - bclswl0827/51duino<i class="fa fa-external-link-alt"></i></span></p>
+<p>基于此库，例如要读取 DS3231 的时间，只需调用库中提供的 <code>WireBeginTransmission()</code>、<code>WireWrite()</code>、<code>WireRead()</code>、<code>WireRequestFrom()</code> 等函数即可，与在 Arduino 平台上开发的代码基本一致，同时，分配给 I2C 的引脚也可以在相关头文件中进行变更。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;framework/wire.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DS3231_ADDRESS 0x68</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="type">uint8_t</span> year;</span><br><span class="line">    <span class="type">uint8_t</span> month;</span><br><span class="line">    <span class="type">uint8_t</span> day;</span><br><span class="line">    <span class="type">uint8_t</span> week;</span><br><span class="line">    <span class="type">uint8_t</span> hour;</span><br><span class="line">    <span class="type">uint8_t</span> minute;</span><br><span class="line">    <span class="type">uint8_t</span> second;</span><br><span class="line">&#125; <span class="type">time_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">getTime</span><span class="params">(<span class="type">time_t</span>* time)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">WireBeginTransmission</span>(DS3231_ADDRESS);</span><br><span class="line">    <span class="built_in">WireWrite</span>(<span class="number">0x00</span>);</span><br><span class="line">    <span class="built_in">WireEndTransmission</span>();</span><br><span class="line">    <span class="built_in">WireRequestFrom</span>(DS3231_ADDRESS, <span class="number">7</span>);</span><br><span class="line"></span><br><span class="line">    time-&gt;second = <span class="built_in">bcdToDec</span>(<span class="built_in">WireRead</span>() &amp; <span class="number">0x7F</span>);</span><br><span class="line">    time-&gt;minute = <span class="built_in">bcdToDec</span>(<span class="built_in">WireRead</span>());</span><br><span class="line">    time-&gt;hour = <span class="built_in">bcdToDec</span>(<span class="built_in">WireRead</span>());</span><br><span class="line">    time-&gt;week = <span class="built_in">bcdToDec</span>(<span class="built_in">WireRead</span>());</span><br><span class="line">    time-&gt;day = <span class="built_in">bcdToDec</span>(<span class="built_in">WireRead</span>());</span><br><span class="line">    time-&gt;month = <span class="built_in">bcdToDec</span>(<span class="built_in">WireRead</span>());</span><br><span class="line">    time-&gt;year = <span class="built_in">bcdToDec</span>(<span class="built_in">WireRead</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="PCB-设计"><a href="#PCB-设计" class="headerlink" title="PCB 设计"></a>PCB 设计</h2><p>为了项目有较强的可拓展性，博主决定设计一款适用于大多数辉光管的标准插座，IN-12 则透过转接板对接到标准插座。这样一来，以后若想要更换辉光管型号，只需另外设计转接板即可，不需要对 PCB 进行任何改动，成本极低。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/9.jpg" alt="IN-12 转接板"></p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/10.jpg" alt="QS-27 转接板"></p>
+<p>博主使用 KiCAD 7.0.0 来设计 PCB，由于本项目和射频、模拟电路等关系不大，因此 PCB 的设计也比较简单，只需将原理图中的元件进行布局、连线、铺铜。DRC 通过后，导出 Gerber 文件即可交送厂商生产。为了方便手工焊接，所以博主尽量选用了直插元器件。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/11.jpg" alt="PCB 正面"></p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/12.jpg" alt="PCB 背面"></p>
+<p>PCB 尺寸 152 * 55 mm，嘉立创打样 5 片 PCB 的费用是 40.02 元。<strong>博主也建议在月底打板 PCB，这样可以在次月领到两张免费券，从而免去转接板的打板费用。</strong></p>
+<p>PCB 以及转接板的完整设计文件位于仓库的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvT3Blbk5peGllL3RyZWUvbWFzdGVyL2NpcmN1aXQ=">circuit 目录下<i class="fa fa-external-link-alt"></i></span>，<strong>经过博主实测，KiCAD 对于跨版本的支持并不好，所以在二次开发时需要注意 KiCAD 的版本号最好同博主保持一致（使用 7.0.0 版本），避免出现奇怪的错误</strong>。</p>
+<p>截止发文时，博主已经为这个项目制作了 IN-12、QS-27 两款辉光管的转接板，博主预计在不久的将来还能支持更多辉光管，博主也欢迎用户自行制作转接板，并向仓库提交 PR。</p>
+<h1 id="软件方案"><a href="#软件方案" class="headerlink" title="软件方案"></a>软件方案</h1><h2 id="单片机端"><a href="#单片机端" class="headerlink" title="单片机端"></a>单片机端</h2><p>单片机的完整源码位于仓库的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvT3Blbk5peGllL3RyZWUvbWFzdGVyL2Zpcm13YXJl">firmware 目录下<i class="fa fa-external-link-alt"></i></span>，为了充分享受自动补全、代码高亮、自动格式化等现代生产力黑科技，所以博主抛弃了传统的 Keil（补一句，Keil 真是又丑又难用），而是使用了 VSCode 上的 EIDE 插件作为 STC89C51 的开发环境。在 VSCode 上安装该插件后，打开 firmware 目录下的 <code>OpenNixie.code-workspace</code> 文件，即可进入 EIDE 工作区编辑代码、构建项目、烧录固件。</p>
+<h3 id="辉光管驱动"><a href="#辉光管驱动" class="headerlink" title="辉光管驱动"></a>辉光管驱动</h3><p>由于博主使用 74HC595 移位寄存器来控制整个设备，所以需要为 74HC595 编写驱动程序，以正确设定对应位（引脚）的电平。根据前文表格中提到的寄存器各位之功能，则可以编写出如下几个函数。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> LATCH P24 <span class="comment">// 74HC595 锁存脚</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DATA P23  <span class="comment">// 74HC595 数据脚</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> CLOCK P22 <span class="comment">// 74HC595 时钟脚</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 设定段选（显示 0-9 之一数字）</span></span><br><span class="line"><span class="function"><span class="type">uint16_t</span> <span class="title">setSegment</span><span class="params">(<span class="type">uint8_t</span> val)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> val &lt; <span class="number">10</span> ? <span class="number">1</span> &lt;&lt; val : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设定位选（使能 0-4 之一辉光管）</span></span><br><span class="line"><span class="function"><span class="type">uint8_t</span> <span class="title">setBit</span><span class="params">(<span class="type">uint8_t</span> val)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (val) &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0x07</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0x0B</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0x0D</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0x0E</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0x0F</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设定氖灯符号（开或关）</span></span><br><span class="line"><span class="function"><span class="type">uint8_t</span> <span class="title">setSymbol</span><span class="params">(<span class="type">uint8_t</span> val)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> val ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设定 MAX1771（使能或禁能）</span></span><br><span class="line"><span class="function"><span class="type">uint8_t</span> <span class="title">setEnable</span><span class="params">(<span class="type">uint8_t</span> val)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> val ? <span class="number">0</span> : <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算寄存器值（作为参数调用 shiftOut 函数）</span></span><br><span class="line"><span class="function"><span class="type">uint16_t</span> <span class="title">setNixie</span><span class="params">(<span class="type">uint8_t</span> enable,</span></span></span><br><span class="line"><span class="params"><span class="function">                  <span class="type">uint8_t</span> symbol,</span></span></span><br><span class="line"><span class="params"><span class="function">                  <span class="type">uint8_t</span> _bit,</span></span></span><br><span class="line"><span class="params"><span class="function">                  <span class="type">uint16_t</span> segment)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (enable &lt;&lt; <span class="number">15</span>) | (symbol &lt;&lt; <span class="number">14</span>) | (_bit &lt;&lt; <span class="number">10</span>) | segment;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据寄存器值设定 595 各引脚电平</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">shiftOut</span><span class="params">(<span class="type">uint16_t</span> val)</span> </span>&#123;</span><br><span class="line">    LATCH = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">uint8_t</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">        DATA = !!(val &amp; (<span class="number">1</span> &lt;&lt; (<span class="number">15</span> - i)));</span><br><span class="line">        CLOCK = <span class="number">1</span>;</span><br><span class="line">        CLOCK = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    LATCH = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于博主的项目采用动态扫描方式进行显示，所以，例如要显示 <code>1 2·3 4</code>，则可以编写下述代码片段。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> enable = <span class="built_in">setEnable</span>(<span class="number">1</span>);</span><br><span class="line"><span class="type">uint8_t</span> symbol = <span class="built_in">setSymbol</span>(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">uint16_t</span> s0 = <span class="built_in">setSegment</span>(<span class="number">1</span>);</span><br><span class="line"><span class="type">uint16_t</span> s1 = <span class="built_in">setSegment</span>(<span class="number">2</span>);</span><br><span class="line"><span class="type">uint16_t</span> s2 = <span class="built_in">setSegment</span>(<span class="number">3</span>);</span><br><span class="line"><span class="type">uint16_t</span> s3 = <span class="built_in">setSegment</span>(<span class="number">4</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(enable, symbol, <span class="built_in">setBit</span>(<span class="number">0</span>), s0));</span><br><span class="line">    <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(enable, symbol, <span class="built_in">setBit</span>(<span class="number">1</span>), s1));</span><br><span class="line">    <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(enable, symbol, <span class="built_in">setBit</span>(<span class="number">2</span>), s2));</span><br><span class="line">    <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(enable, symbol, <span class="built_in">setBit</span>(<span class="number">3</span>), s3));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 避免出现鬼影</span></span><br><span class="line">    <span class="built_in">delayMicroseconds</span>(<span class="number">10</span>);</span><br><span class="line">    <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(<span class="built_in">setEnable</span>(<span class="number">0</span>), symbol, <span class="built_in">setBit</span>(<span class="number">0</span>), <span class="number">0</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="阴极保护"><a href="#阴极保护" class="headerlink" title="阴极保护"></a>阴极保护</h3><p>由于辉光管长期运行可能发生中毒现象，因此需要避免长期显示某个固定的数字。解决的方案则是定时显示一遍所有数字，代码只需基于上述片段稍作修改即可。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">setProtection</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">uint8_t</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        <span class="type">uint16_t</span> s0 = <span class="built_in">setSegment</span>(i);</span><br><span class="line">        <span class="type">uint16_t</span> s1 = <span class="built_in">setSegment</span>(i);</span><br><span class="line">        <span class="type">uint16_t</span> s2 = <span class="built_in">setSegment</span>(i);</span><br><span class="line">        <span class="type">uint16_t</span> s3 = <span class="built_in">setSegment</span>(i);</span><br><span class="line"></span><br><span class="line">        <span class="type">uint8_t</span> enable = <span class="built_in">setEnable</span>(<span class="number">1</span>);</span><br><span class="line">        <span class="type">uint8_t</span> symbol = <span class="built_in">setSymbol</span>(<span class="number">0</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">uint8_t</span> j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j++) &#123;</span><br><span class="line">            <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(enable, symbol, <span class="built_in">setBit</span>(<span class="number">0</span>), s0));</span><br><span class="line">            <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(enable, symbol, <span class="built_in">setBit</span>(<span class="number">1</span>), s1));</span><br><span class="line">            <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(enable, symbol, <span class="built_in">setBit</span>(<span class="number">2</span>), s2));</span><br><span class="line">            <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(enable, symbol, <span class="built_in">setBit</span>(<span class="number">3</span>), s3));</span><br><span class="line"></span><br><span class="line">            <span class="built_in">delayMicroseconds</span>(<span class="number">10</span>);</span><br><span class="line">            <span class="built_in">shiftOut</span>(<span class="built_in">setNixie</span>(<span class="built_in">setEnable</span>(<span class="number">0</span>), symbol, <span class="built_in">setBit</span>(<span class="number">0</span>), <span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的代码中，若要调整数字显示的时长，可以修改内层循环 <code>j &lt; 5</code> 到其他值。</p>
+<h3 id="校准时间"><a href="#校准时间" class="headerlink" title="校准时间"></a>校准时间</h3><p>为了让辉光钟正确识别来自授时客户端的授时请求，博主定义了一系列的命令字和应答字。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> CMD_WORD 0xE0 <span class="comment">// 命令字</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ACK_WORD 0xE1 <span class="comment">// 应答字</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> YEAR_WORD 0xF1   <span class="comment">// 年位命令</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MONTH_WORD 0xF2  <span class="comment">// 月位命令</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DAY_WORD 0xF3    <span class="comment">// 日位命令</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> WEEK_WORD 0xF4   <span class="comment">// 星期位命令</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HOUR_WORD 0xF5   <span class="comment">// 小时位命令</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MINUTE_WORD 0xF6 <span class="comment">// 分钟位命令</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SECOND_WORD 0xF7 <span class="comment">// 秒数位命令</span></span></span><br></pre></td></tr></table></figure>
+
+<p>当单片机监测到串口数据与命令字相匹配时，则开始接收位命令（年月日时分秒等）和时间数据，并将数据写入 RTC 芯片的对应位，写入操作完成后，再往外发送应答字，指示本次授时成功，代码如下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ... 其他代码</span></span><br><span class="line"></span><br><span class="line"><span class="type">time_t</span> time;</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">SerialAvailable</span>() &amp;&amp; <span class="built_in">SerialRead</span>() == CMD_WORD) &#123;</span><br><span class="line">        <span class="type">uint8_t</span> cmd = <span class="built_in">SerialRead</span>();</span><br><span class="line">        <span class="type">uint8_t</span> dat = <span class="built_in">SerialRead</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (cmd) &#123;</span><br><span class="line">            <span class="keyword">case</span> YEAR_WORD:</span><br><span class="line">                time.year = dat;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MONTH_WORD:</span><br><span class="line">                time.month = dat;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> DAY_WORD:</span><br><span class="line">                time.day = dat;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> WEEK_WORD:</span><br><span class="line">                time.week = dat;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> HOUR_WORD:</span><br><span class="line">                time.hour = dat;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> MINUTE_WORD:</span><br><span class="line">                time.minute = dat;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">case</span> SECOND_WORD:</span><br><span class="line">                time.second = dat;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">setTime</span>(&amp;time);</span><br><span class="line">        <span class="built_in">SerialWrite</span>(ACK_WORD);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// ... 其他代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="授时客户端"><a href="#授时客户端" class="headerlink" title="授时客户端"></a>授时客户端</h2><p>博主提供了用 Python、Go、TypeScript 编写的三个授时客户端，<strong>此外，由 TypeScript 编写的客户端基于浏览器实验特性 WebBluetooth，需要使用最新版 Chrome 或者 Edge 才能运行</strong>。</p>
+<p>三个版本的授时工具的完整源码位于仓库的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvT3Blbk5peGllL3RyZWUvbWFzdGVyL3Rvb2xz">tools 目录下<i class="fa fa-external-link-alt"></i></span>，用户可以对其自行构建或二次开发。</p>
+<p>对于一般用户，使用 TypeScript 的版本即可，只需要打开 <a href="https://ibcl.us/OpenNixie/">ibcl.us/OpenNixie</a>，点击屏幕的任意位置即可开始配对和授时。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/13.png" alt="TypeScript 版本授时客户端"></p>
+<h1 id="成果展示"><a href="#成果展示" class="headerlink" title="成果展示"></a>成果展示</h1><p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/14.gif" alt="显示随机数"></p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/15.gif" alt="网页授时"></p>
+<h1 id="一些补充"><a href="#一些补充" class="headerlink" title="一些补充"></a>一些补充</h1><p>除了 GitHub 仓库的 Issue 之外，博主还建了一个 Telegram 群组，方便为读者解答辉光钟 DIY 过程中遇到的各种问题，欢迎加入。</p>
+<p>对了，现在还却一个外壳，可惜博主不会做 3D 设计，所以只能等待有缘人帮忙设计了。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly90Lm1lL09wZW5OaXhpZQ==">t.me/OpenNixie<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A1%AC%E4%BB%B6/" rel="tag"># 硬件</a>
+              <a href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag"># 单片机</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag"># 嵌入式</a>
+              <a href="/tags/%E8%BE%89%E5%85%89%E9%92%9F/" rel="tag"># 辉光钟</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/ShortLink-Firebase_20230626/" rel="prev" title="我写了一个无需后端的短网址程序...">
+      <i class="fa fa-chevron-left"></i> 我写了一个无需后端的短网址程序...
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Earthquake-Sensor_20231009/" rel="next" title="吃灰开发板拿出来，咱们来听听地球吧">
+      吃灰开发板拿出来，咱们来听听地球吧 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A1%AC%E4%BB%B6%E6%96%B9%E6%A1%88"><span class="nav-number">1.</span> <span class="nav-text">硬件方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%87%E5%8E%8B%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">升压方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%B1%E5%8A%A8%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">驱动方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E7%BB%84%E5%90%88"><span class="nav-number">1.3.</span> <span class="nav-text">寄存器组合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E7%89%87%E6%9C%BA%E3%80%81%E4%B8%B2%E5%8F%A3%E3%80%81RTC"><span class="nav-number">1.4.</span> <span class="nav-text">单片机、串口、RTC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCB-%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.5.</span> <span class="nav-text">PCB 设计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">软件方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%95%E7%89%87%E6%9C%BA%E7%AB%AF"><span class="nav-number">2.1.</span> <span class="nav-text">单片机端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%89%E5%85%89%E7%AE%A1%E9%A9%B1%E5%8A%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">辉光管驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B4%E6%9E%81%E4%BF%9D%E6%8A%A4"><span class="nav-number">2.1.2.</span> <span class="nav-text">阴极保护</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%A1%E5%87%86%E6%97%B6%E9%97%B4"><span class="nav-number">2.1.3.</span> <span class="nav-text">校准时间</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%88%E6%97%B6%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">2.2.</span> <span class="nav-text">授时客户端</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%90%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">3.</span> <span class="nav-text">成果展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E8%A1%A5%E5%85%85"><span class="nav-number">4.</span> <span class="nav-text">一些补充</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/Nixie-Clock_20230823/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

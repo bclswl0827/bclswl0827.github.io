@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+<meta property="og:type" content="website">
+<meta property="og:title" content="I BCL.">
+<meta property="og:url" content="https://ibcl.us/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="一个不知名的网友">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ibcl.us/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content index posts-expand">
+            
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Gemini-Client_20240206/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Gemini-Client_20240206/" class="post-title-link" itemprop="url">ChatGemini - 一款博主开发的山寨版 ChatGPT</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-02-06 20:58:00" itemprop="dateCreated datePublished" datetime="2024-02-06T20:58:00+08:00">2024-02-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Gemini-Client_20240206/" class="post-meta-item leancloud_visitors" data-flag-title="ChatGemini - 一款博主开发的山寨版 ChatGPT" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Gemini-Client_20240206/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Gemini-Client_20240206/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>博主前些日子逛 V2EX 时，经常看到有人讨论各种 ChatGPT 的第三方客户端。作为一个月月被 ChatGPT-4 爆金币的人，自然对这些第三方客户端没有兴趣<del>（毕竟咱可是高贵的官方用户）</del>。直到 Google 发布了 Gemini 模型后，博主才想要体验一下这个 AI 模型到底有多厉害，于是在 GitHub 上搜索起了 Gemini 的第三方客户端。</p>
+<p><img data-src="https://c.ibcl.us/Gemini-Client_20240206/1.png" alt="1"></p>
+<p>好家伙，第一条结果的 <code>babaohuang/GeminiProChat</code> 居然有 3.5k 颗 Star，看来这个客户端还是挺受欢迎的，可顺着仓库给出的演示 URL 进去，结果却让博主大失所望。</p>
+<p><img data-src="https://c.ibcl.us/Gemini-Client_20240206/2.png" alt="2"></p>
+<p>这套客户端没有历史记录，发出去的消息也不能再编辑，<strong>另外 Gemini 很重要的识图功能居然也没有实现</strong>，这怎么能行？</p>
+<p>鉴于以上种种不好的使用体验，因此博主最后决定自己开发一个山寨版的 ChatGPT 客户端，名字就叫 ChatGemini。</p>
+<p>说干就干，博主花了 3 天时间，用 React + TypeScript + TailwindCSS 打造了出一款全新的，有如下功能的 Gemini 客户端，项目一经发布，截止博主写这篇文章时，已经收获了 470 颗 Star。</p>
+<ul>
+<li>适配移动端</li>
+<li>支持多 API 密钥分流</li>
+<li>操作逻辑同 ChatGPT</li>
+<li>仿 ChatGPT 3.5 界面</li>
+<li>支持多轮聊天对话</li>
+<li>支持上传图片进行识别</li>
+<li>逐字输出（SSE）回应</li>
+<li>集成 PHP 版反向代理</li>
+<li>自定义 Gemini API 地址</li>
+<li>可启用站点通行码防止滥用</li>
+<li>聊天内容导出（HTML 和 PDF）</li>
+<li>对话内容保存在 IndexedDB 中</li>
+<li>在 AI 回应中运行 Python 代码</li>
+</ul>
+<p><img data-src="https://c.ibcl.us/Gemini-Client_20240206/3.png" alt="3"></p>
+<p>这篇文章并不打算将 README 中的内容再复述一遍，因此这里只会记录一些博主在开发过程中的细节。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Gemini-Client_20240206/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Register-RW_20240107/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Register-RW_20240107/" class="post-title-link" itemprop="url">优雅地编写寄存器读写驱动，然后惊艳所有人</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-07 18:56:42" itemprop="dateCreated datePublished" datetime="2024-01-07T18:56:42+08:00">2024-01-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A1%AC%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">硬件</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Register-RW_20240107/" class="post-meta-item leancloud_visitors" data-flag-title="优雅地编写寄存器读写驱动，然后惊艳所有人" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Register-RW_20240107/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Register-RW_20240107/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在博主刚入门单片机时，经常看到其他人写出类似这样的驱动代码。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ... 其他内容</span></span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0xAE</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0x00</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0x10</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0x40</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0xDA</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0x1D</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0xF1</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0x8D</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0x14</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0xA4</span>);</span><br><span class="line"><span class="built_in">i2c_write_cmd</span>(<span class="number">0xA6</span>);</span><br><span class="line"><span class="comment">// ... 其他内容</span></span><br></pre></td></tr></table></figure>
+
+<p>作为小白，看到一大堆的 16 进制数字，自然是一脸懵比，就算看了半天也只能从调用的函数名字勉强猜出这可能是在操作寄存器，但是具体是什么寄存器，写入的值是什么，就不得而知了。</p>
+<p>用这种一把梭方式写出的驱动代码，不仅可读性极差，而且一旦需要修改，事情就会变得非常麻烦：由于不清楚每句代码都是在操作哪个寄存器，因此开发者又需要回到 Datasheet 中去查找寄存器的地址，然后再去查看寄存器的功能，最后才能确定要写入的值，这样的开发效率可想而知，如果时间一长，开发者便会对这个项目产生厌恶情绪，最终导致项目被搁置，而屎山项目也就此诞生。</p>
+<p>但不幸的是，这种一把梭的方式在很多开源项目中都能看到，因此这也让有强迫症的博主非常不爽。对此，博主决定写一篇文章，以自己的 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtlL2V4cGxvcmVyL3RyZWUvbWFzdGVyL2Zpcm13YXJl">AnyShake Explorer 项目开发途中为 ADC 编写驱动<i class="fa fa-external-link-alt"></i></span>的经历为例，来分享如何才能写出能惊艳到其他人的驱动代码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Register-RW_20240107/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Earthquake-Sensor_20231009/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Earthquake-Sensor_20231009/" class="post-title-link" itemprop="url">吃灰开发板拿出来，咱们来听听地球吧</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-10-09 18:56:42" itemprop="dateCreated datePublished" datetime="2023-10-09T18:56:42+08:00">2023-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9C%B0%E9%9C%87/" itemprop="url" rel="index"><span itemprop="name">地震</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Earthquake-Sensor_20231009/" class="post-meta-item leancloud_visitors" data-flag-title="吃灰开发板拿出来，咱们来听听地球吧" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Earthquake-Sensor_20231009/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Earthquake-Sensor_20231009/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>本项目已更名 AnyShake Project，并由博主继续维护。AnyShake Project 网站及文档位于 <span class="exturl" data-url="aHR0cHM6Ly9hbnlzaGFrZS5vcmcv">anyshake.org<i class="fa fa-external-link-alt"></i></span>，GitHub 主页位于 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtl">github.com/anyshake<i class="fa fa-external-link-alt"></i></span></strong></p>
+<p><strong>由于本文写在项目有起色之初，部分内容可能已经过期或不适用，因此一切请以 AnyShake Project 官网文档给出的内容为准</strong></p>
+<p>博主在今年（2023 年）上半年在带领实验室其他成员报名「全国大学生嵌入式芯片与系统设计竞赛」时，在项目选题时却犹豫不止，大多数人都是选择在「智能小车」、「智能机器人」及其相关的项目上下功夫，而博主却想做点不一样的。</p>
+<p>在报名截止的前夕，博主突然想起博主的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1Rlbmt5dUNoaW1hdGE=">一位朋友曾经给博主提到他买过一台名叫 Raspberry Shake 的地震仪<i class="fa fa-external-link-alt"></i></span>，这台地震仪可以将地震波数据整合或上传到云端，供用户调阅查看，而且<span class="exturl" data-url="aHR0cHM6Ly9saXZlLmJpbGliaWxpLmNvbS8yMjg2Mzc5MA==">他也长期在 Bilibili 上直播地震仪测到的实时数据<i class="fa fa-external-link-alt"></i></span>，在看过他的直播后，博主立刻被这台地震仪所吸引住了。</p>
+<p>最后，博主决定用比赛方提供的龙芯开发板，造一台自己的地震仪，但由于 Raspberry Shake 不开源核心代码，所以博主只能自己动手，一切从零开始。</p>
+<p>在历经 3 个多月紧张的开发后，博主终于实现了这套系统的基本功能，并一举挺进了全国总决赛，最终拿下了全国一等奖的好成绩。</p>
+<p>在获得佳绩后，博主也决定将这一整套系统开源到 GitHub 上，并继续加以维护，<strong>毕竟博主并不是地球物理学专业的学生，所以博主也希望能有更多的专业人士能够参与到这个项目中来，从而使这个项目能够更加完善</strong>。</p>
+<p>先晒出几张博主测到的地震波数据图，数据均来自博主设立在重庆北碚区的自研地震仪，由博主的那位朋友托管。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/1.png" alt="CST 2023-07-23 09:00:27 内江威远 M3.3"></p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/2.png" alt="CST 2023-08-10 17:02:47 雅安石棉 M3.4"></p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/3.png" alt="CST 2023-08-29 03:55:32 印尼巴厘海 M7.1"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Earthquake-Sensor_20231009/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Nixie-Clock_20230823/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Nixie-Clock_20230823/" class="post-title-link" itemprop="url">这或许是全网最完善的辉光钟 DIY 指南</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-23 00:07:10" itemprop="dateCreated datePublished" datetime="2023-08-23T00:07:10+08:00">2023-08-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A1%AC%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">硬件</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Nixie-Clock_20230823/" class="post-meta-item leancloud_visitors" data-flag-title="这或许是全网最完善的辉光钟 DIY 指南" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Nixie-Clock_20230823/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Nixie-Clock_20230823/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>去年（2022 年） 8 月的某一天，博主逛淘宝时偶然刷到了一个 IN-12 辉光管，看完买家秀中展示的照片后，博主深深地被管子发出的幽幽红光给吸引住了，在 Google 上一番搜寻过后，博主发现大多数人都用它来做时钟。</p>
+<p>虽然原理看上去非常简单，但显示时间的载体从液晶屏换到辉光管后，真的很炫酷。博主犹豫片刻过后，随即下单了一个 IN-12 管子和一个升压模块，决定先尝试将其点亮，看看效果如何，再决定是否继续。</p>
+<p>几天后，快递如约而至，博主将升压模块和 IN-12 引脚连接好，接通 5V 电源后，辉光管发出了迷人的红光，博主也露出了满意的笑容。</p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/1.jpg" alt="单只辉光管"></p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/2.jpg" alt="成功点亮 IN-12"></p>
+<p>试水计划顺利完成后，博主也没有闲下来，而是又下单了 3 只 IN-12，决定打造一台属于自己的辉光钟。在历经几个月的不断试错与改进过后，博主终于给交出了一份满意的答卷，<strong>并将整个项目（PCB 文件、单片机程序、授时软件）开源到了 GitHub</strong>，供更多人参考与借鉴。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvT3Blbk5peGll">GitHub - bclswl0827/OpenNixie<i class="fa fa-external-link-alt"></i></span></p>
+<p><img data-src="https://c.ibcl.us/Nixie-Clock_20230823/3.jpg" alt="博主的辉光钟成品"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Nixie-Clock_20230823/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/ShortLink-Firebase_20230626/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/ShortLink-Firebase_20230626/" class="post-title-link" itemprop="url">我写了一个无需后端的短网址程序...</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-26 01:07:10" itemprop="dateCreated datePublished" datetime="2023-06-26T01:07:10+08:00">2023-06-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF/" itemprop="url" rel="index"><span itemprop="name">前端</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/ShortLink-Firebase_20230626/" class="post-meta-item leancloud_visitors" data-flag-title="我写了一个无需后端的短网址程序..." title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/ShortLink-Firebase_20230626/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/ShortLink-Firebase_20230626/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>了解博主的人都知道，博主曾经也是个长期混迹 HostLoc 的元老级 MJJ，即便天天被各种事情忙得抽不开身，还是会花出大量时间浏览各种 VPS 和域名相关的资讯。在那段疯狂的岁月里，博主也攒下了不少垃圾域名。</p>
+<p>不幸的是，与其他 MJJ 一样，这些域名买下来之后，基本也没怎么用过，顶多也就挂挂探针，再无其他的用途。直到某日，博主在给别人发一个长链接时，突然想到，能不能把自己的吃灰域名给利用起来，搭建一个短网址服务呢？</p>
+<p>博主调研了市场的大多数短网址程序过后，发现大多数短网址程序都是使用 PHP 实现的，并需要对接到 MySQL、PostgreSQL、SQLite 等数据库，当用户请求事前生成好的短网址时，该请求会发送到后端服务器，而后端程序会先从数据库检索到其对应到的长网址，再将长网址附在 301 或者 302 的响应中，实现跳转。</p>
+<p>但是博主却对这些要使用后端的短网址程序都不太满意，因为在实际的部署和运营中，服务器除了要处理正常的访客流量，还需要处理来自机器人的大量疯狂试探（毕竟暴露在公网的服务本身就不安全），而且后端程序部署在自己服务器上，万一程序自身出了什么 0Day 漏洞，却又正好被利用的话，那么服务器就彻底沦为别人的肉鸡了。</p>
+<p>再者，由于博主的服务器大多都是低配小鸡，随手一个 CC 攻击就能轻松拿捏博主。本着多一事不如少一事的原则，博主最终决定开发一套不依赖自建后端及数据库的短网址程序，再将前端部署于 GitHub Pages，只使用 JavaScript 做页面间的跳转，这样就能实现抵御大部分试探和攻击了。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/ShortLink-Firebase_20230626/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Serial-Binary_20230611/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Serial-Binary_20230611/" class="post-title-link" itemprop="url">论如何优雅地用串口收发数据</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-11 18:56:42" itemprop="dateCreated datePublished" datetime="2023-06-11T18:56:42+08:00">2023-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A1%AC%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">硬件</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Serial-Binary_20230611/" class="post-meta-item leancloud_visitors" data-flag-title="论如何优雅地用串口收发数据" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Serial-Binary_20230611/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Serial-Binary_20230611/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>又到了一年毕业季，让毕业生们头大的事也莫过于毕业设计了。博主所在的实验室也有一位即将毕业的大四学长，他的毕业设计方向与高速数据采集有关，简单来说，他需要将从 STM32 上采集来的数据透过串口实时发送至上位机，并在上位机上用 Python 做解析，并将数据打上时标，存入 MySQL 数据库。</p>
+<p>但是某日这位学长却找到博主，提到自己在解析串口传来的数据时遇到了延时过大和数据丢包的问题，希望博主能够帮帮忙，而博主在看完这位学长的上下位机代码过后，陷入了沉思，因为这位学长传输并处理数据的方式是这样的。</p>
+<ol>
+<li>STM32 读取传感器浮点数据，放到一个长度为 1000 的数组</li>
+<li>将数组中的数据遍历转为字符串，然后拼接为如下形式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;data_1&gt;,&lt;data_2&gt;,&lt;data_3&gt;,&lt;data_4&gt;,...\t</span><br></pre></td></tr></table></figure></li>
+<li>将该字符串从 STM32 的串口送出</li>
+<li>上位机使用 Python 以 <code>\t</code> 做为数据接收的起始和结束标志</li>
+<li>将接收到的文本字符串使用 split 方法分割，取得一个数组</li>
+<li>遍历该数组将数据类型转型回 <code>float</code></li>
+</ol>
+<p>乍看上去，这种方法好像没有任何问题，因为在许多带有串口协议的模块上（例如 NMEA 协议的 GNSS 模块），数据都是以这样的形式传输的，<strong>然而这位学长却忽略了一个重要的问题，那就是作为一个高速数据采集的项目，他程序的大部分时间却耗在了字符串处理上</strong>。</p>
+<p>博主最后给这位学长的解决方案是，将 STM32 中的传感器数据数组与一个校验和放进结构体，以组帧的方式，将结构体转为字节流，走二进制形式直接从串口送出；Python 上位机的部分则使用 <code>struct</code> 包中的 <code>unpack</code> 方法来解析下位机传来的二进制数据，直接得到来自下位机的原始数据，同时也省下了数据类型之间互转所花去的时间。</p>
+<p>这篇文章，博主会谈谈如何用这种方式优雅地透过串口稳定地传输数据，并给出示例 Arduino 下位机代码和由 Golang 和 Python 实现的上位机代码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Serial-Binary_20230611/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Soundcard-SDR_20230601/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Soundcard-SDR_20230601/" class="post-title-link" itemprop="url">探寻二十年前的声卡 SDR</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-01 13:07:10" itemprop="dateCreated datePublished" datetime="2023-06-01T13:07:10+08:00">2023-06-01</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/SDR/" itemprop="url" rel="index"><span itemprop="name">SDR</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Soundcard-SDR_20230601/" class="post-meta-item leancloud_visitors" data-flag-title="探寻二十年前的声卡 SDR" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Soundcard-SDR_20230601/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Soundcard-SDR_20230601/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>几日前和一个朋友聊起 SDR，在感叹两年的芯片短缺潮终于快要翻篇之余，朋友还提到了快二十年前他在玩的一种 SDR。</p>
+<p>RTL-SDR 的出现在 2012 年左右，值得一提的是，博主入坑 SDR 的第一台设备，也是 RTL-SDR。而在这之前，SDR 设备主要还是集中在专业领域，成本较高且功能也相对有限，仅有 USRP、BladeRF 等几种选择，对于博主这样的业余玩家来说，要是当年购买一套 USRP 或是 BladeRF，恐怕就要掏空好几个腰包了。</p>
+<p>即便如此，也没有难住那时的玩家：<strong>在遥远的当年，比较流行的一个方案就是 DIY 一块包含了射频信号采集、混频、放大、滤波的板卡，然后将其与 PC 上的声卡相连，以声卡作为 ADC，再透过软件进行信号处理，这就是声卡 SDR</strong>。</p>
+<p><img data-src="https://c.ibcl.us/Soundcard-SDR_20230601/1.png" alt="声卡 SDR 架构图"></p>
+<p>上图是一个典型的声卡 SDR 架构框图，在博主正式给出声卡 SDR 的原理图之前，还需要引入一些概念和理论做铺垫，便于以出浅入深的方式去分析及理解声卡 SDR 的工作原理。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Soundcard-SDR_20230601/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/BondBot-Telegram_20230524/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/BondBot-Telegram_20230524/" class="post-title-link" itemprop="url">老乡别走：搭建自己的 Telegram 可转债机器人</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-24 22:56:42" itemprop="dateCreated datePublished" datetime="2023-05-24T22:56:42+08:00">2023-05-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%82%A1%E5%B8%82/" itemprop="url" rel="index"><span itemprop="name">股市</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/BondBot-Telegram_20230524/" class="post-meta-item leancloud_visitors" data-flag-title="老乡别走：搭建自己的 Telegram 可转债机器人" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/BondBot-Telegram_20230524/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/BondBot-Telegram_20230524/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在博主的高中时代，曾经意外接触到一本名为「段子手股民的忏悔录」的书，出于兴趣，在博主满 18 岁那天的早上，便果断给自己开了一个股票账户，从此入坑大 A 股海。</p>
+<p>由于博主资金体量不大，而大 A 市场也不能以零股形式交易，所以博主长期以来的持仓，都只能靠几只稳如老狗的银行股和几个行业 ETF 苟活。直到有一天，博主在刷雪球时看到，原来像博主这样的小散户，还能透过可转债打新的方式，靠运气赚点零花钱。</p>
+<p>不幸的是，可转债这种东西，并不是每天都能申购的。作为一个懒人，每天一早打开炒股软件，生无可恋地看一眼自己绿油油的收益，再去看有没有能申购的新可转债，实在是一件很痛苦的事情。</p>
+<p>多亏博主心理比较强大，也坚信价值投资的意义，否则就成为被收割的韭菜了。在痛苦之余，博主也曾思考，能否写一个小程序，获取每日的可转债并通知博主申购呢？</p>
+<p>也好在博主是 Telegram 的常驻用户，同时，Telegram 也提供了健全的生态，以支援平台下的机器人开发，于是博主萌生了写一个 Telegram 可转债机器人的想法。</p>
+<p>这篇文章，将会分享博主编写简单的 Telegram 可转债机器人时的一些思路，并介绍如何将其搭建在云服务器上，实现每天给自己或是往几个朋友组建的小群里自动推送可供当日申购的可转债，推动「共同富裕」。</p>
+<p><img data-src="https://c.ibcl.us/BondBot-Telegram_20230524/1.jpg" alt="博主 2022 打新收益"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/BondBot-Telegram_20230524/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/JJY-Timecode_20230522/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/JJY-Timecode_20230522/" class="post-title-link" itemprop="url">记与一款 JJY 电波钟模块的邂逅</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-22 23:08:00" itemprop="dateCreated datePublished" datetime="2023-05-22T23:08:00+08:00">2023-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%94%B5%E6%B3%A2%E9%92%9F/" itemprop="url" rel="index"><span itemprop="name">电波钟</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/JJY-Timecode_20230522/" class="post-meta-item leancloud_visitors" data-flag-title="记与一款 JJY 电波钟模块的邂逅" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/JJY-Timecode_20230522/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/JJY-Timecode_20230522/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>某日，博主在逛淘宝时，发现了一款电波钟模块。</p>
+<p><img data-src="https://c.ibcl.us/JJY_Timecode_20230522/1.png" alt="JJY 电波钟模块"></p>
+<p>博主第一次听说长波授时的概念还是在上初中的时候，出于兴趣，当年也下单了过一个 CASIO 出口转内销的电波授时闹钟。如今距离买下这款闹钟已有快七年时间了，虽然当年买的电波钟外壳已经泛黄，但是时间仍然分毫不差。如今刷到这么一个模块，又唤起了博主的回忆。</p>
+<p>在这七年间，博主也曾经尝试弄清楚电波授时的解码原理以及数据报文格式，但是迫于当年的知识面与技术并不到位，所以在几次尝试与几次失败后，博主便放弃了。</p>
+<p>而如今博主作为一个通信工程大学牲，想要再次挑战弄懂 JJY 长波授时的时间码结构，并尝试编写程序解码准确时间，于是果断下单了这款模块。</p>
+<p>在收到模块后，经过两天的不懈努力，博主也终于成功达成了目标，了结了七年来的心事。这篇文章，会分享博主玩转 JJY 时间码模块的过程。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/JJY-Timecode_20230522/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Loongson-Kernel_20230521/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/Loongson-Kernel_20230521/" class="post-title-link" itemprop="url">龙芯 2K1000 EDU 斗智斗勇记</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-21 11:33:11" itemprop="dateCreated datePublished" datetime="2023-05-21T11:33:11+08:00">2023-05-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Loongson-Kernel_20230521/" class="post-meta-item leancloud_visitors" data-flag-title="龙芯 2K1000 EDU 斗智斗勇记" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Loongson-Kernel_20230521/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Loongson-Kernel_20230521/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>博主最近在折腾一个地震监测相关的项目，项目中的测站上位机程序需要运行在 Linux 平台上。</p>
+<p>由于博主的地震项目需要在异地多点部署测站，要是再从网上采购一堆 Linux 开发板的话，又会是一大笔开销。在翻遍实验室库存过后，博主发现了一堆往届学生参加嵌入式比赛留下的龙芯 2K1000 EDU 板子。</p>
+<p>2K1000 EDU 是 mips64el 架构，说来惭愧，博主此前实际用过的 mips 架构的设备，也就只有几台路由器了。</p>
+<p>当然，博主相信，这玩意肯定还是比路由器强一点的，不过能强多少，就不好说了。抱着测站程序「能跑就行」的想法，博主取了一块板子，准备上电装系统看看究竟。</p>
+<p>本以为 2K1000 EDU 除了架构不太一样，性能比较拉垮一点之外，其他方面同别的 ARM Linux 系列开发板别无两样，结果却出乎博主的意料：本来预计一两个小时就能搞定的事情，在 2K1000 EDU 上折腾了快一天才完成。</p>
+<p>所以，这篇文章将详细介绍博主与 2K1000 EDU 斗智斗勇的过程。</p>
+<p><img data-src="https://c.ibcl.us/Loongson-Kernel_20230520/1.jpg" alt="即将寄走的龙芯 2K1000 EDU"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/Loongson-Kernel_20230521/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

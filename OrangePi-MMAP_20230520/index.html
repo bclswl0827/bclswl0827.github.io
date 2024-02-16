@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="博主曾经接手的一个项目，主控板连续好几年使用的一直是 Rapsberry Pi，但是随着 Raspberry Pi 价格长期居高不下，让人直呼伤不起，只能考虑把板子换成更便宜的方案，再三权衡之下，博主最后选了 Orange Pi One。 Orange Pi One 使用了 Allwinner H3 作为 CPU，内建 512 MB 运存，对于博主的项目来说绰绰有余，另外，Orange Pi On">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Orange Pi 使用 mmap 控制 GPIO">
+<meta property="og:url" content="https://ibcl.us/OrangePi-MMAP_20230520/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="博主曾经接手的一个项目，主控板连续好几年使用的一直是 Rapsberry Pi，但是随着 Raspberry Pi 价格长期居高不下，让人直呼伤不起，只能考虑把板子换成更便宜的方案，再三权衡之下，博主最后选了 Orange Pi One。 Orange Pi One 使用了 Allwinner H3 作为 CPU，内建 512 MB 运存，对于博主的项目来说绰绰有余，另外，Orange Pi On">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/OrangePi-MMAP_20230520/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/OrangePi-MMAP_20230520/2.gif">
+<meta property="og:image" content="https://c.ibcl.us/OrangePi-MMAP_20230520/3.png">
+<meta property="article:published_time" content="2023-05-20T05:08:00.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Orange Pi">
+<meta property="article:tag" content="MMAP">
+<meta property="article:tag" content="GPIO">
+<meta property="article:tag" content="硬件">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="Rapsberry Pi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/OrangePi-MMAP_20230520/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/OrangePi-MMAP_20230520/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Orange Pi 使用 mmap 控制 GPIO | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/OrangePi-MMAP_20230520/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Orange Pi 使用 mmap 控制 GPIO
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-20 13:08:00" itemprop="dateCreated datePublished" datetime="2023-05-20T13:08:00+08:00">2023-05-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/OrangePi-MMAP_20230520/" class="post-meta-item leancloud_visitors" data-flag-title="Orange Pi 使用 mmap 控制 GPIO" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/OrangePi-MMAP_20230520/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/OrangePi-MMAP_20230520/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>博主曾经接手的一个项目，主控板连续好几年使用的一直是 Rapsberry Pi，但是随着 Raspberry Pi 价格长期居高不下，让人直呼伤不起，只能考虑把板子换成更便宜的方案，再三权衡之下，博主最后选了 Orange Pi One。</p>
+<p>Orange Pi One 使用了 Allwinner H3 作为 CPU，内建 512 MB 运存，对于博主的项目来说绰绰有余，另外，Orange Pi One 的 GPIO 定义和 Raspberry Pi 相同，而且闲鱼上的售价普遍 70 左右，和树莓派现在的售价比起来，直接少了个 0，让人很难不心动。</p>
+<p>悲催的是，这个项目恰好就用到了 Raspberry Pi 的 GPIO，而且原本的代码中并没有用外部库去操作 GPIO，只是使用了<strong>内存映射</strong>的方式，透过读写内存来操作 GPIO。</p>
+<p>我们知道，不同的 CPU 之间，内部的寄存器集合与地址也都会有所不同，所以在博主想碰碰运气，尝试过直接换板子，发现果然运行不了之后，博主只能很不情愿地改代码去了。</p>
+<p>这篇文章将会介绍博主如何理解 mmap 的概念，如何看懂 Allwinner H3 提供的 Datasheet，以及如何成功编写程序控制 GPIO 的一整套流程，希望能对您有所帮助。</p>
+<p><img data-src="https://c.ibcl.us/OrangePi-MMAP_20230520/1.jpg" alt="博主的 Orange Pi One"></p>
+<span id="more"></span>
+
+<h1 id="为什么要用-mmap"><a href="#为什么要用-mmap" class="headerlink" title="为什么要用 mmap"></a>为什么要用 mmap</h1><p>简单来说，mmap 可以透过将一片物理内存空间映射到应用的虚拟内存空间，这样一来，我们就能直接在应用层就能操作 CPU 的寄存器。</p>
+<p>在常规的开发中，我们通常会用 Linux 通用的 sysfs 方式去控制 GPIO，使 GPIO 输出指定的电平，或是从 GPIO 读取外部向 GPIO 输入的电平。</p>
+<p>但是，这种方法只适合于一般对速度要求不高的场合，在需要高速访问 GPIO 的场合，这种方式还是比较吃力的。这是因为 sysfs 是透过文件 IO 操作进行 GPIO 控制，每次操作都需要进行文件系统的访问和系统调用，这都会引入一定的性能开销。</p>
+<p>所以，若要破除额外的性能开销，突破文件 IO 瓶颈，那就需要想办法绕过它们，而 mmap 这种方法可以直接在物理内存中进行 GPIO 相关操作，按理说可以实现更快速的 GPIO 访问速度。</p>
+<h1 id="mmap-控制-GPIO-的原理"><a href="#mmap-控制-GPIO-的原理" class="headerlink" title="mmap 控制 GPIO 的原理"></a>mmap 控制 GPIO 的原理</h1><p>我们知道，开发板上的 GPIO 实际上就是 CPU 上的一部分引脚，由于这一部分引脚可以透过程序控制，那么 CPU 内必然有与之对应的寄存器，那么也就必然有与之对应的物理地址区段，同时这个区段是不会改变的。而我们可以透过 mmap 操作 CPU 内部寄存器，那么就可以透过这种方式控制指定的 GPIO。</p>
+<p>要透过 mmap 控制 GPIO，流程有如下 5 步。</p>
+<ol>
+<li>打开 <code>/dev/mem</code> 装置文件</li>
+<li>确定 GPIO 控制寄存器的物理地址</li>
+<li>使用 mmap 映射物理地址到用户空间</li>
+<li>访问 GPIO 控制寄存器</li>
+<li>取消 mmap 映射</li>
+</ol>
+<p>在这 5 步中，第 2 步需要查阅 CPU 厂商所提供的 Datasheet 来确定。</p>
+<h1 id="查阅-Allwinner-H3-Datasheet"><a href="#查阅-Allwinner-H3-Datasheet" class="headerlink" title="查阅 Allwinner H3 Datasheet"></a>查阅 Allwinner H3 Datasheet</h1><p>透过 Google，博主找到了 <span class="exturl" data-url="aHR0cHM6Ly9kbC5saW51eC1zdW54aS5vcmcvSDMvQWxsd2lubmVyX0gzX0RhdGFzaGVldF9WMS4wLnBkZg==">Allwinner H3 的 Datasheet<i class="fa fa-external-link-alt"></i></span>。由于 Datasheet 有惊人的 618 页，不可能每页都看完，我们只需要按下 Ctrl + F 搭配搜索如下关键词即可。</p>
+<ul>
+<li>Base Address：基础地址</li>
+<li>Register：寄存器</li>
+</ul>
+<p>在第 90 页 4.3.4. Register List 位置，我们得知，<strong>CPU 内所有寄存器基础地址为 0x01C20000</strong>；继续搜索后，在 318 页 4.22.1. Port Controller Register List 位置，可以了解到 Allwinner H3 的 <strong>GPIO 寄存器基础地址为 0x01C20800</strong>。由此，我们可以得出结论，<strong>GPIO 寄存器基础地址</strong>相对于 <strong>CPU 内所有寄存器基础地址</strong>的偏移量为 0x0800。</p>
+<p>接下来，我们需要知道 GPIO 寄存器的具体配置。在 318 页 4.22.2. Port Controller Register 位置，我们可以看到寄存器表格，去除中断引脚，对于我们有用的寄存器配置如下。</p>
+<table>
+<thead>
+<tr>
+<th align="left">寄存器名称</th>
+<th align="left">寄存器偏移</th>
+<th align="left">寄存器描述</th>
+<th align="left">博主注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Pn_CFG0</td>
+<td align="left">n*0x24 + 0x00</td>
+<td align="left">GPIO n 配置寄存器 0，用于配置 GPIO n 的模式</td>
+<td align="left">先确定好要设定 GPIO 模式的端口号（如 GPIO_A）以及管脚号（如 A6）</td>
+</tr>
+<tr>
+<td align="left">Pn_CFG1</td>
+<td align="left">n*0x24 + 0x04</td>
+<td align="left">GPIO n 配置寄存器 1，用于配置 GPIO n 的模式</td>
+<td align="left">然后在 Datasheet 中此表格后续的 Pn Configure Register x 表中</td>
+</tr>
+<tr>
+<td align="left">Pn_CFG2</td>
+<td align="left">n*0x24 + 0x08</td>
+<td align="left">GPIO n 配置寄存器 2，用于配置 GPIO n 的模式</td>
+<td align="left">n = [0…6]，x = [1…3] 找到确切管脚对应之「位」与模式之「值」</td>
+</tr>
+<tr>
+<td align="left">Pn_CFG3</td>
+<td align="left">n*0x24 + 0x0C</td>
+<td align="left">GPIO n 配置寄存器 3，用于配置 GPIO n 的模式</td>
+<td align="left">（上文提及之代号 n 亦指代 GPIO 端口号 A、C、D、E、F、G、L 之一）</td>
+</tr>
+<tr>
+<td align="left">Pn_DAT</td>
+<td align="left">n*0x24 + 0x10</td>
+<td align="left">GPIO n 数据寄存器，用于存取 GPIO n 的状态</td>
+<td align="left">输入模式时对应位表示引脚状态；输出模式时引脚状态与对应位相同</td>
+</tr>
+<tr>
+<td align="left">Pn_DRV0</td>
+<td align="left">n*0x24 + 0x14</td>
+<td align="left">GPIO n 驱动能力寄存器 0，用于配置 GPIO n 的驱动能力</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Pn_DRV1</td>
+<td align="left">n*0x24 + 0x18</td>
+<td align="left">GPIO n 驱动能力寄存器 1，用于配置 GPIO n 的驱动能力</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Pn_PUL0</td>
+<td align="left">n*0x24 + 0x1C</td>
+<td align="left">GPIO n 上拉电阻控制寄存器 0，用于配置 GPIO n 的上拉电阻</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Pn_PUL1</td>
+<td align="left">n*0x24 + 0x20</td>
+<td align="left">GPIO n 上拉电阻控制寄存器 1，用于配置 GPIO n 的上拉电阻</td>
+<td align="left"></td>
+</tr>
+</tbody></table>
+<p>此外，虽然我们知道了 GPIO 的寄存器基础地址为 0x01C20800，但是我们要控制的 GPIO 是 GPIO_A，所以我们还需要知道 GPIO_A 相对于 GPIO 寄存器基础地址的偏移量。</p>
+<p>继续翻阅 Datasheet，我们可以在 319 页 4.22.2.1. PA Configure Register 0 位置了解到，GPIO_A 端口寄存器相对于 GPIO 寄存器基础地址的偏移量为 0x00，同时 GPIO_A 端口寄存器的所有配置结束于 0x01C20820，位宽 0x20 字节。</p>
+<p>综上所述，我们可以用一个结构体类型 <code>gpio_t</code> 来描述上述寄存器。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">uint32_t</span> config[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">uint32_t</span> data;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">uint32_t</span> driver[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">uint32_t</span> pull[<span class="number">2</span>];</span><br><span class="line">&#125; <span class="type">gpio_t</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在这个结构体中，<code>volatile</code> 关键字用于告诉编译器，这个结构体中的成员变量可能会被其他线程或者中断修改，所以编译器不要对这个结构体进行优化。</p>
+<p>了解了 GPIO 寄存器的配置，我们可以透过一个实例来说明如何配置 GPIO。</p>
+<p>例如，我们要控制 GPIO_A20 为输出模式，并输出高电平，透过查询 Datasheet，我们需要得知以下几条与 GPIO_A20 相关的资讯。</p>
+<ol>
+<li>GPIO_A20 的配置位于 PA_CFG2_REG 寄存器中第 20-22 位，其值为 0x01 时为输出模式</li>
+<li>当 PA_DATA_REG 寄存器第 20 位值为 0x01 时，即可输出高电平</li>
+</ol>
+<p>又例如，我们要控制 GPIO_A8 为输入模式，并使能上拉电阻，透过查询 Datasheet，我们需要得知以下几条与 GPIO_A8 相关的资讯。</p>
+<ol>
+<li>GPIO_A8 的配置位于 PA_CFG1_REG 寄存器中第 0-2 位，其值为 0x00 时为输入模式</li>
+<li>当 PA_PULL0_REG 寄存器第 16-17 位值为 0x01 时，即可使能上拉电阻</li>
+</ol>
+<h1 id="编程解决问题"><a href="#编程解决问题" class="headerlink" title="编程解决问题"></a>编程解决问题</h1><p>有了以上知识做铺垫，我们就可以开始编写程序解决问题了。</p>
+<p>博主将以 C 语言、Go 语言与 Python 为例，透过 mmap 操作 GPIO，实现 GPIO_A21 管脚带动 LED 灯闪烁，同时读取 GPIO_A8 管脚电平并打印到终端。</p>
+<p><strong>由于 GPIO_A8 管脚设定了上拉使能，所以除非用户将这个管脚接地，否则读出的电平始终为高</strong>；同理，若用户设定了下拉使能，则除非用户将这个管脚接到 Vcc，否则读出的电平始终为低。</p>
+<h2 id="C-语言版本"><a href="#C-语言版本" class="headerlink" title="C 语言版本"></a>C 语言版本</h2><p>以下是 C 语言的版本，其中，<code>gpio_t</code> 结构体的定义与上文相同，<code>set_output</code> 函数用于将 GPIO 端口设置为输出模式，<code>set_input</code> 函数用于将 GPIO 端口设置为输入模式，<code>set_level</code> 函数用于设定 GPIO 端口电平，<code>get_level</code> 函数用于读取 GPIO 端口的电平。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/mman.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// GPIO_A 配置寄存器列表</span></span><br><span class="line"><span class="comment">// &#123; 寄存器号, 寄存器位 &#125;</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> GPIO_A_CONFIG[<span class="number">22</span>][<span class="number">2</span>] = &#123;</span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">0</span>&#125;,   <span class="comment">// PA0</span></span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">4</span>&#125;,   <span class="comment">// PA1</span></span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">8</span>&#125;,   <span class="comment">// PA2</span></span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">12</span>&#125;,  <span class="comment">// PA3</span></span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">16</span>&#125;,  <span class="comment">// PA4</span></span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">20</span>&#125;,  <span class="comment">// PA5</span></span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">24</span>&#125;,  <span class="comment">// PA6</span></span><br><span class="line">    &#123;<span class="number">0</span>, <span class="number">28</span>&#125;,  <span class="comment">// PA7</span></span><br><span class="line"></span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">0</span>&#125;,   <span class="comment">// PA8</span></span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">4</span>&#125;,   <span class="comment">// PA9</span></span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">8</span>&#125;,   <span class="comment">// PA10</span></span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">12</span>&#125;,  <span class="comment">// PA11</span></span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">16</span>&#125;,  <span class="comment">// PA12</span></span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">20</span>&#125;,  <span class="comment">// PA13</span></span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">24</span>&#125;,  <span class="comment">// PA14</span></span><br><span class="line">    &#123;<span class="number">1</span>, <span class="number">28</span>&#125;,  <span class="comment">// PA15</span></span><br><span class="line"></span><br><span class="line">    &#123;<span class="number">2</span>, <span class="number">0</span>&#125;,   <span class="comment">// PA16</span></span><br><span class="line">    &#123;<span class="number">2</span>, <span class="number">4</span>&#125;,   <span class="comment">// PA17</span></span><br><span class="line">    &#123;<span class="number">2</span>, <span class="number">8</span>&#125;,   <span class="comment">// PA18</span></span><br><span class="line">    &#123;<span class="number">2</span>, <span class="number">12</span>&#125;,  <span class="comment">// PA19</span></span><br><span class="line">    &#123;<span class="number">2</span>, <span class="number">16</span>&#125;,  <span class="comment">// PA20</span></span><br><span class="line">    &#123;<span class="number">2</span>, <span class="number">20</span>&#125;,  <span class="comment">// PA21</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 寄存器基础地址</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ALLWINNER_H3_BASE 0x01C20000</span></span><br><span class="line"><span class="comment">// GPIO_A 相对于 ALLWINNER_H3_BASE 偏移量</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> GPIO_PA_OFFSET 0x0800</span></span><br><span class="line"><span class="comment">// 指定在使用 mmap 函数时要映射的区域大小</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MMAP_SIZE 0x1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// GPIO 模式设定</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">GPIO_MODE</span> &#123;</span><br><span class="line">    INPUT = <span class="number">0</span>,</span><br><span class="line">    OUTPUT,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// GPIO 电平设定</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">GPIO_LEVEL</span> &#123;</span><br><span class="line">    LOW = <span class="number">0</span>,</span><br><span class="line">    HIGH,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// GPIO 上拉下拉设定</span></span><br><span class="line"><span class="keyword">enum</span> <span class="title class_">GPIO_PULL</span> &#123;</span><br><span class="line">    PULL_OFF = <span class="number">0</span>,</span><br><span class="line">    PULL_UP,</span><br><span class="line">    PULL_DOWN,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// GPIO 端口寄存器类型</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">uint32_t</span> config[<span class="number">4</span>];</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">uint32_t</span> data;</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">uint32_t</span> driver[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">volatile</span> <span class="type">uint32_t</span> pull[<span class="number">2</span>];</span><br><span class="line">&#125; <span class="type">gpio_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置 GPIO_A 的指定管脚为输出模式</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">set_output</span><span class="params">(<span class="type">gpio_t</span>* gpio, <span class="type">int</span> pin)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 取得寄存器号与寄存器位</span></span><br><span class="line">    <span class="type">int</span> reg = GPIO_A_CONFIG[pin][<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> bit = GPIO_A_CONFIG[pin][<span class="number">1</span>];</span><br><span class="line">    <span class="comment">// 清空原有配置</span></span><br><span class="line">    gpio-&gt;config[reg] &amp;= ~(<span class="number">0x0F</span> &lt;&lt; bit);</span><br><span class="line">    <span class="comment">// 设为输出模式</span></span><br><span class="line">    gpio-&gt;config[reg] |= (OUTPUT &lt;&lt; bit);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 配置 GPIO_A 的指定管脚为输入模式</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">set_input</span><span class="params">(<span class="type">gpio_t</span>* gpio, <span class="type">int</span> pin)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 取得寄存器号与寄存器位</span></span><br><span class="line">    <span class="type">int</span> reg = GPIO_A_CONFIG[pin][<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> bit = GPIO_A_CONFIG[pin][<span class="number">1</span>];</span><br><span class="line">    <span class="comment">// 清空原有配置</span></span><br><span class="line">    gpio-&gt;config[reg] &amp;= ~(<span class="number">0x0F</span> &lt;&lt; bit);</span><br><span class="line">    <span class="comment">// 设为输入模式</span></span><br><span class="line">    gpio-&gt;config[reg] |= (INPUT &lt;&lt; bit);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设定 GPIO_A 的指定管脚上拉下拉</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">set_pull</span><span class="params">(<span class="type">gpio_t</span>* gpio, <span class="type">int</span> pin, <span class="type">int</span> pull)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 取得寄存器号</span></span><br><span class="line">    <span class="type">int</span> reg = pin / <span class="number">16</span>;</span><br><span class="line">    <span class="comment">// 取得寄存器位</span></span><br><span class="line">    <span class="type">int</span> bit = (pin % <span class="number">16</span>) * <span class="number">2</span>;</span><br><span class="line">    <span class="comment">// 清空原有配置</span></span><br><span class="line">    gpio-&gt;pull[reg] &amp;= ~(<span class="number">0x03</span> &lt;&lt; bit);</span><br><span class="line">    <span class="comment">// 设定上拉下拉</span></span><br><span class="line">    gpio-&gt;pull[reg] |= (<span class="type">uint32_t</span>)pull &lt;&lt; bit;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 设定 GPIO_A 的指定管脚电平</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">set_level</span><span class="params">(<span class="type">gpio_t</span>* gpio, <span class="type">int</span> pin, <span class="type">int</span> level)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span> (level) &#123;</span><br><span class="line">        <span class="keyword">case</span> HIGH:</span><br><span class="line">            gpio-&gt;data |= (<span class="number">1</span> &lt;&lt; pin);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">case</span> LOW:</span><br><span class="line">            gpio-&gt;data &amp;= ~(<span class="number">1</span> &lt;&lt; pin);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        defaults:</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读取 GPIO_A 的指定管脚电平</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">get_level</span><span class="params">(<span class="type">gpio_t</span>* gpio, <span class="type">int</span> pin)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 取得寄存器号与寄存器位</span></span><br><span class="line">    <span class="type">int</span> reg = GPIO_A_CONFIG[pin][<span class="number">0</span>];</span><br><span class="line">    <span class="type">int</span> bit = GPIO_A_CONFIG[pin][<span class="number">1</span>];</span><br><span class="line">    <span class="comment">// 清空原有配置</span></span><br><span class="line">    gpio-&gt;config[reg] &amp;= ~(<span class="number">0x0F</span> &lt;&lt; bit);</span><br><span class="line">    <span class="keyword">return</span> (gpio-&gt;data &gt;&gt; pin) &amp; <span class="number">0x01</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 以读写模式打开 /dev/mem 装置文件</span></span><br><span class="line">    <span class="type">int</span> mem = <span class="built_in">open</span>(<span class="string">&quot;/dev/mem&quot;</span>, O_RDWR | O_SYNC);</span><br><span class="line">    <span class="keyword">if</span> (mem &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;open /dev/mem&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将寄存器映射到内存</span></span><br><span class="line">    <span class="type">char</span>* reg = (<span class="type">char</span>*)<span class="built_in">mmap</span>(<span class="literal">NULL</span>, MMAP_SIZE, PROT_READ | PROT_WRITE, MAP_SHARED,</span><br><span class="line">                            mem, ALLWINNER_H3_BASE);</span><br><span class="line">    <span class="keyword">if</span> (reg == MAP_FAILED) &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;mmap&quot;</span>);</span><br><span class="line">        <span class="built_in">close</span>(mem);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 将映射的地址偏移量应用于 GPIO_A 寄存器类型</span></span><br><span class="line">    <span class="type">gpio_t</span>* gpio = (<span class="type">gpio_t</span>*)&amp;reg[GPIO_PA_OFFSET];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设定 GPIO_A21 为输出模式</span></span><br><span class="line">    <span class="built_in">set_output</span>(gpio, <span class="number">21</span>);</span><br><span class="line">    <span class="comment">// 设定 GPIO_A8 为输入模式</span></span><br><span class="line">    <span class="built_in">set_input</span>(gpio, <span class="number">8</span>);</span><br><span class="line">    <span class="comment">// 设定 GPIO_A8 上拉使能</span></span><br><span class="line">    <span class="built_in">set_pull</span>(gpio, <span class="number">8</span>, PULL_UP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 闪烁 LED 灯并读取电平</span></span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="comment">// 闪烁 GPIO_A21 LED</span></span><br><span class="line">        <span class="built_in">set_level</span>(gpio, <span class="number">21</span>, HIGH);</span><br><span class="line">        <span class="built_in">usleep</span>(<span class="number">500000</span>);</span><br><span class="line">        <span class="built_in">set_level</span>(gpio, <span class="number">21</span>, LOW);</span><br><span class="line">        <span class="built_in">usleep</span>(<span class="number">500000</span>);</span><br><span class="line">        <span class="comment">// 读取 GPIO_A8 电平并打印</span></span><br><span class="line">        <span class="type">int</span> level = <span class="built_in">get_level</span>(gpio, <span class="number">8</span>);</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;GPIO_A8 level: %d\n&quot;</span>, level);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解除内存映射</span></span><br><span class="line">    <span class="built_in">munmap</span>(gpio, MMAP_SIZE);</span><br><span class="line">    <span class="built_in">close</span>(mem);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Go-语言版本"><a href="#Go-语言版本" class="headerlink" title="Go 语言版本"></a>Go 语言版本</h2><p>作为一个 Gopher，当然也要用 Go 语言来实现一遍了。</p>
+<p>在 Go 语言的版本中，内存映射使用了 <code>syscall.Mmap()</code> 和 <code>syscall.Munmap()</code> 函数。</p>
+<p>此外，在之前的 C 代码中，使用了强制类型转换 <code>(gpio_t *)</code> 和解引用运算符 <code>*</code> 来进行指针转换，而在 Go 版本的实现中，指针转换是使用 <code>unsafe.Pointer</code> 类型与 <code>unsafe.Pointer()</code> 函数来进行指针转换，从而实现了直接操作内存地址。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;os&quot;</span></span><br><span class="line">	<span class="string">&quot;syscall&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">	<span class="string">&quot;unsafe&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// GPIO_A 配置寄存器列表</span></span><br><span class="line"><span class="comment">// &#123; 寄存器号, 寄存器位 &#125;</span></span><br><span class="line"><span class="keyword">var</span> GPIO_A_CONFIG = [<span class="number">22</span>][<span class="number">2</span>]<span class="type">int</span>&#123;</span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">0</span>&#125;,  <span class="comment">// PA0</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">4</span>&#125;,  <span class="comment">// PA1</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">8</span>&#125;,  <span class="comment">// PA2</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">12</span>&#125;, <span class="comment">// PA3</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">16</span>&#125;, <span class="comment">// PA4</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">20</span>&#125;, <span class="comment">// PA5</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">24</span>&#125;, <span class="comment">// PA6</span></span><br><span class="line">	&#123;<span class="number">0</span>, <span class="number">28</span>&#125;, <span class="comment">// PA7</span></span><br><span class="line"></span><br><span class="line">	&#123;<span class="number">1</span>, <span class="number">0</span>&#125;,  <span class="comment">// PA8</span></span><br><span class="line">	&#123;<span class="number">1</span>, <span class="number">4</span>&#125;,  <span class="comment">// PA9</span></span><br><span class="line">	&#123;<span class="number">1</span>, <span class="number">8</span>&#125;,  <span class="comment">// PA10</span></span><br><span class="line">	&#123;<span class="number">1</span>, <span class="number">12</span>&#125;, <span class="comment">// PA11</span></span><br><span class="line">	&#123;<span class="number">1</span>, <span class="number">16</span>&#125;, <span class="comment">// PA12</span></span><br><span class="line">	&#123;<span class="number">1</span>, <span class="number">20</span>&#125;, <span class="comment">// PA13</span></span><br><span class="line">	&#123;<span class="number">1</span>, <span class="number">24</span>&#125;, <span class="comment">// PA14</span></span><br><span class="line">	&#123;<span class="number">1</span>, <span class="number">28</span>&#125;, <span class="comment">// PA15</span></span><br><span class="line"></span><br><span class="line">	&#123;<span class="number">2</span>, <span class="number">0</span>&#125;,  <span class="comment">// PA16</span></span><br><span class="line">	&#123;<span class="number">2</span>, <span class="number">4</span>&#125;,  <span class="comment">// PA17</span></span><br><span class="line">	&#123;<span class="number">2</span>, <span class="number">8</span>&#125;,  <span class="comment">// PA18</span></span><br><span class="line">	&#123;<span class="number">2</span>, <span class="number">12</span>&#125;, <span class="comment">// PA19</span></span><br><span class="line">	&#123;<span class="number">2</span>, <span class="number">16</span>&#125;, <span class="comment">// PA20</span></span><br><span class="line">	&#123;<span class="number">2</span>, <span class="number">20</span>&#125;, <span class="comment">// PA21</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	<span class="comment">// 寄存器基础地址</span></span><br><span class="line">	ALLWINNER_H3_BASE = <span class="number">0x01C20000</span></span><br><span class="line">	<span class="comment">// GPIO_A 相对于 ALLWINNER_H3_BASE 偏移量</span></span><br><span class="line">	GPIO_PA_OFFSET = <span class="number">0x0800</span></span><br><span class="line">	<span class="comment">// 指定在使用 mmap 函数时要映射的区域大小</span></span><br><span class="line">	MMAP_SIZE = <span class="number">0x1000</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// GPIO 模式设定</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	INPUT  = <span class="number">0</span></span><br><span class="line">	OUTPUT = <span class="number">1</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// GPIO 电平设定</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	LOW  = <span class="number">0</span></span><br><span class="line">	HIGH = <span class="number">1</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 上拉下拉设定</span></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	PULL_OFF  = <span class="number">0</span></span><br><span class="line">	PULL_UP   = <span class="number">1</span></span><br><span class="line">	PULL_DOWN = <span class="number">2</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// GPIO 端口寄存器类型</span></span><br><span class="line"><span class="keyword">type</span> gpio_t <span class="keyword">struct</span> &#123;</span><br><span class="line">	config [<span class="number">4</span>]<span class="type">uint32</span></span><br><span class="line">	data   <span class="type">uint32</span></span><br><span class="line">	driver [<span class="number">2</span>]<span class="type">uint32</span></span><br><span class="line">	pull   [<span class="number">2</span>]<span class="type">uint32</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setOutput</span><span class="params">(gpio *gpio_t, pin <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 取得寄存器号与寄存器位</span></span><br><span class="line">	reg := GPIO_A_CONFIG[pin][<span class="number">0</span>]</span><br><span class="line">	bit := GPIO_A_CONFIG[pin][<span class="number">1</span>]</span><br><span class="line">	<span class="comment">// 清空原有配置</span></span><br><span class="line">	gpio.config[reg] &amp;= ^(<span class="number">0x0F</span> &lt;&lt; bit)</span><br><span class="line">	<span class="comment">// 设为输出模式</span></span><br><span class="line">	gpio.config[reg] |= OUTPUT &lt;&lt; bit</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setInput</span><span class="params">(gpio *gpio_t, pin <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 取得寄存器号与寄存器位</span></span><br><span class="line">	reg := GPIO_A_CONFIG[pin][<span class="number">0</span>]</span><br><span class="line">	bit := GPIO_A_CONFIG[pin][<span class="number">1</span>]</span><br><span class="line">	<span class="comment">// 清空原有配置</span></span><br><span class="line">	gpio.config[reg] &amp;= ^(<span class="number">0x0F</span> &lt;&lt; bit)</span><br><span class="line">	<span class="comment">// 设为输入模式</span></span><br><span class="line">	gpio.config[reg] |= INPUT &lt;&lt; bit</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setPull</span><span class="params">(gpio *gpio_t, pin, pull <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="comment">// 取得寄存器号</span></span><br><span class="line">	reg := pin / <span class="number">16</span></span><br><span class="line">    <span class="comment">// 取得寄存器位</span></span><br><span class="line">    bit := (pin % <span class="number">16</span>) * <span class="number">2</span>;</span><br><span class="line">	<span class="comment">// 清空原有配置</span></span><br><span class="line">	gpio.pull[reg] &amp;= ^(<span class="number">0x03</span> &lt;&lt; bit)</span><br><span class="line">	<span class="comment">// 设定上拉下拉</span></span><br><span class="line">	gpio.pull[reg] |= <span class="type">uint32</span>(pull) &lt;&lt; bit</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">setLevel</span><span class="params">(gpio *gpio_t, pin, level <span class="type">int</span>)</span></span> &#123;</span><br><span class="line">	<span class="keyword">switch</span> level &#123;</span><br><span class="line">	<span class="keyword">case</span> HIGH:</span><br><span class="line">		gpio.data |= <span class="number">1</span> &lt;&lt; pin</span><br><span class="line">	<span class="keyword">case</span> LOW:</span><br><span class="line">		gpio.data &amp;= ^(<span class="number">1</span> &lt;&lt; pin)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getLevel</span><span class="params">(gpio *gpio_t, pin <span class="type">int</span>)</span></span> <span class="type">int</span> &#123;</span><br><span class="line">	<span class="comment">// 取得寄存器号与寄存器位</span></span><br><span class="line">	reg := GPIO_A_CONFIG[pin][<span class="number">0</span>]</span><br><span class="line">	bit := GPIO_A_CONFIG[pin][<span class="number">1</span>]</span><br><span class="line">	<span class="comment">// 清空原有配置</span></span><br><span class="line">	gpio.config[reg] &amp;= ^(<span class="number">0x0F</span> &lt;&lt; bit)</span><br><span class="line">	<span class="keyword">return</span> <span class="type">int</span>((gpio.data &gt;&gt; pin) &amp; <span class="number">0x01</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 以读写模式打开 /dev/mem 装置文件</span></span><br><span class="line">	mem, err := os.OpenFile(<span class="string">&quot;/dev/mem&quot;</span>, os.O_RDWR|os.O_SYNC, <span class="number">0</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;Failed to open /dev/mem: %v\n&quot;</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> mem.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将寄存器映射到内存</span></span><br><span class="line">	reg, err := syscall.Mmap(<span class="type">int</span>(mem.Fd()), ALLWINNER_H3_BASE, MMAP_SIZE, syscall.PROT_READ|syscall.PROT_WRITE, syscall.MAP_SHARED)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Printf(<span class="string">&quot;Failed to mmap: %v\n&quot;</span>, err)</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> syscall.Munmap(reg)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 将映射的地址偏移量应用于 GPIO_A 寄存器类型</span></span><br><span class="line">	gpio := (*gpio_t)(unsafe.Pointer(&amp;reg[GPIO_PA_OFFSET]))</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 设定 GPIO_A21 为输出模式</span></span><br><span class="line">	setOutput(gpio, <span class="number">21</span>)</span><br><span class="line">	<span class="comment">// 设定 GPIO_A8 为输入模式</span></span><br><span class="line">	setInput(gpio, <span class="number">8</span>)</span><br><span class="line">	<span class="comment">// 设定 GPIO_A8 上拉使能</span></span><br><span class="line">	setPull(gpio, <span class="number">8</span>, PULL_UP)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 闪烁 LED 灯并读取电平</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="comment">// 闪烁 GPIO_A21 LED</span></span><br><span class="line">		setLevel(gpio, <span class="number">21</span>, HIGH)</span><br><span class="line">		time.Sleep(time.Millisecond * <span class="number">500</span>)</span><br><span class="line">		setLevel(gpio, <span class="number">21</span>, LOW)</span><br><span class="line">		time.Sleep(time.Millisecond * <span class="number">500</span>)</span><br><span class="line">		<span class="comment">// 读取 GPIO_A8 电平并打印</span></span><br><span class="line">		level := getLevel(gpio, <span class="number">8</span>)</span><br><span class="line">		fmt.Printf(<span class="string">&quot;GPIO_A8 level: %d\n&quot;</span>, level)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Python-版本"><a href="#Python-版本" class="headerlink" title="Python 版本"></a>Python 版本</h2><p>Python 版本的实现与 Go 版本的实现类似，不过在 Python 中，内存映射使用了 <code>mmap</code> 模块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> mmap <span class="keyword">import</span> mmap, MAP_SHARED, PROT_READ, PROT_WRITE</span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> <span class="built_in">open</span>, close, O_RDWR, O_SYNC</span><br><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> Structure, c_uint32</span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> <span class="type">Type</span></span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> sleep</span><br><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span> exit</span><br><span class="line"></span><br><span class="line"><span class="comment"># GPIO_A 配置寄存器列表</span></span><br><span class="line"><span class="comment"># &#123; 寄存器号, 寄存器位 &#125;</span></span><br><span class="line">GPIO_A_CONFIG = [</span><br><span class="line">    [<span class="number">0</span>, <span class="number">0</span>],  <span class="comment"># PA0</span></span><br><span class="line">    [<span class="number">0</span>, <span class="number">4</span>],  <span class="comment"># PA1</span></span><br><span class="line">    [<span class="number">0</span>, <span class="number">8</span>],  <span class="comment"># PA2</span></span><br><span class="line">    [<span class="number">0</span>, <span class="number">12</span>],  <span class="comment"># PA3</span></span><br><span class="line">    [<span class="number">0</span>, <span class="number">16</span>],  <span class="comment"># PA4</span></span><br><span class="line">    [<span class="number">0</span>, <span class="number">20</span>],  <span class="comment"># PA5</span></span><br><span class="line">    [<span class="number">0</span>, <span class="number">24</span>],  <span class="comment"># PA6</span></span><br><span class="line">    [<span class="number">0</span>, <span class="number">28</span>],  <span class="comment"># PA7</span></span><br><span class="line">    [<span class="number">1</span>, <span class="number">0</span>],  <span class="comment"># PA8</span></span><br><span class="line">    [<span class="number">1</span>, <span class="number">4</span>],  <span class="comment"># PA9</span></span><br><span class="line">    [<span class="number">1</span>, <span class="number">8</span>],  <span class="comment"># PA10</span></span><br><span class="line">    [<span class="number">1</span>, <span class="number">12</span>],  <span class="comment"># PA11</span></span><br><span class="line">    [<span class="number">1</span>, <span class="number">16</span>],  <span class="comment"># PA12</span></span><br><span class="line">    [<span class="number">1</span>, <span class="number">20</span>],  <span class="comment"># PA13</span></span><br><span class="line">    [<span class="number">1</span>, <span class="number">24</span>],  <span class="comment"># PA14</span></span><br><span class="line">    [<span class="number">1</span>, <span class="number">28</span>],  <span class="comment"># PA15</span></span><br><span class="line">    [<span class="number">2</span>, <span class="number">0</span>],  <span class="comment"># PA16</span></span><br><span class="line">    [<span class="number">2</span>, <span class="number">4</span>],  <span class="comment"># PA17</span></span><br><span class="line">    [<span class="number">2</span>, <span class="number">8</span>],  <span class="comment"># PA18</span></span><br><span class="line">    [<span class="number">2</span>, <span class="number">12</span>],  <span class="comment"># PA19</span></span><br><span class="line">    [<span class="number">2</span>, <span class="number">16</span>],  <span class="comment"># PA20</span></span><br><span class="line">    [<span class="number">2</span>, <span class="number">20</span>],  <span class="comment"># PA21</span></span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 寄存器基础地址</span></span><br><span class="line">ALLWINNER_H3_BASE = <span class="number">0x01C20000</span></span><br><span class="line"><span class="comment"># GPIO_A 相对于 ALLWINNER_H3_BASE 偏移量</span></span><br><span class="line">GPIO_PA_OFFSET = <span class="number">0x0800</span></span><br><span class="line"><span class="comment"># 指定在使用 mmap 函数时要映射的区域大小</span></span><br><span class="line">MMAP_SIZE = <span class="number">0x1000</span></span><br><span class="line"><span class="comment"># GPIO 模式设定</span></span><br><span class="line">INPUT = <span class="number">0</span></span><br><span class="line">OUTPUT = <span class="number">1</span></span><br><span class="line"><span class="comment"># GPIO 电平设定</span></span><br><span class="line">LOW = <span class="number">0</span></span><br><span class="line">HIGH = <span class="number">1</span></span><br><span class="line"><span class="comment"># 上拉下拉设定</span></span><br><span class="line">PULL_OFF = <span class="number">0</span></span><br><span class="line">PULL_UP = <span class="number">1</span></span><br><span class="line">PULL_DOWN = <span class="number">2</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># GPIO 端口寄存器类型</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">gpio_t</span>(<span class="title class_ inherited__">Structure</span>):</span><br><span class="line">    _fields_ = [</span><br><span class="line">        (<span class="string">&quot;config&quot;</span>, c_uint32 * <span class="number">4</span>),</span><br><span class="line">        (<span class="string">&quot;data&quot;</span>, c_uint32),</span><br><span class="line">        (<span class="string">&quot;driver&quot;</span>, c_uint32 * <span class="number">2</span>),</span><br><span class="line">        (<span class="string">&quot;pull&quot;</span>, c_uint32 * <span class="number">2</span>),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 GPIO_A 的指定管脚为输出模式</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_output</span>(<span class="params">gpio: <span class="type">Type</span>[gpio_t], pin: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># 取得寄存器号与寄存器位</span></span><br><span class="line">    reg, bit = GPIO_A_CONFIG[pin]</span><br><span class="line">    <span class="comment"># 清空原有配置</span></span><br><span class="line">    gpio.config[reg] &amp;= ~(<span class="number">0x0F</span> &lt;&lt; bit)</span><br><span class="line">    <span class="comment"># 设为输出模式</span></span><br><span class="line">    gpio.config[reg] |= (OUTPUT &lt;&lt; bit)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 配置 GPIO_A 的指定管脚为输入模式</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_input</span>(<span class="params">gpio: <span class="type">Type</span>[gpio_t], pin: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># 取得寄存器号与寄存器位</span></span><br><span class="line">    reg, bit = GPIO_A_CONFIG[pin]</span><br><span class="line">    <span class="comment"># 清空原有配置</span></span><br><span class="line">    gpio.config[reg] &amp;= ~(<span class="number">0x0F</span> &lt;&lt; bit)</span><br><span class="line">    <span class="comment"># 设为输入模式</span></span><br><span class="line">    gpio.config[reg] |= (INPUT &lt;&lt; bit)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定 GPIO_A 的指定管脚上拉下拉</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_pull</span>(<span class="params">gpio: <span class="type">Type</span>[gpio_t], pin: <span class="built_in">int</span>, pull: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="comment"># 取得寄存器号</span></span><br><span class="line">    reg = <span class="built_in">int</span>(pin / <span class="number">16</span>)</span><br><span class="line">    <span class="comment"># 取得寄存器位</span></span><br><span class="line">    bit = <span class="built_in">int</span>((pin % <span class="number">16</span>) * <span class="number">2</span>)</span><br><span class="line">    <span class="comment"># 清除原有配置</span></span><br><span class="line">    gpio.pull[reg] &amp;= ~(<span class="number">0x03</span> &lt;&lt; bit)</span><br><span class="line">    <span class="comment"># 设置上拉下拉</span></span><br><span class="line">    gpio.pull[reg] |= (pull &lt;&lt; bit)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 设定 GPIO_A 的指定管脚电平</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">set_level</span>(<span class="params">gpio: <span class="type">Type</span>[gpio_t], pin: <span class="built_in">int</span>, level: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">    <span class="keyword">if</span> level == HIGH:</span><br><span class="line">        gpio.data |= (<span class="number">1</span> &lt;&lt; pin)</span><br><span class="line">    <span class="keyword">elif</span> level == LOW:</span><br><span class="line">        gpio.data &amp;= ~(<span class="number">1</span> &lt;&lt; pin)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 读取 GPIO_A 的指定管脚电平</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_level</span>(<span class="params">gpio: <span class="type">Type</span>[gpio_t], pin: <span class="built_in">int</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="comment"># 取得寄存器号与寄存器位</span></span><br><span class="line">    reg, bit = GPIO_A_CONFIG[pin]</span><br><span class="line">    <span class="comment"># 清空原有配置</span></span><br><span class="line">    gpio.config[reg] &amp;= ~(<span class="number">0x0F</span> &lt;&lt; bit)</span><br><span class="line">    <span class="keyword">return</span> (gpio.data &gt;&gt; pin) &amp; <span class="number">0x01</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 以读写模式打开 /dev/mem 装置文件</span></span><br><span class="line">    mem = <span class="built_in">open</span>(<span class="string">&quot;/dev/mem&quot;</span>, O_RDWR | O_SYNC)</span><br><span class="line">    <span class="keyword">if</span> mem &lt; <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Failed to open /dev/mem&quot;</span>)</span><br><span class="line">        exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将寄存器映射到内存</span></span><br><span class="line">    reg = mmap(</span><br><span class="line">        mem, MMAP_SIZE, MAP_SHARED,</span><br><span class="line">        PROT_READ | PROT_WRITE,</span><br><span class="line">        offset=ALLWINNER_H3_BASE</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 将映射的地址偏移量应用于 GPIO_A 寄存器类型</span></span><br><span class="line">    gpio = gpio_t.from_buffer(reg, GPIO_PA_OFFSET)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 设定 GPIO_A21 为输出模式</span></span><br><span class="line">    set_output(gpio, <span class="number">21</span>)</span><br><span class="line">    <span class="comment"># 设定 GPIO_A8 为输入模式</span></span><br><span class="line">    set_input(gpio, <span class="number">8</span>)</span><br><span class="line">    <span class="comment"># 设定 GPIO_A8 上拉使能</span></span><br><span class="line">    set_pull(gpio, <span class="number">8</span>, PULL_UP)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 闪烁 LED 灯并读取电平</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 闪烁 GPIO_A21 LED</span></span><br><span class="line">        set_level(gpio, <span class="number">21</span>, HIGH)</span><br><span class="line">        sleep(<span class="number">0.5</span>)</span><br><span class="line">        set_level(gpio, <span class="number">21</span>, LOW)</span><br><span class="line">        sleep(<span class="number">0.5</span>)</span><br><span class="line">        <span class="comment"># 读取 GPIO_A8 电平并打印</span></span><br><span class="line">        level = get_level(gpio, <span class="number">8</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;GPIO_A8 level:&quot;</span>, level)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 解除内存映射</span></span><br><span class="line">    reg.close()</span><br><span class="line">    close(mem)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<h1 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h1><p><img data-src="https://c.ibcl.us/OrangePi-MMAP_20230520/2.gif" alt="GPIO_A21 闪烁的 LED"></p>
+<p><img data-src="https://c.ibcl.us/OrangePi-MMAP_20230520/3.png" alt="读取 GPIO_A8 电平"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Orange-Pi/" rel="tag"># Orange Pi</a>
+              <a href="/tags/MMAP/" rel="tag"># MMAP</a>
+              <a href="/tags/GPIO/" rel="tag"># GPIO</a>
+              <a href="/tags/%E7%A1%AC%E4%BB%B6/" rel="tag"># 硬件</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag"># 嵌入式</a>
+              <a href="/tags/Rapsberry-Pi/" rel="tag"># Rapsberry Pi</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/FY-2x_20211104/" rel="prev" title="今天继续手把手教大家如何喝茶">
+      <i class="fa fa-chevron-left"></i> 今天继续手把手教大家如何喝茶
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Loongson-Kernel_20230521/" rel="next" title="龙芯 2K1000 EDU 斗智斗勇记">
+      龙芯 2K1000 EDU 斗智斗勇记 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8-mmap"><span class="nav-number">1.</span> <span class="nav-text">为什么要用 mmap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mmap-%E6%8E%A7%E5%88%B6-GPIO-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">mmap 控制 GPIO 的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%A5%E9%98%85-Allwinner-H3-Datasheet"><span class="nav-number">3.</span> <span class="nav-text">查阅 Allwinner H3 Datasheet</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">编程解决问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC"><span class="nav-number">4.1.</span> <span class="nav-text">C 语言版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-%E8%AF%AD%E8%A8%80%E7%89%88%E6%9C%AC"><span class="nav-number">4.2.</span> <span class="nav-text">Go 语言版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Python-%E7%89%88%E6%9C%AC"><span class="nav-number">4.3.</span> <span class="nav-text">Python 版本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">5.</span> <span class="nav-text">效果展示</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/OrangePi-MMAP_20230520/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

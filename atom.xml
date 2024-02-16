@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>I BCL.</title>
+  
+  <subtitle>ibcl.us</subtitle>
+  <link href="https://ibcl.us/atom.xml" rel="self"/>
+  
+  <link href="https://ibcl.us/"/>
+  <updated>2024-02-16T05:44:13.378Z</updated>
+  <id>https://ibcl.us/</id>
+  
+  <author>
+    <name>一个不知名的网友</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ChatGemini - 一款博主开发的山寨版 ChatGPT</title>
+    <link href="https://ibcl.us/Gemini-Client_20240206/"/>
+    <id>https://ibcl.us/Gemini-Client_20240206/</id>
+    <published>2024-02-06T12:58:00.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;博主前些日子逛 V2EX 时，经常看到有人讨论各种 ChatGPT 的第三方客户端。作为一个月月被 ChatGPT-4 爆金币的人，自然对这些第三方客户端没有兴趣&lt;del&gt;（毕竟咱可是高贵的官方用户）&lt;/del&gt;。直到 Google 发布了 Gemini 模型后，博主才想要体验一下这个 AI 模型到底有多厉害，于是在 GitHub 上搜索起了 Gemini 的第三方客户端。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Gemini-Client_20240206/1.png&quot; alt=&quot;1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;好家伙，第一条结果的 &lt;code&gt;babaohuang/GeminiProChat&lt;/code&gt; 居然有 3.5k 颗 Star，看来这个客户端还是挺受欢迎的，可顺着仓库给出的演示 URL 进去，结果却让博主大失所望。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Gemini-Client_20240206/2.png&quot; alt=&quot;2&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这套客户端没有历史记录，发出去的消息也不能再编辑，&lt;strong&gt;另外 Gemini 很重要的识图功能居然也没有实现&lt;/strong&gt;，这怎么能行？&lt;/p&gt;
+&lt;p&gt;鉴于以上种种不好的使用体验，因此博主最后决定自己开发一个山寨版的 ChatGPT 客户端，名字就叫 ChatGemini。&lt;/p&gt;
+&lt;p&gt;说干就干，博主花了 3 天时间，用 React + TypeScript + TailwindCSS 打造了出一款全新的，有如下功能的 Gemini 客户端，项目一经发布，截止博主写这篇文章时，已经收获了 470 颗 Star。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;适配移动端&lt;/li&gt;
+&lt;li&gt;支持多 API 密钥分流&lt;/li&gt;
+&lt;li&gt;操作逻辑同 ChatGPT&lt;/li&gt;
+&lt;li&gt;仿 ChatGPT 3.5 界面&lt;/li&gt;
+&lt;li&gt;支持多轮聊天对话&lt;/li&gt;
+&lt;li&gt;支持上传图片进行识别&lt;/li&gt;
+&lt;li&gt;逐字输出（SSE）回应&lt;/li&gt;
+&lt;li&gt;集成 PHP 版反向代理&lt;/li&gt;
+&lt;li&gt;自定义 Gemini API 地址&lt;/li&gt;
+&lt;li&gt;可启用站点通行码防止滥用&lt;/li&gt;
+&lt;li&gt;聊天内容导出（HTML 和 PDF）&lt;/li&gt;
+&lt;li&gt;对话内容保存在 IndexedDB 中&lt;/li&gt;
+&lt;li&gt;在 AI 回应中运行 Python 代码&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Gemini-Client_20240206/3.png&quot; alt=&quot;3&quot;&gt;&lt;/p&gt;
+&lt;p&gt;这篇文章并不打算将 README 中的内容再复述一遍，因此这里只会记录一些博主在开发过程中的细节。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端" scheme="https://ibcl.us/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="前端" scheme="https://ibcl.us/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+    <category term="React" scheme="https://ibcl.us/tags/React/"/>
+    
+    <category term="TypeScript" scheme="https://ibcl.us/tags/TypeScript/"/>
+    
+    <category term="TailwindCSS" scheme="https://ibcl.us/tags/TailwindCSS/"/>
+    
+    <category term="Gemini" scheme="https://ibcl.us/tags/Gemini/"/>
+    
+    <category term="ChatGPT" scheme="https://ibcl.us/tags/ChatGPT/"/>
+    
+    <category term="Google" scheme="https://ibcl.us/tags/Google/"/>
+    
+    <category term="Serverless" scheme="https://ibcl.us/tags/Serverless/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>优雅地编写寄存器读写驱动，然后惊艳所有人</title>
+    <link href="https://ibcl.us/Register-RW_20240107/"/>
+    <id>https://ibcl.us/Register-RW_20240107/</id>
+    <published>2024-01-07T10:56:42.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在博主刚入门单片机时，经常看到其他人写出类似这样的驱动代码。&lt;/p&gt;
+&lt;figure class=&quot;highlight cpp&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// ... 其他内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0xAE&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0x00&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0x10&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0x40&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0xDA&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0x1D&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0xF1&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0x8D&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0x14&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0xA4&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;i2c_write_cmd&lt;/span&gt;(&lt;span class=&quot;number&quot;&gt;0xA6&lt;/span&gt;);&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// ... 其他内容&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;作为小白，看到一大堆的 16 进制数字，自然是一脸懵比，就算看了半天也只能从调用的函数名字勉强猜出这可能是在操作寄存器，但是具体是什么寄存器，写入的值是什么，就不得而知了。&lt;/p&gt;
+&lt;p&gt;用这种一把梭方式写出的驱动代码，不仅可读性极差，而且一旦需要修改，事情就会变得非常麻烦：由于不清楚每句代码都是在操作哪个寄存器，因此开发者又需要回到 Datasheet 中去查找寄存器的地址，然后再去查看寄存器的功能，最后才能确定要写入的值，这样的开发效率可想而知，如果时间一长，开发者便会对这个项目产生厌恶情绪，最终导致项目被搁置，而屎山项目也就此诞生。&lt;/p&gt;
+&lt;p&gt;但不幸的是，这种一把梭的方式在很多开源项目中都能看到，因此这也让有强迫症的博主非常不爽。对此，博主决定写一篇文章，以自己的 &lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtlL2V4cGxvcmVyL3RyZWUvbWFzdGVyL2Zpcm13YXJl&quot;&gt;AnyShake Explorer 项目开发途中为 ADC 编写驱动&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;的经历为例，来分享如何才能写出能惊艳到其他人的驱动代码。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="硬件" scheme="https://ibcl.us/categories/%E7%A1%AC%E4%BB%B6/"/>
+    
+    
+    <category term="单片机" scheme="https://ibcl.us/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"/>
+    
+    <category term="嵌入式" scheme="https://ibcl.us/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    <category term="C / C++" scheme="https://ibcl.us/tags/C-C/"/>
+    
+    <category term="SPI" scheme="https://ibcl.us/tags/SPI/"/>
+    
+    <category term="I2C" scheme="https://ibcl.us/tags/I2C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>吃灰开发板拿出来，咱们来听听地球吧</title>
+    <link href="https://ibcl.us/Earthquake-Sensor_20231009/"/>
+    <id>https://ibcl.us/Earthquake-Sensor_20231009/</id>
+    <published>2023-10-09T10:56:42.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;strong&gt;本项目已更名 AnyShake Project，并由博主继续维护。AnyShake Project 网站及文档位于 &lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9hbnlzaGFrZS5vcmcv&quot;&gt;anyshake.org&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;，GitHub 主页位于 &lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtl&quot;&gt;github.com/anyshake&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;由于本文写在项目有起色之初，部分内容可能已经过期或不适用，因此一切请以 AnyShake Project 官网文档给出的内容为准&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;博主在今年（2023 年）上半年在带领实验室其他成员报名「全国大学生嵌入式芯片与系统设计竞赛」时，在项目选题时却犹豫不止，大多数人都是选择在「智能小车」、「智能机器人」及其相关的项目上下功夫，而博主却想做点不一样的。&lt;/p&gt;
+&lt;p&gt;在报名截止的前夕，博主突然想起博主的&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9naXRodWIuY29tL1Rlbmt5dUNoaW1hdGE=&quot;&gt;一位朋友曾经给博主提到他买过一台名叫 Raspberry Shake 的地震仪&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;，这台地震仪可以将地震波数据整合或上传到云端，供用户调阅查看，而且&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9saXZlLmJpbGliaWxpLmNvbS8yMjg2Mzc5MA==&quot;&gt;他也长期在 Bilibili 上直播地震仪测到的实时数据&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;，在看过他的直播后，博主立刻被这台地震仪所吸引住了。&lt;/p&gt;
+&lt;p&gt;最后，博主决定用比赛方提供的龙芯开发板，造一台自己的地震仪，但由于 Raspberry Shake 不开源核心代码，所以博主只能自己动手，一切从零开始。&lt;/p&gt;
+&lt;p&gt;在历经 3 个多月紧张的开发后，博主终于实现了这套系统的基本功能，并一举挺进了全国总决赛，最终拿下了全国一等奖的好成绩。&lt;/p&gt;
+&lt;p&gt;在获得佳绩后，博主也决定将这一整套系统开源到 GitHub 上，并继续加以维护，&lt;strong&gt;毕竟博主并不是地球物理学专业的学生，所以博主也希望能有更多的专业人士能够参与到这个项目中来，从而使这个项目能够更加完善&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;先晒出几张博主测到的地震波数据图，数据均来自博主设立在重庆北碚区的自研地震仪，由博主的那位朋友托管。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Earthquake-Sensor_20231009/1.png&quot; alt=&quot;CST 2023-07-23 09:00:27 内江威远 M3.3&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Earthquake-Sensor_20231009/2.png&quot; alt=&quot;CST 2023-08-10 17:02:47 雅安石棉 M3.4&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Earthquake-Sensor_20231009/3.png&quot; alt=&quot;CST 2023-08-29 03:55:32 印尼巴厘海 M7.1&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="地震" scheme="https://ibcl.us/categories/%E5%9C%B0%E9%9C%87/"/>
+    
+    
+    <category term="Linux" scheme="https://ibcl.us/tags/Linux/"/>
+    
+    <category term="硬件" scheme="https://ibcl.us/tags/%E7%A1%AC%E4%BB%B6/"/>
+    
+    <category term="Golang" scheme="https://ibcl.us/tags/Golang/"/>
+    
+    <category term="单片机" scheme="https://ibcl.us/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"/>
+    
+    <category term="嵌入式" scheme="https://ibcl.us/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    <category term="C / C++" scheme="https://ibcl.us/tags/C-C/"/>
+    
+    <category term="串口" scheme="https://ibcl.us/tags/%E4%B8%B2%E5%8F%A3/"/>
+    
+    <category term="前端" scheme="https://ibcl.us/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+    <category term="React" scheme="https://ibcl.us/tags/React/"/>
+    
+    <category term="TypeScript" scheme="https://ibcl.us/tags/TypeScript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>这或许是全网最完善的辉光钟 DIY 指南</title>
+    <link href="https://ibcl.us/Nixie-Clock_20230823/"/>
+    <id>https://ibcl.us/Nixie-Clock_20230823/</id>
+    <published>2023-08-22T16:07:10.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;去年（2022 年） 8 月的某一天，博主逛淘宝时偶然刷到了一个 IN-12 辉光管，看完买家秀中展示的照片后，博主深深地被管子发出的幽幽红光给吸引住了，在 Google 上一番搜寻过后，博主发现大多数人都用它来做时钟。&lt;/p&gt;
+&lt;p&gt;虽然原理看上去非常简单，但显示时间的载体从液晶屏换到辉光管后，真的很炫酷。博主犹豫片刻过后，随即下单了一个 IN-12 管子和一个升压模块，决定先尝试将其点亮，看看效果如何，再决定是否继续。&lt;/p&gt;
+&lt;p&gt;几天后，快递如约而至，博主将升压模块和 IN-12 引脚连接好，接通 5V 电源后，辉光管发出了迷人的红光，博主也露出了满意的笑容。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Nixie-Clock_20230823/1.jpg&quot; alt=&quot;单只辉光管&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Nixie-Clock_20230823/2.jpg&quot; alt=&quot;成功点亮 IN-12&quot;&gt;&lt;/p&gt;
+&lt;p&gt;试水计划顺利完成后，博主也没有闲下来，而是又下单了 3 只 IN-12，决定打造一台属于自己的辉光钟。在历经几个月的不断试错与改进过后，博主终于给交出了一份满意的答卷，&lt;strong&gt;并将整个项目（PCB 文件、单片机程序、授时软件）开源到了 GitHub&lt;/strong&gt;，供更多人参考与借鉴。&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvT3Blbk5peGll&quot;&gt;GitHub - bclswl0827/OpenNixie&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Nixie-Clock_20230823/3.jpg&quot; alt=&quot;博主的辉光钟成品&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="硬件" scheme="https://ibcl.us/categories/%E7%A1%AC%E4%BB%B6/"/>
+    
+    
+    <category term="硬件" scheme="https://ibcl.us/tags/%E7%A1%AC%E4%BB%B6/"/>
+    
+    <category term="单片机" scheme="https://ibcl.us/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"/>
+    
+    <category term="嵌入式" scheme="https://ibcl.us/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    <category term="辉光钟" scheme="https://ibcl.us/tags/%E8%BE%89%E5%85%89%E9%92%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>我写了一个无需后端的短网址程序...</title>
+    <link href="https://ibcl.us/ShortLink-Firebase_20230626/"/>
+    <id>https://ibcl.us/ShortLink-Firebase_20230626/</id>
+    <published>2023-06-25T17:07:10.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;了解博主的人都知道，博主曾经也是个长期混迹 HostLoc 的元老级 MJJ，即便天天被各种事情忙得抽不开身，还是会花出大量时间浏览各种 VPS 和域名相关的资讯。在那段疯狂的岁月里，博主也攒下了不少垃圾域名。&lt;/p&gt;
+&lt;p&gt;不幸的是，与其他 MJJ 一样，这些域名买下来之后，基本也没怎么用过，顶多也就挂挂探针，再无其他的用途。直到某日，博主在给别人发一个长链接时，突然想到，能不能把自己的吃灰域名给利用起来，搭建一个短网址服务呢？&lt;/p&gt;
+&lt;p&gt;博主调研了市场的大多数短网址程序过后，发现大多数短网址程序都是使用 PHP 实现的，并需要对接到 MySQL、PostgreSQL、SQLite 等数据库，当用户请求事前生成好的短网址时，该请求会发送到后端服务器，而后端程序会先从数据库检索到其对应到的长网址，再将长网址附在 301 或者 302 的响应中，实现跳转。&lt;/p&gt;
+&lt;p&gt;但是博主却对这些要使用后端的短网址程序都不太满意，因为在实际的部署和运营中，服务器除了要处理正常的访客流量，还需要处理来自机器人的大量疯狂试探（毕竟暴露在公网的服务本身就不安全），而且后端程序部署在自己服务器上，万一程序自身出了什么 0Day 漏洞，却又正好被利用的话，那么服务器就彻底沦为别人的肉鸡了。&lt;/p&gt;
+&lt;p&gt;再者，由于博主的服务器大多都是低配小鸡，随手一个 CC 攻击就能轻松拿捏博主。本着多一事不如少一事的原则，博主最终决定开发一套不依赖自建后端及数据库的短网址程序，再将前端部署于 GitHub Pages，只使用 JavaScript 做页面间的跳转，这样就能实现抵御大部分试探和攻击了。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="前端" scheme="https://ibcl.us/categories/%E5%89%8D%E7%AB%AF/"/>
+    
+    
+    <category term="前端" scheme="https://ibcl.us/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+    <category term="React" scheme="https://ibcl.us/tags/React/"/>
+    
+    <category term="TypeScript" scheme="https://ibcl.us/tags/TypeScript/"/>
+    
+    <category term="Serverless" scheme="https://ibcl.us/tags/Serverless/"/>
+    
+    <category term="Firebase" scheme="https://ibcl.us/tags/Firebase/"/>
+    
+    <category term="实时数据库" scheme="https://ibcl.us/tags/%E5%AE%9E%E6%97%B6%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+    
+    <category term="NoSQL" scheme="https://ibcl.us/tags/NoSQL/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>论如何优雅地用串口收发数据</title>
+    <link href="https://ibcl.us/Serial-Binary_20230611/"/>
+    <id>https://ibcl.us/Serial-Binary_20230611/</id>
+    <published>2023-06-11T10:56:42.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;又到了一年毕业季，让毕业生们头大的事也莫过于毕业设计了。博主所在的实验室也有一位即将毕业的大四学长，他的毕业设计方向与高速数据采集有关，简单来说，他需要将从 STM32 上采集来的数据透过串口实时发送至上位机，并在上位机上用 Python 做解析，并将数据打上时标，存入 MySQL 数据库。&lt;/p&gt;
+&lt;p&gt;但是某日这位学长却找到博主，提到自己在解析串口传来的数据时遇到了延时过大和数据丢包的问题，希望博主能够帮帮忙，而博主在看完这位学长的上下位机代码过后，陷入了沉思，因为这位学长传输并处理数据的方式是这样的。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;STM32 读取传感器浮点数据，放到一个长度为 1000 的数组&lt;/li&gt;
+&lt;li&gt;将数组中的数据遍历转为字符串，然后拼接为如下形式&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&amp;lt;data_1&amp;gt;,&amp;lt;data_2&amp;gt;,&amp;lt;data_3&amp;gt;,&amp;lt;data_4&amp;gt;,...&#92;t&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/li&gt;
+&lt;li&gt;将该字符串从 STM32 的串口送出&lt;/li&gt;
+&lt;li&gt;上位机使用 Python 以 &lt;code&gt;&#92;t&lt;/code&gt; 做为数据接收的起始和结束标志&lt;/li&gt;
+&lt;li&gt;将接收到的文本字符串使用 split 方法分割，取得一个数组&lt;/li&gt;
+&lt;li&gt;遍历该数组将数据类型转型回 &lt;code&gt;float&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;乍看上去，这种方法好像没有任何问题，因为在许多带有串口协议的模块上（例如 NMEA 协议的 GNSS 模块），数据都是以这样的形式传输的，&lt;strong&gt;然而这位学长却忽略了一个重要的问题，那就是作为一个高速数据采集的项目，他程序的大部分时间却耗在了字符串处理上&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;博主最后给这位学长的解决方案是，将 STM32 中的传感器数据数组与一个校验和放进结构体，以组帧的方式，将结构体转为字节流，走二进制形式直接从串口送出；Python 上位机的部分则使用 &lt;code&gt;struct&lt;/code&gt; 包中的 &lt;code&gt;unpack&lt;/code&gt; 方法来解析下位机传来的二进制数据，直接得到来自下位机的原始数据，同时也省下了数据类型之间互转所花去的时间。&lt;/p&gt;
+&lt;p&gt;这篇文章，博主会谈谈如何用这种方式优雅地透过串口稳定地传输数据，并给出示例 Arduino 下位机代码和由 Golang 和 Python 实现的上位机代码。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="硬件" scheme="https://ibcl.us/categories/%E7%A1%AC%E4%BB%B6/"/>
+    
+    
+    <category term="硬件" scheme="https://ibcl.us/tags/%E7%A1%AC%E4%BB%B6/"/>
+    
+    <category term="Golang" scheme="https://ibcl.us/tags/Golang/"/>
+    
+    <category term="单片机" scheme="https://ibcl.us/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"/>
+    
+    <category term="嵌入式" scheme="https://ibcl.us/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    <category term="C / C++" scheme="https://ibcl.us/tags/C-C/"/>
+    
+    <category term="串口" scheme="https://ibcl.us/tags/%E4%B8%B2%E5%8F%A3/"/>
+    
+    <category term="Python" scheme="https://ibcl.us/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>探寻二十年前的声卡 SDR</title>
+    <link href="https://ibcl.us/Soundcard-SDR_20230601/"/>
+    <id>https://ibcl.us/Soundcard-SDR_20230601/</id>
+    <published>2023-06-01T05:07:10.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;几日前和一个朋友聊起 SDR，在感叹两年的芯片短缺潮终于快要翻篇之余，朋友还提到了快二十年前他在玩的一种 SDR。&lt;/p&gt;
+&lt;p&gt;RTL-SDR 的出现在 2012 年左右，值得一提的是，博主入坑 SDR 的第一台设备，也是 RTL-SDR。而在这之前，SDR 设备主要还是集中在专业领域，成本较高且功能也相对有限，仅有 USRP、BladeRF 等几种选择，对于博主这样的业余玩家来说，要是当年购买一套 USRP 或是 BladeRF，恐怕就要掏空好几个腰包了。&lt;/p&gt;
+&lt;p&gt;即便如此，也没有难住那时的玩家：&lt;strong&gt;在遥远的当年，比较流行的一个方案就是 DIY 一块包含了射频信号采集、混频、放大、滤波的板卡，然后将其与 PC 上的声卡相连，以声卡作为 ADC，再透过软件进行信号处理，这就是声卡 SDR&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Soundcard-SDR_20230601/1.png&quot; alt=&quot;声卡 SDR 架构图&quot;&gt;&lt;/p&gt;
+&lt;p&gt;上图是一个典型的声卡 SDR 架构框图，在博主正式给出声卡 SDR 的原理图之前，还需要引入一些概念和理论做铺垫，便于以出浅入深的方式去分析及理解声卡 SDR 的工作原理。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="SDR" scheme="https://ibcl.us/categories/SDR/"/>
+    
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="软件无线电" scheme="https://ibcl.us/tags/%E8%BD%AF%E4%BB%B6%E6%97%A0%E7%BA%BF%E7%94%B5/"/>
+    
+    <category term="无线电" scheme="https://ibcl.us/tags/%E6%97%A0%E7%BA%BF%E7%94%B5/"/>
+    
+    <category term="GNURadio" scheme="https://ibcl.us/tags/GNURadio/"/>
+    
+    <category term="模拟电路" scheme="https://ibcl.us/tags/%E6%A8%A1%E6%8B%9F%E7%94%B5%E8%B7%AF/"/>
+    
+    <category term="数字电路" scheme="https://ibcl.us/tags/%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>老乡别走：搭建自己的 Telegram 可转债机器人</title>
+    <link href="https://ibcl.us/BondBot-Telegram_20230524/"/>
+    <id>https://ibcl.us/BondBot-Telegram_20230524/</id>
+    <published>2023-05-24T14:56:42.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在博主的高中时代，曾经意外接触到一本名为「段子手股民的忏悔录」的书，出于兴趣，在博主满 18 岁那天的早上，便果断给自己开了一个股票账户，从此入坑大 A 股海。&lt;/p&gt;
+&lt;p&gt;由于博主资金体量不大，而大 A 市场也不能以零股形式交易，所以博主长期以来的持仓，都只能靠几只稳如老狗的银行股和几个行业 ETF 苟活。直到有一天，博主在刷雪球时看到，原来像博主这样的小散户，还能透过可转债打新的方式，靠运气赚点零花钱。&lt;/p&gt;
+&lt;p&gt;不幸的是，可转债这种东西，并不是每天都能申购的。作为一个懒人，每天一早打开炒股软件，生无可恋地看一眼自己绿油油的收益，再去看有没有能申购的新可转债，实在是一件很痛苦的事情。&lt;/p&gt;
+&lt;p&gt;多亏博主心理比较强大，也坚信价值投资的意义，否则就成为被收割的韭菜了。在痛苦之余，博主也曾思考，能否写一个小程序，获取每日的可转债并通知博主申购呢？&lt;/p&gt;
+&lt;p&gt;也好在博主是 Telegram 的常驻用户，同时，Telegram 也提供了健全的生态，以支援平台下的机器人开发，于是博主萌生了写一个 Telegram 可转债机器人的想法。&lt;/p&gt;
+&lt;p&gt;这篇文章，将会分享博主编写简单的 Telegram 可转债机器人时的一些思路，并介绍如何将其搭建在云服务器上，实现每天给自己或是往几个朋友组建的小群里自动推送可供当日申购的可转债，推动「共同富裕」。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/BondBot-Telegram_20230524/1.jpg&quot; alt=&quot;博主 2022 打新收益&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="股市" scheme="https://ibcl.us/categories/%E8%82%A1%E5%B8%82/"/>
+    
+    
+    <category term="股票" scheme="https://ibcl.us/tags/%E8%82%A1%E7%A5%A8/"/>
+    
+    <category term="可转债" scheme="https://ibcl.us/tags/%E5%8F%AF%E8%BD%AC%E5%80%BA/"/>
+    
+    <category term="A 股" scheme="https://ibcl.us/tags/A-%E8%82%A1/"/>
+    
+    <category term="韭菜" scheme="https://ibcl.us/tags/%E9%9F%AD%E8%8F%9C/"/>
+    
+    <category term="Golang" scheme="https://ibcl.us/tags/Golang/"/>
+    
+    <category term="Telegram 机器人" scheme="https://ibcl.us/tags/Telegram-%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>记与一款 JJY 电波钟模块的邂逅</title>
+    <link href="https://ibcl.us/JJY-Timecode_20230522/"/>
+    <id>https://ibcl.us/JJY-Timecode_20230522/</id>
+    <published>2023-05-22T15:08:00.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;某日，博主在逛淘宝时，发现了一款电波钟模块。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/JJY_Timecode_20230522/1.png&quot; alt=&quot;JJY 电波钟模块&quot;&gt;&lt;/p&gt;
+&lt;p&gt;博主第一次听说长波授时的概念还是在上初中的时候，出于兴趣，当年也下单了过一个 CASIO 出口转内销的电波授时闹钟。如今距离买下这款闹钟已有快七年时间了，虽然当年买的电波钟外壳已经泛黄，但是时间仍然分毫不差。如今刷到这么一个模块，又唤起了博主的回忆。&lt;/p&gt;
+&lt;p&gt;在这七年间，博主也曾经尝试弄清楚电波授时的解码原理以及数据报文格式，但是迫于当年的知识面与技术并不到位，所以在几次尝试与几次失败后，博主便放弃了。&lt;/p&gt;
+&lt;p&gt;而如今博主作为一个通信工程大学牲，想要再次挑战弄懂 JJY 长波授时的时间码结构，并尝试编写程序解码准确时间，于是果断下单了这款模块。&lt;/p&gt;
+&lt;p&gt;在收到模块后，经过两天的不懈努力，博主也终于成功达成了目标，了结了七年来的心事。这篇文章，会分享博主玩转 JJY 时间码模块的过程。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="电波钟" scheme="https://ibcl.us/categories/%E7%94%B5%E6%B3%A2%E9%92%9F/"/>
+    
+    
+    <category term="电波钟" scheme="https://ibcl.us/tags/%E7%94%B5%E6%B3%A2%E9%92%9F/"/>
+    
+    <category term="单片机" scheme="https://ibcl.us/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"/>
+    
+    <category term="嵌入式" scheme="https://ibcl.us/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    <category term="JJY" scheme="https://ibcl.us/tags/JJY/"/>
+    
+    <category term="长波" scheme="https://ibcl.us/tags/%E9%95%BF%E6%B3%A2/"/>
+    
+    <category term="无线电" scheme="https://ibcl.us/tags/%E6%97%A0%E7%BA%BF%E7%94%B5/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>龙芯 2K1000 EDU 斗智斗勇记</title>
+    <link href="https://ibcl.us/Loongson-Kernel_20230521/"/>
+    <id>https://ibcl.us/Loongson-Kernel_20230521/</id>
+    <published>2023-05-21T03:33:11.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;博主最近在折腾一个地震监测相关的项目，项目中的测站上位机程序需要运行在 Linux 平台上。&lt;/p&gt;
+&lt;p&gt;由于博主的地震项目需要在异地多点部署测站，要是再从网上采购一堆 Linux 开发板的话，又会是一大笔开销。在翻遍实验室库存过后，博主发现了一堆往届学生参加嵌入式比赛留下的龙芯 2K1000 EDU 板子。&lt;/p&gt;
+&lt;p&gt;2K1000 EDU 是 mips64el 架构，说来惭愧，博主此前实际用过的 mips 架构的设备，也就只有几台路由器了。&lt;/p&gt;
+&lt;p&gt;当然，博主相信，这玩意肯定还是比路由器强一点的，不过能强多少，就不好说了。抱着测站程序「能跑就行」的想法，博主取了一块板子，准备上电装系统看看究竟。&lt;/p&gt;
+&lt;p&gt;本以为 2K1000 EDU 除了架构不太一样，性能比较拉垮一点之外，其他方面同别的 ARM Linux 系列开发板别无两样，结果却出乎博主的意料：本来预计一两个小时就能搞定的事情，在 2K1000 EDU 上折腾了快一天才完成。&lt;/p&gt;
+&lt;p&gt;所以，这篇文章将详细介绍博主与 2K1000 EDU 斗智斗勇的过程。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Loongson-Kernel_20230520/1.jpg&quot; alt=&quot;即将寄走的龙芯 2K1000 EDU&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux" scheme="https://ibcl.us/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="https://ibcl.us/tags/Linux/"/>
+    
+    <category term="硬件" scheme="https://ibcl.us/tags/%E7%A1%AC%E4%BB%B6/"/>
+    
+    <category term="嵌入式" scheme="https://ibcl.us/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    <category term="龙芯" scheme="https://ibcl.us/tags/%E9%BE%99%E8%8A%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Orange Pi 使用 mmap 控制 GPIO</title>
+    <link href="https://ibcl.us/OrangePi-MMAP_20230520/"/>
+    <id>https://ibcl.us/OrangePi-MMAP_20230520/</id>
+    <published>2023-05-20T05:08:00.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;博主曾经接手的一个项目，主控板连续好几年使用的一直是 Rapsberry Pi，但是随着 Raspberry Pi 价格长期居高不下，让人直呼伤不起，只能考虑把板子换成更便宜的方案，再三权衡之下，博主最后选了 Orange Pi One。&lt;/p&gt;
+&lt;p&gt;Orange Pi One 使用了 Allwinner H3 作为 CPU，内建 512 MB 运存，对于博主的项目来说绰绰有余，另外，Orange Pi One 的 GPIO 定义和 Raspberry Pi 相同，而且闲鱼上的售价普遍 70 左右，和树莓派现在的售价比起来，直接少了个 0，让人很难不心动。&lt;/p&gt;
+&lt;p&gt;悲催的是，这个项目恰好就用到了 Raspberry Pi 的 GPIO，而且原本的代码中并没有用外部库去操作 GPIO，只是使用了&lt;strong&gt;内存映射&lt;/strong&gt;的方式，透过读写内存来操作 GPIO。&lt;/p&gt;
+&lt;p&gt;我们知道，不同的 CPU 之间，内部的寄存器集合与地址也都会有所不同，所以在博主想碰碰运气，尝试过直接换板子，发现果然运行不了之后，博主只能很不情愿地改代码去了。&lt;/p&gt;
+&lt;p&gt;这篇文章将会介绍博主如何理解 mmap 的概念，如何看懂 Allwinner H3 提供的 Datasheet，以及如何成功编写程序控制 GPIO 的一整套流程，希望能对您有所帮助。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/OrangePi-MMAP_20230520/1.jpg&quot; alt=&quot;博主的 Orange Pi One&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="Linux" scheme="https://ibcl.us/categories/Linux/"/>
+    
+    
+    <category term="Linux" scheme="https://ibcl.us/tags/Linux/"/>
+    
+    <category term="Orange Pi" scheme="https://ibcl.us/tags/Orange-Pi/"/>
+    
+    <category term="MMAP" scheme="https://ibcl.us/tags/MMAP/"/>
+    
+    <category term="GPIO" scheme="https://ibcl.us/tags/GPIO/"/>
+    
+    <category term="硬件" scheme="https://ibcl.us/tags/%E7%A1%AC%E4%BB%B6/"/>
+    
+    <category term="嵌入式" scheme="https://ibcl.us/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/"/>
+    
+    <category term="Rapsberry Pi" scheme="https://ibcl.us/tags/Rapsberry-Pi/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>今天继续手把手教大家如何喝茶</title>
+    <link href="https://ibcl.us/FY-2x_20211104/"/>
+    <id>https://ibcl.us/FY-2x_20211104/</id>
+    <published>2021-11-04T02:58:08.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;引子&quot;&gt;&lt;a href=&quot;#引子&quot; class=&quot;headerlink&quot; title=&quot;引子&quot;&gt;&lt;/a&gt;引子&lt;/h1&gt;&lt;p&gt;出了这么大一事儿，博主才想起自己还有个博客…… 直到有人开始传博主也是因为被喝了茶，才金盆洗手同无线电一刀两断时，博主这才觉得有必要出来冒个泡了。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/FY-2x_20211104/1.jpg&quot; alt=&quot;1&quot; title=&quot;1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;继 ADS-B、AIS 玩家挨个被慰问过后，各种另类版本也冒了出来，有说自己建气象站被喝茶的，有说玩 FT8 会被喝茶的，还有说用别人 KiwiSDR 也会被喝茶的（这都什么牛马？）…… 照这趋势，以后是不是车上听个对岸中波电台也要被喝茶了？&lt;/p&gt;
+&lt;p&gt;既然干啥都会被喝茶，那喝茶就得喝得有逼格，鉴于以上种种，博主这次就来手把手教大家如何通过“架设气象观测设备”喝茶。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/FY-2x_20211104/2.jpg&quot; alt=&quot;2&quot; title=&quot;2&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;境外势力的风云二号观测设备&quot;&gt;&lt;a href=&quot;#境外势力的风云二号观测设备&quot; class=&quot;headerlink&quot; title=&quot;境外势力的风云二号观测设备&quot;&gt;&lt;/a&gt;境外势力的风云二号观测设备&lt;/h1&gt;</summary>
+    
+    
+    
+    <category term="SDR" scheme="https://ibcl.us/categories/SDR/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="软件无线电" scheme="https://ibcl.us/tags/%E8%BD%AF%E4%BB%B6%E6%97%A0%E7%BA%BF%E7%94%B5/"/>
+    
+    <category term="风云二号" scheme="https://ibcl.us/tags/%E9%A3%8E%E4%BA%91%E4%BA%8C%E5%8F%B7/"/>
+    
+    <category term="气象卫星" scheme="https://ibcl.us/tags/%E6%B0%94%E8%B1%A1%E5%8D%AB%E6%98%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历</title>
+    <link href="https://ibcl.us/GSM-Sniffing_20200826/"/>
+    <id>https://ibcl.us/GSM-Sniffing_20200826/</id>
+    <published>2020-08-25T17:16:38.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;本文内容仅供参考、学习之用。&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;在阅读本文之前，请详细了解相关法律，若因读者对本文内容进行模仿而造成的一切负面影响及后果，&lt;a href=&quot;https://ibcl.us/&quot;&gt;“I BCL.”&lt;/a&gt;一概对其不负责。&lt;/em&gt;&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;本文内容应情节需求系完全虚构，如有雷同实属巧合。&lt;/em&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;前情提要&quot;&gt;&lt;a href=&quot;#前情提要&quot; class=&quot;headerlink&quot; title=&quot;前情提要&quot;&gt;&lt;/a&gt;前情提要&lt;/h1&gt;&lt;p&gt;一个百无聊赖的午间，博主正躺在床上带着耳机听歌，昏昏欲睡之中，突然收到一条讯息。&lt;/p&gt;
+&lt;p&gt;冷气与睡意之间，被通知铃声吵醒是一件痛苦的事，但是博主还是打开了萤幕，原来是某位大佬发来的留言。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;大佬：最近忙啥呢？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;既然是大佬主动联系博主，一定是有什么有趣的事情。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;博主：表示现在很闲，大佬是有什么事？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;接着，大佬发来一个链接，对应的地址是一个&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9naXRodWIuY29tL3B0cmtyeXNpay9nci1nc20=&quot;&gt;名为 gr-gsm 开源专案&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;大佬：既然有时间，咱们来玩嗅探 GSM 怎么样？就用你的 RTL-SDR。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;博主：蛤？&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;博主从未想过，自己与成为一个能偷看他人简讯的偷窥狂，仅仅只有 50 块的距离……&lt;/p&gt;
+&lt;p&gt;这么有趣的体验，怎么能够拒绝？于是博主果断答应了大佬的邀请。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>ADS-B：从入门到入狱</title>
+    <link href="https://ibcl.us/ADSB_Decode_20200118/"/>
+    <id>https://ibcl.us/ADSB_Decode_20200118/</id>
+    <published>2020-01-18T09:30:06.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;听惯了中短波广播，甚至已经能准确说出当前的某个频率对应哪个电台在播音… 是的，博主终于对传统广播有了倦意，也正因如此，最后博主决定拿出闲置的 RTL-SDR，玩玩 ADS-B 接收。&lt;/p&gt;
+&lt;p&gt;在这篇文章中，博主将介绍如何用 RTL-SDR 接收 1090MHz，由航班下发的 ADS-B 信号，并将实时航班情况展示在地图上，公开至外网，然后坐等被喝茶（&lt;/p&gt;
+&lt;p&gt;&lt;del&gt;&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9hLmliY2wudXMv&quot;&gt;现在，博主的 ADS-B 监测站点已经上线，欢迎来踩～&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/ADSB-Decode_20200118/1.jpg&quot; alt=&quot;博主的 SDR 服务器&quot; title=&quot;博主的 SDR 服务器&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>某科学的 T1 盒子刷 Armbian 调教笔记</title>
+    <link href="https://ibcl.us/PhicommT1-Armbian_20190825/"/>
+    <id>https://ibcl.us/PhicommT1-Armbian_20190825/</id>
+    <published>2019-08-25T08:22:00.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在剁手斐讯 N1 刷入 Armbian 作为&lt;span class=&quot;exturl&quot; data-url=&quot;aHR0cHM6Ly9zLmliY2wudXMv&quot;&gt;本站的 SDR 服务器&lt;i class=&quot;fa fa-external-link-alt&quot;&gt;&lt;/i&gt;&lt;/span&gt;之后，博主已经对这个“穷人的树莓派”佩服得五体投地了。&lt;/p&gt;
+&lt;p&gt;然而人的欲望总是无止境的，所以过了几天，博主又在并夕夕上剁手了斐讯 T1 盒子，也打算刷入 Armbian，作为日常实（瞎）验（搞）之用。&lt;/p&gt;
+&lt;p&gt;可网上一大堆教程都是在调教 N1，有关 T1 刷机的文章少之又少，一切只能自己摸索。&lt;/p&gt;
+&lt;p&gt;在害怕踩坑并搞烂 T1，导致自己省下的一百五十来块打水漂的情况下，于是博主带着 T1 去附近的庙里烧了香拜了佛……&lt;/p&gt;
+&lt;p&gt;听上去有些扯，但是博主最后顺利地让 T1 运行了 Armbian，并烧写镜像到了自带的 emmc 中。&lt;/p&gt;
+&lt;p&gt;这篇文章，便是调教 T1 盒子的笔记。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/PhicommT1-Armbian_20190825/1.jpg&quot; alt=&quot;T1 盒子&quot; title=&quot;T1 盒子&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="杂谈" scheme="https://ibcl.us/categories/%E6%9D%82%E8%B0%88/"/>
+    
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+    <category term="杂谈" scheme="https://ibcl.us/tags/%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>别样的 GK2A 气象卫星接收大战</title>
+    <link href="https://ibcl.us/GK2A-Decode_20190811/"/>
+    <id>https://ibcl.us/GK2A-Decode_20190811/</id>
+    <published>2019-08-10T16:10:06.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;一天，BH4ERB 给我发来消息他说：“你敢不敢和我接收 GK2A 气象卫星”，我豪爽的答应了：“我当然敢”，周日下午在 xx 路 xx 大厦举行，谁不来谁就是怂货。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我原本以为我恐吓了 BH4ERB，BH4ERB 应该躲在家，不敢找我，可正当这时，我听见了音乐声，原来是我手机响了，一看，竟然是 BH4ERB 发来的消息，他还真有勇气，我接通了电话，听道电话那头骂道：“&lt;del&gt;小废物，你怎么还不来，再不来你妈的泌尿系统就被我搞坏了。&lt;/del&gt;”我听到他对我的毒骂之后，我回骂道：“&lt;del&gt;我要把你挂到同性恋网站上，帮你炒作一番，你说好不好啊。&lt;/del&gt;”&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;他吓得没再回应我，可是到了周日，BH4ERB 竟然又给我发消息了，他还真要和我举行接收大战，于是我按照约定，到达了 xx 大厦，可他已经等我很久了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;……&lt;/p&gt;
+&lt;p&gt;GK2A 是韩国的气象卫星，由韩国气象厅开发，KARI 制造。于 2018 年 12 月 4 日由欧洲航天局的阿丽亚娜 5 号将其送上轨道，属于地球同步卫星。&lt;/p&gt;
+&lt;p&gt;最近 HAM 大佬  BH4ERB 对这颗卫星感上了兴趣，决定尝试接收并解码 GK2A 下传的数据。&lt;/p&gt;
+&lt;p&gt;接收数据需要使用到一个名为 Goestools 的工具，钦定在 Linux 下运行。由于 BH4ERB 对 Linux 并不熟悉，在多次尝试编译安装，却报错无法启动之后，找到了博主帮忙，希望跟博主一起合作填完这个巨坑。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>修改 RTL-SDR 驱动使 rtl_tcp 支持从 I/Q 通道直采信号</title>
+    <link href="https://ibcl.us/rtltcp-BranchIQ_20190611/"/>
+    <id>https://ibcl.us/rtltcp-BranchIQ_20190611/</id>
+    <published>2019-06-11T05:10:06.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;博主最近申请到了 WebSDR 的服务端程序，在准备好各种环境之后，却卡在了与 RTL-SDR 的对接上……&lt;/p&gt;
+&lt;p&gt;WebSDR 的后端一般与 RTL-SDR 驱动自带的 TCP 服务器模块 &lt;code&gt;rtl_tcp&lt;/code&gt; 对接并进行调谐。&lt;code&gt;rtl_tcp&lt;/code&gt; 的启动很简单，只需要一行命令即可解决。&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;root@yukiho:~# rtl_tcp -a 127.0.0.1 -s 1024000 -g 0 -d 0 -p 1234&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;在设置好中心频率（9500 kHz），采样率（1.2 Msps）并启动该模块之后，博主却发现 WebSDR 并不能正常地接收短波信号，频谱瀑布一片空白。&lt;/p&gt;
+&lt;p&gt;这就很迷了。经过一波分析之后，博主得出了结论：&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;rtl_tcp&lt;/code&gt; 命令不能像 &lt;code&gt;rtl_sdr&lt;/code&gt; 命令一样使用 I/Q 通道直采接收中短波信号，而此前 OpenWebRX 能实现是因为 Op 采用的是支持 I/Q 通道直采的 &lt;code&gt;rtl_sdr&lt;/code&gt; 模块加 netcat 转发数据至 TCP 实现的……&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;转发数据确实是一条新的思路，但是操作起来却有些麻烦：&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;root@yukiho:~# rtl_sdr -D2 -s 1024000 -f 9500000 -p 0 -g 0 -| nmux --bufsize 253952 --bufcnt 379 --port 1234 --address 127.0.0.1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;此外，由于引入了新的工具 netcat 做数据转发，所以负载也跟着上去了，对于博主的垃圾 Orange Pi Lite 来说简直就是灭顶之灾……&lt;/p&gt;
+&lt;p&gt;还有更好的方法吗？&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="SDR" scheme="https://ibcl.us/tags/SDR/"/>
+    
+    <category term="瞎搞" scheme="https://ibcl.us/tags/%E7%9E%8E%E6%90%9E/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>如何写出一份好的收听报告</title>
+    <link href="https://ibcl.us/Write-ReceptionReport_20180715/"/>
+    <id>https://ibcl.us/Write-ReceptionReport_20180715/</id>
+    <published>2018-07-15T08:08:08.000Z</published>
+    <updated>2024-02-16T05:44:13.378Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;&lt;em&gt;如何写出一份能让大多数电台接受的，高质量的收听报告？&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;在这篇文章中，你将了解如何撰写一份好的收听报告。&lt;/p&gt;
+&lt;p&gt;&lt;img data-src=&quot;https://c.ibcl.us/Write-ReceptionReport_20180715/1.jpg&quot; alt=&quot;Reception Report&quot; title=&quot;Reception Report&quot;&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="广播" scheme="https://ibcl.us/categories/%E5%B9%BF%E6%92%AD/"/>
+    
+    
+    <category term="广播" scheme="https://ibcl.us/tags/%E5%B9%BF%E6%92%AD/"/>
+    
+    <category term="原创" scheme="https://ibcl.us/tags/%E5%8E%9F%E5%88%9B/"/>
+    
+    <category term="收听报告" scheme="https://ibcl.us/tags/%E6%94%B6%E5%90%AC%E6%8A%A5%E5%91%8A/"/>
+    
+  </entry>
+  
+</feed>

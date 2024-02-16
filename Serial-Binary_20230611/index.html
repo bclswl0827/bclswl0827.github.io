@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="又到了一年毕业季，让毕业生们头大的事也莫过于毕业设计了。博主所在的实验室也有一位即将毕业的大四学长，他的毕业设计方向与高速数据采集有关，简单来说，他需要将从 STM32 上采集来的数据透过串口实时发送至上位机，并在上位机上用 Python 做解析，并将数据打上时标，存入 MySQL 数据库。 但是某日这位学长却找到博主，提到自己在解析串口传来的数据时遇到了延时过大和数据丢包的问题，希望博主能够帮帮">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论如何优雅地用串口收发数据">
+<meta property="og:url" content="https://ibcl.us/Serial-Binary_20230611/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="又到了一年毕业季，让毕业生们头大的事也莫过于毕业设计了。博主所在的实验室也有一位即将毕业的大四学长，他的毕业设计方向与高速数据采集有关，简单来说，他需要将从 STM32 上采集来的数据透过串口实时发送至上位机，并在上位机上用 Python 做解析，并将数据打上时标，存入 MySQL 数据库。 但是某日这位学长却找到博主，提到自己在解析串口传来的数据时遇到了延时过大和数据丢包的问题，希望博主能够帮帮">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-06-11T10:56:42.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="硬件">
+<meta property="article:tag" content="Golang">
+<meta property="article:tag" content="单片机">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="C &#x2F; C++">
+<meta property="article:tag" content="串口">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ibcl.us/Serial-Binary_20230611/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>论如何优雅地用串口收发数据 | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Serial-Binary_20230611/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          论如何优雅地用串口收发数据
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-06-11 18:56:42" itemprop="dateCreated datePublished" datetime="2023-06-11T18:56:42+08:00">2023-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%A1%AC%E4%BB%B6/" itemprop="url" rel="index"><span itemprop="name">硬件</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Serial-Binary_20230611/" class="post-meta-item leancloud_visitors" data-flag-title="论如何优雅地用串口收发数据" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Serial-Binary_20230611/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Serial-Binary_20230611/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>又到了一年毕业季，让毕业生们头大的事也莫过于毕业设计了。博主所在的实验室也有一位即将毕业的大四学长，他的毕业设计方向与高速数据采集有关，简单来说，他需要将从 STM32 上采集来的数据透过串口实时发送至上位机，并在上位机上用 Python 做解析，并将数据打上时标，存入 MySQL 数据库。</p>
+<p>但是某日这位学长却找到博主，提到自己在解析串口传来的数据时遇到了延时过大和数据丢包的问题，希望博主能够帮帮忙，而博主在看完这位学长的上下位机代码过后，陷入了沉思，因为这位学长传输并处理数据的方式是这样的。</p>
+<ol>
+<li>STM32 读取传感器浮点数据，放到一个长度为 1000 的数组</li>
+<li>将数组中的数据遍历转为字符串，然后拼接为如下形式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;data_1&gt;,&lt;data_2&gt;,&lt;data_3&gt;,&lt;data_4&gt;,...\t</span><br></pre></td></tr></table></figure></li>
+<li>将该字符串从 STM32 的串口送出</li>
+<li>上位机使用 Python 以 <code>\t</code> 做为数据接收的起始和结束标志</li>
+<li>将接收到的文本字符串使用 split 方法分割，取得一个数组</li>
+<li>遍历该数组将数据类型转型回 <code>float</code></li>
+</ol>
+<p>乍看上去，这种方法好像没有任何问题，因为在许多带有串口协议的模块上（例如 NMEA 协议的 GNSS 模块），数据都是以这样的形式传输的，<strong>然而这位学长却忽略了一个重要的问题，那就是作为一个高速数据采集的项目，他程序的大部分时间却耗在了字符串处理上</strong>。</p>
+<p>博主最后给这位学长的解决方案是，将 STM32 中的传感器数据数组与一个校验和放进结构体，以组帧的方式，将结构体转为字节流，走二进制形式直接从串口送出；Python 上位机的部分则使用 <code>struct</code> 包中的 <code>unpack</code> 方法来解析下位机传来的二进制数据，直接得到来自下位机的原始数据，同时也省下了数据类型之间互转所花去的时间。</p>
+<p>这篇文章，博主会谈谈如何用这种方式优雅地透过串口稳定地传输数据，并给出示例 Arduino 下位机代码和由 Golang 和 Python 实现的上位机代码。</p>
+<span id="more"></span>
+
+<h1 id="为什么要用二进制传输"><a href="#为什么要用二进制传输" class="headerlink" title="为什么要用二进制传输"></a>为什么要用二进制传输</h1><p>在多数情况下，串口通信是透过文本形式进行的，因为文本具有易读性和易于解析的特点。然而，要传输文本形式的数据，通常也需要进行字符编码，例如使用 ASCII 码，这会导致数据的冗余，即传输的数据量相比原始数据更大，而这些冗余的数据可能会占用更多的带宽和存储空间，尤其在高速数据传输时，会增加传输的时间和资源消耗。</p>
+<p>在上述反面教材中，这位大四学长的方法是将传感器数据先转换为字符串形式，然后透过串口发送给上位机。这种方法需要进行数据类型转换、字符串拼接和分割等操作，这些操作在处理大量数据时会耗费大量的时间和计算资源。尤其是在高速数据采集的情况下，数据量很大，处理字符串的开销将会更加明显。</p>
+<p>而使用二进制形式传输数据可以有效地解决这些问题。透过将数据转换为二进制字节流，可以直接将原始数据传输给上位机，无需进行数据类型转换和字符串处理操作。这样可以显著提高数据传输的效率和速度，减少延迟和丢包的问题。另外，使用二进制形式传输数据还可以节省传输带宽。文本形式的数据通常会占用更多的字节，因为每个字符需要用若干字节表示。而二进制形式的数据可以更加紧凑地表示，减少了不必要的数据冗余，提高了数据传输的效率。</p>
+<p>总结起来，使用二进制传输数据可以带来以下好处：</p>
+<ol>
+<li> 提高数据传输的效率和速度</li>
+<li> 减少延迟和丢包的问题</li>
+<li> 节省传输带宽</li>
+</ol>
+<h1 id="两种模式性能比较"><a href="#两种模式性能比较" class="headerlink" title="两种模式性能比较"></a>两种模式性能比较</h1><p>博主写了两个 Python 小脚本，模拟处理串口接收到的字符串和二进制数据，并计算两者的造成的耗时，分析其性能。</p>
+<h2 id="字符串模式"><a href="#字符串模式" class="headerlink" title="字符串模式"></a>字符串模式</h2><p>首先是字符串模式，博主使用 <code>random</code> 包生成了长度为 1000 的随机浮点数据，将其转换为字符串后，按照文章开头的方式进行处理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span> getsizeof</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> uniform</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">measure_time</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*args: <span class="built_in">tuple</span>, **kwargs: <span class="built_in">dict</span></span>):</span><br><span class="line">        start = time()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        <span class="built_in">print</span>(</span><br><span class="line">            <span class="string">&quot;执行耗时 %f 微秒&quot;</span> %</span><br><span class="line">            ((time() - start) * <span class="number">1e6</span>)</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_random</span>(<span class="params">length: <span class="built_in">int</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    random_floats = [<span class="built_in">str</span>(uniform(<span class="number">0.1</span>, <span class="number">10</span>)) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(length)]</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;,&quot;</span>.join(random_floats)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">data_size</span>(<span class="params">data: <span class="built_in">str</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="keyword">return</span> getsizeof(data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@measure_time</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mock_serial</span>(<span class="params">data: <span class="built_in">str</span></span>) -&gt; <span class="built_in">list</span>[<span class="built_in">float</span>]:</span><br><span class="line">    <span class="comment"># 以 , 为分隔符，分割字符串</span></span><br><span class="line">    data = data.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">    <span class="comment"># 遍历字符串列表，转回浮点数</span></span><br><span class="line">    <span class="keyword">return</span> [<span class="built_in">float</span>(i) <span class="keyword">for</span> i <span class="keyword">in</span> data]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 模拟出学长从串口收到的数据</span></span><br><span class="line">    data = generate_random(<span class="number">1000</span>)</span><br><span class="line">    <span class="comment"># 取得文本数据的大小</span></span><br><span class="line">    <span class="built_in">print</span>(</span><br><span class="line">        <span class="string">&quot;文本大小 %d 字节&quot;</span> %</span><br><span class="line">        data_size(data=data)</span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 处理数据，计算耗时</span></span><br><span class="line">    mock_serial(data=data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本过后，得到了字符串数据占用的大小和文本处理部分的代码耗时。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">文本大小 18316 字节</span><br><span class="line">执行耗时 348.567963 微秒</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，光是由于处理文本造成的耗时，就已经用去了 363 us，生成的字符串也用去了 18 kB 左右。 </p>
+<h2 id="二进制模式"><a href="#二进制模式" class="headerlink" title="二进制模式"></a>二进制模式</h2><p>接下来是二进制模式，博主同样使用 <code>random</code> 包生成了长度为 1000 的浮点列表数据，再将其转换为字节类型数据，再使用 <code>struct</code> 包做解析。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> struct <span class="keyword">import</span> pack, unpack, calcsize</span><br><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> uniform</span><br><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span> getsizeof</span><br><span class="line"><span class="keyword">from</span> time <span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">measure_time</span>(<span class="params">func</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">inner</span>(<span class="params">*args: <span class="built_in">tuple</span>, **kwargs: <span class="built_in">dict</span></span>):</span><br><span class="line">        start = time()</span><br><span class="line">        result = func(*args, **kwargs)</span><br><span class="line">        <span class="built_in">print</span>(</span><br><span class="line">            <span class="string">&quot;执行耗时 %f 微秒&quot;</span> %</span><br><span class="line">            ((time() - start) * <span class="number">1e6</span>)</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    <span class="keyword">return</span> inner</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_random</span>(<span class="params">length: <span class="built_in">int</span></span>) -&gt; <span class="built_in">bytes</span>:</span><br><span class="line">    random_floats = [uniform(<span class="number">0.1</span>, <span class="number">10</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(length)]</span><br><span class="line">    data = pack(<span class="string">f&quot;<span class="subst">&#123;length&#125;</span>f&quot;</span>, *random_floats)</span><br><span class="line">    <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">data_size</span>(<span class="params">data: <span class="built_in">bytes</span></span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    <span class="keyword">return</span> getsizeof(data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@measure_time</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mock_serial</span>(<span class="params">data: <span class="built_in">bytes</span></span>) -&gt; <span class="built_in">list</span>[<span class="built_in">float</span>]:</span><br><span class="line">    <span class="comment"># 计算浮点数个数</span></span><br><span class="line">    num_floats = <span class="built_in">len</span>(data) // calcsize(<span class="string">&#x27;f&#x27;</span>)</span><br><span class="line">    <span class="comment"># 格式化字符串</span></span><br><span class="line">    format_string = <span class="string">f&quot;<span class="subst">&#123;num_floats&#125;</span>f&quot;</span></span><br><span class="line">    <span class="comment"># 使用 struct.unpack 解析字节流</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>(unpack(format_string, data))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 生成随机浮点数，转为二进制形式</span></span><br><span class="line">    data = generate_random(<span class="number">1000</span>)</span><br><span class="line">    <span class="comment"># 取得二进制数据的大小</span></span><br><span class="line">    <span class="built_in">print</span>(</span><br><span class="line">        <span class="string">&quot;二进制数据大小 %d 字节&quot;</span> %</span><br><span class="line">        data_size(data=data)</span><br><span class="line">    )</span><br><span class="line">    <span class="comment"># 处理数据，计算耗时</span></span><br><span class="line">    mock_serial(data=data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>执行脚本过后，得到了二进制数据占用的大小和二进制解包处理部分的代码耗时。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">二进制数据大小 4033 字节</span><br><span class="line">执行耗时 10.728836 微秒</span><br></pre></td></tr></table></figure>
+
+<p>可以看到，相对于字符串模式，二进制模式的处理耗时减少了 30 多倍，传输的数据大小也减少了将近 5 倍，可以说是质的飞跃。</p>
+<h1 id="二进制发送一个结构体"><a href="#二进制发送一个结构体" class="headerlink" title="二进制发送一个结构体"></a>二进制发送一个结构体</h1><p>在实际的开发中，下位机一般会将传感器采集到的数据放到结构体中，并在结构体中附上校验和，然后透过串口发送给上位机。上位机收到数据后，再将其解析成结构体，进行后续的处理。为便于理解代码，博主这里的下位机以 Arduino 为例，演示如何使用二进制形式发送一个结构体。</p>
+<p>例如，下文的结构体类型数据中包含了一个长度为 100 的 <code>float</code> 类型数组和一个 <code>uint8_t</code> 类型的校验和。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="type">float</span> data[<span class="number">100</span>];</span><br><span class="line">    <span class="type">uint8_t</span> checksum;</span><br><span class="line">&#125; <span class="type">sensor_t</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="下位机代码"><a href="#下位机代码" class="headerlink" title="下位机代码"></a>下位机代码</h2><p>以 Arduino 为例，下位机的代码如下所示，其中，校验和的部分使用简单校验和算法。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;Arduino.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 数据帧起始字节</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> HEADER 0x8A</span></span><br><span class="line"><span class="comment">// 数据帧长度</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> LENGTH 100</span></span><br><span class="line"><span class="comment">// 两帧间延时</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> DELAY 10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 传感器数据结构体</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> &#123;</span><br><span class="line">    <span class="type">float</span> data[LENGTH];</span><br><span class="line">    <span class="type">uint8_t</span> checksum;</span><br><span class="line">&#125; <span class="type">sensor_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算校验和</span></span><br><span class="line"><span class="function"><span class="type">uint8_t</span> <span class="title">getChecksum</span><span class="params">(<span class="type">float</span>* data, <span class="type">size_t</span> length)</span> </span>&#123;</span><br><span class="line">    <span class="type">uint8_t</span> checksum = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">        <span class="type">uint8_t</span>* bytes = (<span class="type">uint8_t</span>*)&amp;data[i];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">size_t</span> j = <span class="number">0</span>; j &lt; <span class="built_in">sizeof</span>(<span class="type">float</span>); j++) &#123;</span><br><span class="line">            checksum ^= bytes[j];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> checksum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">setup</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 打开串口</span></span><br><span class="line">    Serial.<span class="built_in">begin</span>(<span class="number">115200</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 声明传感器数据结构体</span></span><br><span class="line">    <span class="type">sensor_t</span> sensorData;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 填充传感器数据</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">uint8_t</span> i = <span class="number">0</span>; i &lt; LENGTH; i++) &#123;</span><br><span class="line">        <span class="comment">// 读取传感器数据（这里为随机数）</span></span><br><span class="line">        sensorData.data[i] = (<span class="type">float</span>)<span class="built_in">random</span>(<span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 计算校验和</span></span><br><span class="line">    sensorData.checksum = <span class="built_in">getChecksum</span>(sensorData.data, LENGTH);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 发送数据头</span></span><br><span class="line">    Serial.<span class="built_in">write</span>(HEADER);</span><br><span class="line">    <span class="comment">// 发送结构体数据</span></span><br><span class="line">    Serial.<span class="built_in">write</span>((<span class="type">uint8_t</span>*)&amp;sensorData, <span class="built_in">sizeof</span>(sensorData));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 等待发送完成并延时</span></span><br><span class="line">    Serial.<span class="built_in">flush</span>();</span><br><span class="line">    <span class="built_in">delay</span>(DELAY);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="上位机代码"><a href="#上位机代码" class="headerlink" title="上位机代码"></a>上位机代码</h2><h3 id="Golang-版本"><a href="#Golang-版本" class="headerlink" title="Golang 版本"></a>Golang 版本</h3><p>原谅博主太热爱 Golang 了，什么都想拿 Go 写一遍。这里用到了 <code>encoding/binary</code> 包，可以<del>方便地</del>将二进制数据解析成结构体。</p>
+<p>此外，由于 Go 的 <code>io.ReadFull</code> 方法没有超时机制，所以博主重新实现了这个方法，设置了一个超时时间，如果在超时时间内没有读取到数据，就会抛出异常，避免进程被阻塞。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">&quot;bytes&quot;</span></span><br><span class="line">	<span class="string">&quot;encoding/binary&quot;</span></span><br><span class="line">	<span class="string">&quot;fmt&quot;</span></span><br><span class="line">	<span class="string">&quot;io&quot;</span></span><br><span class="line">	<span class="string">&quot;time&quot;</span></span><br><span class="line">	<span class="string">&quot;unsafe&quot;</span></span><br><span class="line"></span><br><span class="line">	<span class="string">&quot;github.com/tarm/serial&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> (</span><br><span class="line">	<span class="comment">// 数据帧起始字节</span></span><br><span class="line">	HEADER = <span class="number">0x8A</span></span><br><span class="line">	<span class="comment">// 数据帧长度</span></span><br><span class="line">	LENGTH = <span class="number">100</span></span><br><span class="line">	<span class="comment">// 串口波特率</span></span><br><span class="line">	BAUDRATE = <span class="number">115200</span></span><br><span class="line">	<span class="comment">// 串口设备路径</span></span><br><span class="line">	DEVICE = <span class="string">&quot;/dev/ttyUSB0&quot;</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 传感器数据结构体</span></span><br><span class="line"><span class="keyword">type</span> sensor_t <span class="keyword">struct</span> &#123;</span><br><span class="line">	Data     [LENGTH]<span class="type">float32</span></span><br><span class="line">	Checksum <span class="type">uint8</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getChecksum</span><span class="params">(data [LENGTH]<span class="type">float32</span>)</span></span> <span class="type">byte</span> &#123;</span><br><span class="line">	checksum := <span class="type">byte</span>(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _, value := <span class="keyword">range</span> data &#123;</span><br><span class="line">		bytes := *(*[<span class="number">4</span>]<span class="type">byte</span>)(unsafe.Pointer(&amp;value))</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> _, b := <span class="keyword">range</span> bytes &#123;</span><br><span class="line">			checksum ^= b</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> checksum</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">readSerial</span><span class="params">(r io.Reader, buf []<span class="type">byte</span>, timeout time.Duration)</span></span> (n <span class="type">int</span>, err <span class="type">error</span>) &#123;</span><br><span class="line">	min := <span class="built_in">len</span>(buf)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(buf) &lt; min &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>, io.ErrShortBuffer</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	start := time.Now()</span><br><span class="line">	<span class="keyword">for</span> n &lt; min &amp;&amp; err == <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> time.Since(start) &gt; timeout &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>, fmt.Errorf(<span class="string">&quot;reader: timeout due to no response&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		nn, err := r.Read(buf[n:])</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>, err</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		n += nn</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> n &gt;= min &#123;</span><br><span class="line">		err = <span class="literal">nil</span></span><br><span class="line">	&#125; <span class="keyword">else</span> <span class="keyword">if</span> n &gt; <span class="number">0</span> &amp;&amp; err == io.EOF &#123;</span><br><span class="line">		err = io.ErrUnexpectedEOF</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> n, err</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span> &#123;</span><br><span class="line">	<span class="comment">// 打开串口</span></span><br><span class="line">	port, err := serial.OpenPort(&amp;serial.Config&#123;</span><br><span class="line">		Name: DEVICE,</span><br><span class="line">		Baud: BAUDRATE,</span><br><span class="line">	&#125;)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="built_in">panic</span>(err)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> port.Close()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 接收数据帧</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="comment">// 等待接收数据帧头</span></span><br><span class="line">		<span class="keyword">for</span> &#123;</span><br><span class="line">			header := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="number">1</span>)</span><br><span class="line">			port.Read(header)</span><br><span class="line"></span><br><span class="line">			<span class="keyword">if</span> bytes.Equal(header, []<span class="type">byte</span>&#123;HEADER&#125;) &#123;</span><br><span class="line">				<span class="keyword">break</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 读取数据帧</span></span><br><span class="line">		buffer := <span class="built_in">make</span>([]<span class="type">byte</span>, unsafe.Sizeof(sensor_t&#123;&#125;))</span><br><span class="line">		n, err := readSerial(port, buffer, <span class="number">2</span>*time.Second)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="built_in">panic</span>(err)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 解析数据帧</span></span><br><span class="line">		<span class="keyword">var</span> SensorData sensor_t</span><br><span class="line">		err = binary.Read(</span><br><span class="line">			bytes.NewReader(buffer[:n]),</span><br><span class="line">			binary.LittleEndian,</span><br><span class="line">			&amp;SensorData,</span><br><span class="line">		)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="built_in">panic</span>(err)</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 校验数据帧</span></span><br><span class="line">		<span class="keyword">if</span> SensorData.Checksum != getChecksum(SensorData.Data) &#123;</span><br><span class="line">			fmt.Println(<span class="string">&quot;校验和不正确&quot;</span>)</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 打印数据帧</span></span><br><span class="line">		fmt.Println(<span class="string">&quot;校验和正确&quot;</span>, SensorData.Data)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行该程序后，可以看到下位机与上位机之间的数据传输非常稳定，同时，上下位机之间的数据校验和都是正确的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">校验和正确 [4 4 6 6 7 8 7 4 6 7 1 2 3 1 6 4 2 9 4 2 4 7 2 3 4 3 5 6 8 8 3 4 8 7 3 9 4 9 7 5 6 3 5 5 7 9 4 1 3 7 7 3 7 1 9 3 5 3 3 9 1 9 7 4 3 5 4 8 9 7 1 6 4 8 5 7 3 3 3 2 8 8 3 3 9 2 2 3 9 5 4 7 6 7 6 8 7 2 7 3]</span><br><span class="line">校验和正确 [7 1 5 6 4 8 5 4 9 7 9 8 2 8 1 3 8 6 4 3 8 5 2 3 4 4 7 1 1 2 8 1 9 8 5 4 8 6 5 7 8 6 8 3 8 7 1 6 5 1 1 6 6 7 9 9 1 3 4 1 2 9 3 3 4 2 2 5 7 4 5 9 6 3 2 4 7 1 6 6 2 2 4 2 2 3 7 1 1 4 4 7 2 5 8 5 7 7 8 6]</span><br><span class="line">校验和正确 [7 3 2 1 5 9 3 4 2 7 1 9 8 3 9 9 4 3 3 7 6 1 5 2 6 2 3 4 2 7 2 2 6 4 9 3 5 6 9 7 7 1 8 9 3 9 2 4 2 4 4 7 3 2 7 3 4 4 8 5 9 9 9 1 1 2 9 6 8 4 1 1 5 9 4 3 8 5 6 3 4 1 5 6 2 9 2 1 1 2 7 2 7 3 4 5 8 7 9 3]</span><br><span class="line">校验和正确 [2 8 8 4 8 9 5 4 7 7 1 3 3 2 6 9 8 9 5 6 3 3 6 3 5 5 1 4 9 8 4 8 5 9 6 6 9 6 3 9 1 4 4 6 3 4 3 8 5 6 6 1 1 1 4 9 9 5 8 4 2 7 6 8 1 2 3 7 4 4 3 4 2 2 1 9 4 1 3 2 6 2 1 3 9 9 1 1 7 6 1 8 5 3 5 2 1 3 7 6]</span><br><span class="line">校验和正确 [1 2 1 4 8 1 5 8 8 2 1 3 3 5 2 6 3 4 8 7 3 5 5 9 3 7 2 6 9 1 9 3 9 6 9 3 4 8 7 8 1 2 5 8 2 6 5 7 1 7 4 7 6 2 3 5 3 7 2 8 6 5 1 3 1 4 2 1 3 6 2 6 4 7 1 5 7 5 3 7 8 4 3 9 1 6 1 6 6 9 2 9 9 9 4 4 8 6 6 5]</span><br></pre></td></tr></table></figure>
+
+<h3 id="Python-版本"><a href="#Python-版本" class="headerlink" title="Python 版本"></a>Python 版本</h3><p>论便利性，Python 只需要短短几行就能解决。串口部分用到了 <code>pyserial</code> 包（可能需要使用 pip 手动安装），二进制拆包部分用到了 <code>struct</code> 包。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> serial</span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据帧起始字节</span></span><br><span class="line">HEADER = <span class="number">0x8A</span></span><br><span class="line"><span class="comment"># 数据帧长度</span></span><br><span class="line">LENGTH = <span class="number">100</span></span><br><span class="line"><span class="comment"># 串口波特率</span></span><br><span class="line">BAUDRATE = <span class="number">115200</span></span><br><span class="line"><span class="comment"># 串口设备路径</span></span><br><span class="line">DEVICE = <span class="string">&#x27;/dev/ttyUSB0&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_checksum</span>(<span class="params">data: <span class="built_in">list</span>[<span class="built_in">float</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">    checksum = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> data:</span><br><span class="line">        <span class="built_in">bytes</span> = <span class="built_in">bytearray</span>(struct.pack(<span class="string">&quot;f&quot;</span>, value))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> byte <span class="keyword">in</span> <span class="built_in">bytes</span>:</span><br><span class="line">            checksum ^= byte</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> checksum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="comment"># 定义结构体格式</span></span><br><span class="line">    sensor_format = struct.Struct(<span class="string">&quot;&lt;%dfB&quot;</span> % LENGTH)</span><br><span class="line">    <span class="comment"># 打开串口</span></span><br><span class="line">    ser = serial.Serial(DEVICE, BAUDRATE)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="comment"># 等待接收数据帧头</span></span><br><span class="line">        header = ser.read()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> header == <span class="built_in">bytes</span>([HEADER]):</span><br><span class="line">            <span class="comment"># 接收结构体数据</span></span><br><span class="line">            recv = ser.read(sensor_format.size)</span><br><span class="line">            <span class="comment"># 解析结构体数据</span></span><br><span class="line">            data = sensor_format.unpack(recv)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 提取数据</span></span><br><span class="line">            sensor = data[:-<span class="number">1</span>]</span><br><span class="line">            <span class="comment"># 提取校验和</span></span><br><span class="line">            checksum = data[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 比较校验和</span></span><br><span class="line">            <span class="keyword">if</span> checksum == get_checksum(sensor):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;校验和正确&quot;</span>, sensor)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;校验和不正确&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+
+<p>运行该程序后，可以看到下位机与上位机之间的数据传输也非常稳定，同时，上下位机之间的数据校验和也是正确的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">校验和正确 (9.0, 5.0, 5.0, 8.0, 3.0, 3.0, 7.0, 5.0, 4.0, 3.0, 7.0, 8.0, 7.0, 1.0, 8.0, 7.0, 7.0, 9.0, 1.0, 6.0, 7.0, 5.0, 4.0, 5.0, 4.0, 8.0, 5.0, 9.0, 6.0, 7.0, 1.0, 7.0, 6.0, 1.0, 6.0, 1.0, 6.0, 2.0, 7.0, 3.0, 4.0, 7.0, 3.0, 3.0, 2.0, 9.0, 9.0, 3.0, 4.0, 1.0, 9.0, 2.0, 1.0, 1.0, 6.0, 4.0, 8.0, 8.0, 5.0, 3.0, 7.0, 3.0, 1.0, 6.0, 1.0, 9.0, 3.0, 8.0, 9.0, 5.0, 3.0, 8.0, 3.0, 8.0, 7.0, 7.0, 6.0, 8.0, 8.0, 1.0, 6.0, 3.0, 1.0, 9.0, 3.0, 1.0, 5.0, 5.0, 2.0, 9.0, 9.0, 5.0, 2.0, 3.0, 9.0, 1.0, 7.0, 1.0, 3.0, 7.0)</span><br><span class="line">校验和正确 (4.0, 2.0, 9.0, 5.0, 6.0, 3.0, 3.0, 7.0, 4.0, 1.0, 1.0, 3.0, 5.0, 2.0, 5.0, 2.0, 1.0, 4.0, 7.0, 1.0, 1.0, 1.0, 3.0, 3.0, 1.0, 3.0, 6.0, 8.0, 7.0, 4.0, 6.0, 3.0, 4.0, 3.0, 7.0, 7.0, 9.0, 1.0, 9.0, 9.0, 7.0, 4.0, 3.0, 8.0, 5.0, 4.0, 3.0, 8.0, 3.0, 8.0, 7.0, 9.0, 2.0, 6.0, 9.0, 2.0, 6.0, 9.0, 9.0, 3.0, 8.0, 2.0, 9.0, 1.0, 9.0, 2.0, 5.0, 6.0, 9.0, 9.0, 3.0, 1.0, 6.0, 1.0, 1.0, 9.0, 9.0, 7.0, 8.0, 7.0, 4.0, 6.0, 6.0, 8.0, 4.0, 9.0, 2.0, 5.0, 7.0, 6.0, 6.0, 2.0, 7.0, 1.0, 7.0, 5.0, 2.0, 7.0, 3.0, 6.0)</span><br><span class="line">校验和正确 (7.0, 6.0, 6.0, 7.0, 6.0, 4.0, 2.0, 5.0, 8.0, 7.0, 1.0, 1.0, 1.0, 8.0, 9.0, 1.0, 4.0, 1.0, 8.0, 1.0, 5.0, 5.0, 2.0, 9.0, 4.0, 2.0, 1.0, 7.0, 3.0, 1.0, 3.0, 8.0, 7.0, 5.0, 5.0, 8.0, 3.0, 3.0, 9.0, 4.0, 5.0, 3.0, 9.0, 4.0, 7.0, 6.0, 9.0, 7.0, 7.0, 3.0, 8.0, 1.0, 1.0, 7.0, 9.0, 2.0, 3.0, 6.0, 3.0, 9.0, 1.0, 2.0, 5.0, 7.0, 8.0, 7.0, 5.0, 9.0, 9.0, 9.0, 9.0, 7.0, 1.0, 5.0, 1.0, 3.0, 4.0, 1.0, 1.0, 9.0, 4.0, 5.0, 1.0, 9.0, 8.0, 6.0, 2.0, 8.0, 6.0, 5.0, 2.0, 4.0, 3.0, 1.0, 8.0, 6.0, 9.0, 1.0, 3.0, 1.0)</span><br><span class="line">校验和正确 (1.0, 6.0, 3.0, 8.0, 5.0, 1.0, 3.0, 8.0, 1.0, 5.0, 1.0, 5.0, 1.0, 3.0, 6.0, 5.0, 8.0, 1.0, 2.0, 1.0, 5.0, 1.0, 6.0, 3.0, 5.0, 1.0, 6.0, 5.0, 9.0, 2.0, 2.0, 2.0, 6.0, 4.0, 8.0, 5.0, 1.0, 4.0, 3.0, 2.0, 6.0, 6.0, 5.0, 1.0, 4.0, 8.0, 4.0, 1.0, 6.0, 4.0, 4.0, 4.0, 8.0, 8.0, 8.0, 7.0, 3.0, 1.0, 2.0, 8.0, 9.0, 8.0, 4.0, 3.0, 3.0, 1.0, 2.0, 7.0, 2.0, 4.0, 3.0, 3.0, 1.0, 2.0, 8.0, 4.0, 1.0, 8.0, 6.0, 2.0, 1.0, 7.0, 2.0, 4.0, 5.0, 2.0, 9.0, 5.0, 4.0, 4.0, 8.0, 2.0, 7.0, 5.0, 4.0, 8.0, 6.0, 8.0, 1.0, 2.0)</span><br><span class="line">校验和正确 (7.0, 2.0, 6.0, 7.0, 9.0, 7.0, 6.0, 1.0, 2.0, 3.0, 8.0, 9.0, 1.0, 9.0, 7.0, 5.0, 8.0, 6.0, 5.0, 4.0, 6.0, 1.0, 7.0, 4.0, 7.0, 7.0, 4.0, 9.0, 7.0, 2.0, 5.0, 7.0, 4.0, 5.0, 9.0, 1.0, 5.0, 4.0, 1.0, 3.0, 1.0, 5.0, 5.0, 6.0, 7.0, 1.0, 5.0, 7.0, 2.0, 8.0, 8.0, 8.0, 4.0, 5.0, 6.0, 4.0, 3.0, 2.0, 4.0, 4.0, 3.0, 2.0, 1.0, 9.0, 9.0, 6.0, 9.0, 4.0, 1.0, 5.0, 7.0, 3.0, 3.0, 7.0, 2.0, 1.0, 4.0, 8.0, 9.0, 3.0, 6.0, 8.0, 6.0, 9.0, 4.0, 3.0, 7.0, 7.0, 4.0, 7.0, 4.0, 7.0, 2.0, 6.0, 7.0, 5.0, 9.0, 2.0, 7.0, 2.0)</span><br></pre></td></tr></table></figure>
+
+<h1 id="关于校验和"><a href="#关于校验和" class="headerlink" title="关于校验和"></a>关于校验和</h1><p>校验和是一种用于检测数据传输错误的简单方法，在本文中，博主使用了一个简单的校验和算法，方法是将数据包中的所有字节进行异或运算来实现的。</p>
+<p>具体来说，它使用了两层循环，外层循环透过迭代 data 数组中的每个元素 value，将 value 转换为一个包含 4 个字节的数组 bytes。</p>
+<p>接下来，内层循环透过迭代 bytes 数组中的每个字节 b，使用异或运算符 ^= 将 b 与 checksum 进行异或运算。</p>
+<p>如此一来，每个字节都会与 checksum 进行异或，从而在 checksum 中累积计算出最终的校验和，最后，函数返回计算得到的校验和 checksum。</p>
+<p>这样的方法虽然简单，但是它无法检测出所有可能的错误。例如，如果两个数据包中的字节交换了位置，它们的校验和将是相同的，这就导致了错误的数据包被误认为是正确的。不过，这种情况很少发生，如果发生了，那就去买张彩票吧。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%A1%AC%E4%BB%B6/" rel="tag"># 硬件</a>
+              <a href="/tags/Golang/" rel="tag"># Golang</a>
+              <a href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag"># 单片机</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag"># 嵌入式</a>
+              <a href="/tags/C-C/" rel="tag"># C / C++</a>
+              <a href="/tags/%E4%B8%B2%E5%8F%A3/" rel="tag"># 串口</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Soundcard-SDR_20230601/" rel="prev" title="探寻二十年前的声卡 SDR">
+      <i class="fa fa-chevron-left"></i> 探寻二十年前的声卡 SDR
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/ShortLink-Firebase_20230626/" rel="next" title="我写了一个无需后端的短网址程序...">
+      我写了一个无需后端的短网址程序... <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%BC%A0%E8%BE%93"><span class="nav-number">1.</span> <span class="nav-text">为什么要用二进制传输</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F%E6%80%A7%E8%83%BD%E6%AF%94%E8%BE%83"><span class="nav-number">2.</span> <span class="nav-text">两种模式性能比较</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.1.</span> <span class="nav-text">字符串模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%A8%A1%E5%BC%8F"><span class="nav-number">2.2.</span> <span class="nav-text">二进制模式</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8F%91%E9%80%81%E4%B8%80%E4%B8%AA%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">3.</span> <span class="nav-text">二进制发送一个结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E4%BD%8D%E6%9C%BA%E4%BB%A3%E7%A0%81"><span class="nav-number">3.1.</span> <span class="nav-text">下位机代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E4%BD%8D%E6%9C%BA%E4%BB%A3%E7%A0%81"><span class="nav-number">3.2.</span> <span class="nav-text">上位机代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Golang-%E7%89%88%E6%9C%AC"><span class="nav-number">3.2.1.</span> <span class="nav-text">Golang 版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Python-%E7%89%88%E6%9C%AC"><span class="nav-number">3.2.2.</span> <span class="nav-text">Python 版本</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="nav-number">4.</span> <span class="nav-text">关于校验和</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/Serial-Binary_20230611/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="重要：由于 V2Ray 修改了自动安装脚本，导致 bclswl0827&#x2F;v2ray-heroku 该镜像在 Heroku 无法运行。修改 Dockerfile 后问题已经解决，现在请 2020 年 2 月 20 日前部署过本镜像的用户，删除原先的 V2Ray 应用，并重新在 Heroku 部署本镜像。 已经 Fork 过这个项目的用户，请重新 Fork 一次。 概述在白嫖党的强势围攻之下，Aruk">
+<meta property="og:type" content="website">
+<meta property="og:title" content="在 Heroku 搭建 V2Ray">
+<meta property="og:url" content="https://ibcl.us/archive/Heroku-V2Ray_20191014.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="重要：由于 V2Ray 修改了自动安装脚本，导致 bclswl0827&#x2F;v2ray-heroku 该镜像在 Heroku 无法运行。修改 Dockerfile 后问题已经解决，现在请 2020 年 2 月 20 日前部署过本镜像的用户，删除原先的 V2Ray 应用，并重新在 Heroku 部署本镜像。 已经 Fork 过这个项目的用户，请重新 Fork 一次。 概述在白嫖党的强势围攻之下，Aruk">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-10-14T15:22:00.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.382Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="杂谈">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ibcl.us/archive/Heroku-V2Ray_20191014">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>在 Heroku 搭建 V2Ray | I BCL.
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">在 Heroku 搭建 V2Ray
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p><strong>重要：由于 V2Ray 修改了自动安装脚本，导致 bclswl0827/v2ray-heroku 该镜像在 Heroku 无法运行。修改 Dockerfile 后问题已经解决，现在请 2020 年 2 月 20 日前部署过本镜像的用户，删除原先的 V2Ray 应用，并重新在 Heroku 部署本镜像。</strong></p>
+<p><strong>已经 Fork 过这个项目的用户，请重新 Fork 一次。</strong></p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>在白嫖党的强势围攻之下，Arukas 终于宣布倒闭，并将于 2020 年 1 月 31 日关闭所有服务。</p>
+<blockquote>
+<p>Dear Arukas users,<br>We will shutdown of service on January 31, 2020 (JST).</p>
+</blockquote>
+<p>又一个免费服务被撸翻了车，默默为 Arukas 心疼一秒…</p>
+<p>算下来的话，现在还在运营中的，提供免费容器的也就只有 OpenShift 和 Heroku 了，很气的是，OpenShift 在今年二月左右变更了政策，此前可以一直使用的 OpenShift Starter 的有效期改为了只有两个月，到期之后需要重新申请免费的 OpenShift Starter 并重新部署应用。</p>
+<p>于是 Free Plan 变成了 Free Trail，顿时 OpenShift 就不香了。</p>
+<p>对于白嫖党们来说，Arukas 的倒下和 OpenShift 政策的变更确实是一个极坏的消息，但是好在还有 Heroku 这个活雷锋，并且 Heroku 和 OpenSHift 一样是使用的 Amazon EC2…</p>
+<p>或许可以再利用一波？</p>
+<p>这篇水文，将介绍博主如何写 Dockerfie 以在 Heroku 上搭建 V2Ray。</p>
+<p>默默为 Heroku 心疼两秒…</p>
+<span id="more"></span>
+<h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>虽然网上已经有了现成的在 Heroku 搭建 V2Ray 的教程，但大多数都是东抄西搬来的内容。此外，根据一些人反馈的情况来看，在 Heroku 上部署 V2Ray 后帐户会被“秒封”。</p>
+<p>在博主仔细看了这些用于 Heroku 搭建 V2Ray 的 Dockerfile 后，找出了可能封号的原因，大致三种情况。</p>
+<ul>
+<li>所选用系统过于庞大，几近 60MB，占用了过多的空间；</li>
+<li>同时运行了 V2Ray 和 Caddy，占用大量资源；</li>
+<li>用户长时间大流量连接单个应用，超出限额·引起管理员怀疑。</li>
+</ul>
+<p>针对这些问题，博主也给出了三个优化的方法。</p>
+<ul>
+<li>使用 Alpine Linux 在 Heroku 部署 V2Ray；</li>
+<li>让 V2Ray 监听 0.0.0.0，不通过 Caddy 反向代理；</li>
+<li>部署多个应用，配置 V2Ray 特有的<span class="exturl" data-url="aHR0cHM6Ly90b3V0eXJhdGVyLmdpdGh1Yi5pby9hcHAvYmFsYW5jZS5odG1s">以轮询方式实现的简单的负载均衡<i class="fa fa-external-link-alt"></i></span>，避免用户长时间大流量连接单个应用。</li>
+</ul>
+<p>于是，博主用五行代码解决了 Dockerfile… 此外，配置镜像在部署时自动下载安装最新的 V2Ray，无需手动定义版本号。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FROM alpine:3.5</span><br><span class="line">RUN apk add --no-cache --virtual .build-deps ca-certificates curl</span><br><span class="line">ADD configure.sh /configure.sh</span><br><span class="line">RUN chmod +x /configure.sh</span><br><span class="line">CMD /configure.sh</span><br></pre></td></tr></table></figure>
+
+<p>V2Ray 需要用到的 UUID，这里通过环境变量来定义，但是 Heroku 要求把 ENV 写在 app.json 中… 此外，需要定义 <code>stack</code> 为 <code>container</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	&quot;name&quot;: &quot;V2Ray&quot;,</span><br><span class="line">	&quot;description&quot;: &quot;Deploy V2ray on Heroku.&quot;,</span><br><span class="line">	&quot;keywords&quot;: [&quot;V2Ray&quot;],</span><br><span class="line">	&quot;env&quot;: &#123;</span><br><span class="line">		&quot;UUID&quot;: &#123;</span><br><span class="line">			&quot;description&quot;: &quot;V2Ray UUID&quot;,</span><br><span class="line">			&quot;value&quot;: &quot;ad806487-2d26-4636-98b6-ab85cc8521f7&quot;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;,</span><br><span class="line">	&quot;website&quot;: &quot;https://github.com/bclswl0827/v2ray-heroku&quot;,</span><br><span class="line">	&quot;repository&quot;: &quot;https://github.com/bclswl0827/v2ray-heroku&quot;,</span><br><span class="line">	&quot;stack&quot;: &quot;container&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Dockerfile 还引入了 Entrypoint，这个脚本是为了将 UUID 写入 V2Ray 的配置文件并运行 V2Ray 的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"># Download and install V2Ray</span><br><span class="line">curl -L -H &quot;Cache-Control: no-cache&quot; -o /v2ray.zip https://github.com/v2ray/v2ray-core/releases/latest/download/v2ray-linux-64.zip</span><br><span class="line">mkdir /usr/bin/v2ray /etc/v2ray</span><br><span class="line">touch /etc/v2ray/config.json</span><br><span class="line">unzip /v2ray.zip -d /usr/bin/v2ray</span><br><span class="line"># Remove /v2ray.zip and other useless files</span><br><span class="line">rm -rf /v2ray.zip /usr/bin/v2ray/*.sig /usr/bin/v2ray/doc /usr/bin/v2ray/*.json /usr/bin/v2ray/*.dat /usr/bin/v2ray/sys*</span><br><span class="line"># V2Ray new configuration</span><br><span class="line">cat &lt;&lt;-EOF &gt; /etc/v2ray/config.json</span><br><span class="line">&#123;</span><br><span class="line">  &quot;inbounds&quot;: [</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;port&quot;: $&#123;PORT&#125;,</span><br><span class="line">    &quot;protocol&quot;: &quot;vmess&quot;,</span><br><span class="line">    &quot;settings&quot;: &#123;</span><br><span class="line">      &quot;clients&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;id&quot;: &quot;$&#123;UUID&#125;&quot;,</span><br><span class="line">          &quot;alterId&quot;: 64</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;streamSettings&quot;: &#123;</span><br><span class="line">      &quot;network&quot;: &quot;ws&quot;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;outbounds&quot;: [</span><br><span class="line">  &#123;</span><br><span class="line">    &quot;protocol&quot;: &quot;freedom&quot;,</span><br><span class="line">    &quot;settings&quot;: &#123;&#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">/usr/bin/v2ray/v2ray -config=/etc/v2ray/config.json</span><br></pre></td></tr></table></figure>
+
+<p>由于 Heroku 只支持 ws + TLS，干脆就把协议写死好了。</p>
+<p>最后是 heroku.yml，告知 Heroku 如何部署这个应用。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">build:</span><br><span class="line">  docker:</span><br><span class="line">    web: Dockerfile</span><br></pre></td></tr></table></figure>
+
+<p>于是，一个用于在 Heroku 部署 V2Ray 的 Docker 镜像做好了～</p>
+<h1 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h1><p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvdjJyYXktaGVyb2t1">本镜像现已开源至博主的 GayHub，欢迎 Star+Fork：bclswl0827/v2ray-heroku<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9kYXNoYm9hcmQuaGVyb2t1LmNvbS9uZXc/dGVtcGxhdGU9aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvdjJyYXktaGVyb2t1">一键部署至 Heroku。<i class="fa fa-external-link-alt"></i></span></p>
+<p>接下来便是尝试部署。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">=== Fetching app code</span><br><span class="line">=== Building web (Dockerfile)</span><br><span class="line">Sending build context to Docker daemon  9.216kB</span><br><span class="line">Step 1/5 : FROM alpine:3.5</span><br><span class="line">latest: Pulling from library/alpine</span><br><span class="line">9d48c3bd43c5: Pulling fs layer</span><br><span class="line">9d48c3bd43c5: Download complete</span><br><span class="line">9d48c3bd43c5: Pull complete</span><br><span class="line">Digest: sha256:72c42ed48c3a2db31b7dafe17d275b634664a708d901ec9fd57b1529280f01fb</span><br><span class="line">Status: Downloaded newer image for alpine:latest</span><br><span class="line"> ---&gt; 961769676411</span><br><span class="line">Step 2/5 : RUN apk add --no-cache --virtual .build-deps ca-certificates curl bash</span><br><span class="line"> ---&gt; Running in b99ed707bc0c</span><br><span class="line">fetch http://dl-cdn.alpinelinux.org/alpine/v3.5/main/x86_64/APKINDEX.tar.gz</span><br><span class="line">fetch http://dl-cdn.alpinelinux.org/alpine/v3.5/community/x86_64/APKINDEX.tar.gz</span><br><span class="line">(1/5) Installing ca-certificates (20190108-r0)</span><br><span class="line">(2/5) Installing nghttp2-libs (1.39.2-r0)</span><br><span class="line">(3/5) Installing libcurl (7.66.0-r0)</span><br><span class="line">(4/5) Installing curl (7.66.0-r0)</span><br><span class="line">(5/5) Installing .build-deps (20191014.154718)</span><br><span class="line">Executing busybox-1.30.1-r2.trigger</span><br><span class="line">Executing ca-certificates-20190108-r0.trigger</span><br><span class="line">OK: 6 MiB in 18 packages</span><br><span class="line">Removing intermediate container b99ed707bc0c</span><br><span class="line"> ---&gt; 5df76f7718fe</span><br><span class="line">Step 3/5 : ADD configure.sh /configure.sh</span><br><span class="line"> ---&gt; d46cbec9cb4f</span><br><span class="line">Step 4/5 : RUN chmod +x /configure.sh</span><br><span class="line"> ---&gt; Running in 2639e76f40c4</span><br><span class="line">Removing intermediate container 2639e76f40c4</span><br><span class="line"> ---&gt; fc6979776c58</span><br><span class="line">Step 5/5 : CMD /configure.sh</span><br><span class="line"> ---&gt; Running in 056b679218a9</span><br><span class="line">Removing intermediate container 056b679218a9</span><br><span class="line"> ---&gt; 6ff840c77143</span><br><span class="line">Successfully built 6ff840c77143</span><br><span class="line">Successfully tagged 208417e4712e32ac36b36d2a902d93426dd3550b:latest</span><br><span class="line">=== Pushing web (Dockerfile)</span><br><span class="line">Tagged image &quot;208417e4712e32ac36b36d2a902d93426dd3550b&quot; as &quot;registry.heroku.com/ibcl-us/web&quot;</span><br><span class="line">The push refers to repository [registry.heroku.com/ibcl-us/web]</span><br><span class="line">0e0b51861c0a: Preparing</span><br><span class="line">8ce982ffc400: Preparing</span><br><span class="line">0b49aca41e7d: Preparing</span><br><span class="line">03901b4a2ea8: Preparing</span><br><span class="line">0e0b51861c0a: Pushed</span><br><span class="line">03901b4a2ea8: Pushed</span><br><span class="line">8ce982ffc400: Pushed</span><br><span class="line">0b49aca41e7d: Pushed</span><br><span class="line">latest: digest: sha256:dfc164ea98ce1af321d4251bdad0656aa104a9761d08ef3ddcf8cd5fec361775 size: 1153</span><br></pre></td></tr></table></figure>
+
+<p>部署成功了！</p>
+<p>打开 Heroku 分配的 Endpoint，出现 Bad Request，可以大致判断 V2Ray 已经在运行。</p>
+<p>博主一共部署了两个应用，配置了 V2Ray 的负载均衡，这里给出一个配置示例。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;inbounds&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;port&quot;: 1080,</span><br><span class="line">      &quot;listen&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">      &quot;protocol&quot;: &quot;socks&quot;,</span><br><span class="line">      &quot;sniffing&quot;: &#123;</span><br><span class="line">        &quot;enabled&quot;: true,</span><br><span class="line">        &quot;destOverride&quot;: [&quot;http&quot;, &quot;tls&quot;]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;auth&quot;: &quot;noauth&quot;,</span><br><span class="line">        &quot;udp&quot;: false</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  &quot;outbounds&quot;: [</span><br><span class="line">    &#123;</span><br><span class="line">      &quot;protocol&quot;: &quot;vmess&quot;,</span><br><span class="line">      &quot;settings&quot;: &#123;</span><br><span class="line">        &quot;vnext&quot;: [</span><br><span class="line">          &#123;</span><br><span class="line">            &quot;address&quot;: &quot;1st.herokuapp.com&quot;,</span><br><span class="line">            &quot;port&quot;: 443,</span><br><span class="line">            &quot;users&quot;: [</span><br><span class="line">              &#123;</span><br><span class="line">                &quot;id&quot;: &quot;40c98649-847b-412c-a229-5e68ca9985eb&quot;,</span><br><span class="line">                &quot;security&quot;: &quot;auto&quot;,</span><br><span class="line">                &quot;alterId&quot;: 64</span><br><span class="line">              &#125;</span><br><span class="line">            ]</span><br><span class="line">          &#125;,</span><br><span class="line">          &#123;</span><br><span class="line">            &quot;address&quot;: &quot;2nd.herokuapp.com&quot;,</span><br><span class="line">            &quot;port&quot;: 443,</span><br><span class="line">            &quot;users&quot;: [</span><br><span class="line">              &#123;</span><br><span class="line">                &quot;id&quot;: &quot;40c98649-847b-412c-a229-5e68ca9985eb&quot;,</span><br><span class="line">                &quot;security&quot;: &quot;auto&quot;,</span><br><span class="line">                &quot;alterId&quot;: 64</span><br><span class="line">              &#125;</span><br><span class="line">            ]</span><br><span class="line">          &#125;</span><br><span class="line">        ]</span><br><span class="line">      &#125;,</span><br><span class="line">      &quot;streamSettings&quot;: &#123;</span><br><span class="line">        &quot;network&quot;: &quot;ws&quot;,</span><br><span class="line">        &quot;security&quot;: &quot;tls&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>经过测试，博主本地电信非高峰时段速度在 20Mbps 左右，应急使用是足够了。</p>
+<p>此外，博主还搭建了<a href="https://ibcl.us/nodes/">一个 V2Ray 公益节点</a>。</p>
+<h1 id="套上-ClouFlare"><a href="#套上-ClouFlare" class="headerlink" title="套上 ClouFlare"></a>套上 ClouFlare</h1><p>可惜电信国际出口晚上炸成了狗，Heroku 到中国的速度便连电话线都不如了。</p>
+<p><del>偶然发现</del>（其实早就知道了）Heroku 可以给应用绑定域名，所以给 Herokuapp 套上 CloudFlare，或许情况会好很多。</p>
+<p>可怜的 CloudFlare（</p>
+<h2 id="有一个域名"><a href="#有一个域名" class="headerlink" title="有一个域名"></a>有一个域名</h2><p>值得一提的是，Heroku 需要先添加一张信用卡才能绑定域名。经过博主测试，银联信用卡成功绑定，并且会被识别为 Discover。</p>
+<p>随后在应用中添加要绑定的域名，在 CloudFlare DNS 管理页中添加 Heroku 给出的对应 CNAME 地址，点亮 CloudFlare 云朵，即可完成绑定。</p>
+<p>为了提高门槛防止 CloudFlare 被玩坏，此处不给出过于详细的教程。</p>
+<h2 id="没有信用卡和域名"><a href="#没有信用卡和域名" class="headerlink" title="没有信用卡和域名"></a>没有信用卡和域名</h2><p>但是也有一部分人没有信用卡和域名，但是也想白女票 CloudFlare 加速的，为了方便这一部分人，博主也想出来一个办法…</p>
+<p>好在 CloudFlare 最近推出了他们的 Serverless 应用 CloudFlare Workers，Workers 使用的语言是 Node.js，借助 Workers，我们可以利用它反向代理部署的 Heroku 应用。</p>
+<p>为了防止被玩坏，这里略去具体部署过程，只贴出反向代理的代码（</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">addEventListener(</span><br><span class="line">  &quot;fetch&quot;,event =&gt; &#123;</span><br><span class="line">     let url=new URL(event.request.url);</span><br><span class="line">     url.hostname=&quot;应用名称.herokuapp.com&quot;;</span><br><span class="line">     let request=new Request(url,event.request);</span><br><span class="line">     event. respondWith(</span><br><span class="line">       fetch(request)</span><br><span class="line">     )</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>部署完成后，将 Heroku 分配的链接改为 CloudFlare Workers 分配的应用链接即可～～</p>
+<h1 id="发个牢骚"><a href="#发个牢骚" class="headerlink" title="发个牢骚"></a>发个牢骚</h1><p>但愿 Heroku 不是下一个 Arukas，不然就真的没得玩了…</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">3.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A5%97%E4%B8%8A-ClouFlare"><span class="nav-number">4.</span> <span class="nav-text">套上 ClouFlare</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%89%E4%B8%80%E4%B8%AA%E5%9F%9F%E5%90%8D"><span class="nav-number">4.1.</span> <span class="nav-text">有一个域名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89%E4%BF%A1%E7%94%A8%E5%8D%A1%E5%92%8C%E5%9F%9F%E5%90%8D"><span class="nav-number">4.2.</span> <span class="nav-text">没有信用卡和域名</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%91%E4%B8%AA%E7%89%A2%E9%AA%9A"><span class="nav-number">5.</span> <span class="nav-text">发个牢骚</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/archive/Heroku-V2Ray_20191014.html',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

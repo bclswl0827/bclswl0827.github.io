@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="某年某月某日，某无（国）限（安）垫（局）技（茶）术（道）讨（研）论（究）群（组）中出现了这样一段对话。  呐，听大佬说，FlightAware 的 FlightFeeder 套件本体是 Raspberry Pi 呢。   So？白嫖安排上？   据说 FlightFeeder 会把 ADS-B 资讯上传到国外，有人因为这个喝了茶的。   国安的怎么知道 FlightFeeder 使用者的确切位置？">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FlightFeeder 白嫖背后的阴谋">
+<meta property="og:url" content="https://ibcl.us/archive/ADSB-FlightFeeder_20200319.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="某年某月某日，某无（国）限（安）垫（局）技（茶）术（道）讨（研）论（究）群（组）中出现了这样一段对话。  呐，听大佬说，FlightAware 的 FlightFeeder 套件本体是 Raspberry Pi 呢。   So？白嫖安排上？   据说 FlightFeeder 会把 ADS-B 资讯上传到国外，有人因为这个喝了茶的。   国安的怎么知道 FlightFeeder 使用者的确切位置？">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/3.jpg">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/4.jpg">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/5.jpg">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/6.jpg">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/7.jpg">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/8.jpg">
+<meta property="og:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/9.jpg">
+<meta property="article:published_time" content="2020-03-19T09:30:06.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.382Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="广播">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="SDR">
+<meta property="article:tag" content="瞎搞">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/ADSB-FlightFeeder_20200319/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/archive/ADSB-FlightFeeder_20200319">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>FlightFeeder 白嫖背后的阴谋 | I BCL.
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">FlightFeeder 白嫖背后的阴谋
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <p>某年某月某日，某无（国）限（安）垫（局）技（茶）术（道）讨（研）论（究）群（组）中出现了这样一段对话。</p>
+<blockquote>
+<p>呐，听大佬说，FlightAware 的 FlightFeeder 套件本体是 Raspberry Pi 呢。</p>
+</blockquote>
+<blockquote>
+<p>So？白嫖安排上？</p>
+</blockquote>
+<blockquote>
+<p>据说 FlightFeeder 会把 ADS-B 资讯上传到国外，有人因为这个喝了茶的。</p>
+</blockquote>
+<blockquote>
+<p>国安的怎么知道 FlightFeeder 使用者的确切位置？这不科学啊！钓鱼执法？</p>
+</blockquote>
+<blockquote>
+<p>可能是通过网络抓包吧？这个我也不清楚哈哈。</p>
+</blockquote>
+<blockquote>
+<p>谁管这么多，先弄到手再说。</p>
+</blockquote>
+<blockquote>
+<p>…</p>
+</blockquote>
+<p>作为一个遵纪守法的好公（居）民，看到这种危险的言论，就应该立刻 jvbao，然后把这些不法分子一锅端掉，为维护国家的稳定做出贡献（手动滑稽</p>
+<p>鼠标移到了“举报”键上，在离一锅端只有一步之遥时，博主却犹豫了…</p>
+<hr>
+<p>博主是个穷人，买不起 Raspberry Pi 这种奢侈品，只能看其他人玩，能有一块 Raspberry Pi 是博主多年以来的梦想（大雾</p>
+<p>然而现在，一个免费领 Raspberry Pi 的机会就在面前，为何要做 jvbao 这种傻事！</p>
+<p>鼠标滑到 Chrome 的图标上，接着博主去到了 <span class="exturl" data-url="aHR0cHM6Ly9mbGlnaHRhd2FyZS5jb20vYWRzYi9mbGlnaHRmZWVkZXIv">FlightAware 的网站<i class="fa fa-external-link-alt"></i></span>。</p>
+<span id="more"></span>
+<h1 id="壹"><a href="#壹" class="headerlink" title="壹"></a>壹</h1><p>在填完一堆表格，并上传了居所东南西北方向的照片过后，博主终于通过了审核，并在 3 月初收到了来自德国的包裹。</p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/1.jpg" alt="DHL 敦豪国际" title="DHL 敦豪国际"></p>
+<p>除了 FlightFeeder 本体之外，还有 5M 长的电缆、ADS-B 天线、固定支架和树莓派的原装电源（awsl！原装电源诶！）</p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/2.jpg" alt="FlightFeeder 本体" title="FlightFeeder 本体"></p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/3.jpg" alt="5M 长电缆和 ADS-B 天线" title="5M 长电缆和 ADS-B 天线"></p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/4.jpg" alt="固定支架" title="固定支架"></p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/5.jpg" alt="树莓派原装电源" title="树莓派原装电源"></p>
+<p>对了，还有一件丑到爆的 T 恤衫（</p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/6.jpg" alt="FlightAware 定制 T 恤衫" title="FlightAware 定制 T 恤衫"></p>
+<p>报价单上显示，这些物件总共价值 75 欧元，而且不包括邮费。</p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/7.jpg" alt="报价单" title="报价单"></p>
+<p>博主不得不感叹于 FlightAware 的大方，同时也因捡如此大的便宜而窃喜。</p>
+<p>但事情真的就这么简单吗？</p>
+<h1 id="貳"><a href="#貳" class="headerlink" title="貳"></a>貳</h1><p>收到 FlightFeeder 套件的第二天，博主收到了来自 FlightAware 的邮件，提醒博主需要在一周之内打开 FlightFeeder。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Hello from FlightAware!</span><br><span class="line"></span><br><span class="line">We are pleased to inform you that your FlightFeeder kit has been delivered! We ask that you please install and power on your device within one week of receiving this email.</span><br><span class="line"></span><br><span class="line">For reference, installation instructions can be found here: https://flightaware.com/adsb/flightfeeder/install</span><br><span class="line"></span><br><span class="line">Need help with installation? Send us an email at adsbsupport@flightaware.com, so that we can assist you to get your FlightFeeder online as soon as possible. Also, please let us know if you no longer wish to host your FlightFeeder, and we will assist you to return it to us.</span><br><span class="line"></span><br><span class="line">Thank you again for volunteering to host a FlightFeeder, we look forward to getting your device online!</span><br><span class="line"></span><br><span class="line">-FlightAware</span><br></pre></td></tr></table></figure>
+
+<p>博主将 ADS-B 天线固定在了卧室落地窗前的护栏上，与外界只有一块玻璃之隔，至少这样能够避免天线被风吹雨打日晒，同时免去维护的麻烦。</p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/8.jpg" alt="ADS-B 天线" title="ADS-B 天线"></p>
+<p>部署好了天线和电缆，并连接到了 FlightFeeder，在准备打开 FlightFeeder 前的一刻，博主却心血来潮想要看看 FlightFeeder 本体内部树莓派 SD 卡中的内容…</p>
+<p>于是，博主卸下了螺丝钉，打开了 FlightFeeder 的外壳，取出了树莓派和 SD 卡。</p>
+<p>让博主没有想到的是，这个心血来潮的举动，让博主看到了 FlightFeeder 免费背后的阴谋<del>，从而避免了一场世界大战的发生</del>…</p>
+<p>故事就此开始。</p>
+<h1 id="叁"><a href="#叁" class="headerlink" title="叁"></a>叁</h1><p>接上读卡器，电脑识别出了一个 FAT16 分区和一个 Ext4 分区，前者存储了启动时的引导文件，而用于 FlightFeeder 的系统文件则在 Ext4 分区。</p>
+<p>Fedora Linux 上，博主将这个分区挂载到了 /mnt</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@BelovedZY ~]# mount /dev/sdb2 /mnt</span><br></pre></td></tr></table></figure>
+
+<p>先来看看 FlightFeeder 所使用的 Linux 发行版。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@BelovedZY ~]# cat /mnt/etc/issue</span><br><span class="line">Raspbian GNU/Linux 8</span><br></pre></td></tr></table></figure>
+
+<p>FlightFeeder 使用的是 Debian jessie，算是比较老的版本了，此外，这个系统的软件源被替换成了 FlightAware 的地址，不光如此，系统还被添加了一个额外的 FlightAware  的软件源。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@BelovedZY ~]# ls /mnt/etc/apt/sources.list.d</span><br><span class="line">flightfeeder-jessie.list  raspberrypi.org.list  raspberrypi.org.list~</span><br><span class="line">[root@BelovedZY ~]# cat /mnt/etc/apt/sources.list.d/flightfeeder-jessie.list</span><br><span class="line">deb http://flightaware.com/adsb/flightfeeder/files/packages jessie flightfeeder</span><br></pre></td></tr></table></figure>
+
+<p>有猫腻！</p>
+<p>博主决定继续查下去。</p>
+<h1 id="肆"><a href="#肆" class="headerlink" title="肆"></a>肆</h1><p>FlightFeeder 的进站提示（motd）已经被修改过，内容如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@BelovedZY ~]# cat /mnt/etc/motd</span><br><span class="line">***************************************************************************</span><br><span class="line">*           ACCESS IS RESTRICTED TO AUTHORIZED PERSONNEL                  *</span><br><span class="line">*                                                                         *</span><br><span class="line">* This is a privately owned computing system. Access is permitted only by *</span><br><span class="line">* authorized employees or agents of the company.  The system may be used  *</span><br><span class="line">* only for authorized company business.  Company management approval is   *</span><br><span class="line">* required for all access privileges. This system is equipped with a      *</span><br><span class="line">* security system intended to prevent and record all unauthorized  access *</span><br><span class="line">* attempts. Unauthorized access or use is a crime under state law.        *</span><br><span class="line">***************************************************************************</span><br><span class="line"></span><br><span class="line">FlightFeeder unit xxxx (model G7)</span><br><span class="line">Running software version 7.9.2~bpo8+1</span><br></pre></td></tr></table></figure>
+
+<p>浓缩为一句话，就是“访问限制于经批准者”。</p>
+<p>接着，在 /mnt/etc 下，博主看到了 openvpn 的影子。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@BelovedZY ~]# ls /mnt/etc/openvpn</span><br><span class="line">client.crt  ffvpn.conf           ffvpn-local.include.bak  openvpn-ta.key</span><br><span class="line">client.key  ffvpn-local.include  openvpn-ca.crt           update-resolv-conf*</span><br></pre></td></tr></table></figure>
+
+<p>换句话说，借助这个 VPN 连接，FlightAware 的工作人员可以随便出入这个系统。</p>
+<p>这怎么行？自己不能访问 SSH，还帮别人免费运行一台服务器，博主开始有些后悔了。</p>
+<p>由于 OpenVPN 早已被某伟大的墙精准识别，博主怀疑那些被喝茶的先人，恐怕也是因为这个 VPN。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">[root@BelovedZY ~]# cat /mnt/etc/openvpn/ffvpn.conf</span><br><span class="line"># This configures the shared parts of the FlightFeeder management VPN.</span><br><span class="line"># Additional configuration (e.g. network configuration specific to a FF)</span><br><span class="line"># is configured via ffvpn-local.conf</span><br><span class="line"></span><br><span class="line">client</span><br><span class="line">dev tun</span><br><span class="line"></span><br><span class="line">comp-lzo</span><br><span class="line">verb 3</span><br><span class="line"></span><br><span class="line">resolv-retry infinite</span><br><span class="line">nobind</span><br><span class="line"></span><br><span class="line"># TLS settings</span><br><span class="line">ns-cert-type server         # require nsCertType of server on the peer cert</span><br><span class="line">tls-auth openvpn-ta.key 1   # semi-secret HMAC key</span><br><span class="line">ca openvpn-ca.crt           # FA CA</span><br><span class="line">cert client.crt             # FlightFeeder-specific client cert</span><br><span class="line">key client.key              # FlightFeeder-specific client cert secret key</span><br><span class="line">tls-version-min 1.2</span><br><span class="line">reneg-sec 0                 # let the server decide</span><br><span class="line"></span><br><span class="line"># don&#x27;t run ifconfig/ip directly</span><br><span class="line"># instead run a script</span><br><span class="line">script-security 2</span><br><span class="line">ifconfig-noexec</span><br><span class="line">up /usr/lib/flightfeeder-support/openvpn-up-script</span><br><span class="line"></span><br><span class="line"># include ffvpn-local.conf for special connection settings</span><br><span class="line"># e.g. http-proxy</span><br><span class="line">config ffvpn-local.include</span><br><span class="line"></span><br><span class="line"># fallback connection options to try</span><br><span class="line">&lt;connection&gt;</span><br><span class="line">remote 70.42.6.135 1194 udp</span><br><span class="line">&lt;/connection&gt;</span><br><span class="line"></span><br><span class="line">&lt;connection&gt;</span><br><span class="line">remote 70.42.6.135 443 tcp</span><br><span class="line">&lt;/connection&gt;</span><br><span class="line"></span><br><span class="line">&lt;connection&gt;</span><br><span class="line">remote 70.42.6.135 4194 udp</span><br><span class="line">&lt;/connection&gt;</span><br><span class="line"></span><br><span class="line">&lt;connection&gt;</span><br><span class="line">remote 70.42.6.135 4194 tcp</span><br><span class="line">&lt;/connection&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此外，不难发现，FlightAware 的 OpenVPN 服务器 IP 地址是固定的，换言之，对于想要“精准扶贫”的国安人员来说，这是一个再好不过的特征。</p>
+<p>既然已经拿到了这套设备，总不能放着吃灰啊。在一番深思熟虑过后，博主打算对这套设备进行改装，<del>使之符合国情</del>。</p>
+<h1 id="伍"><a href="#伍" class="headerlink" title="伍"></a>伍</h1><p>根据 FlightAware 官网的用户条款，用户是被明确要求不得对 FlightFeeder 进行改装的。</p>
+<p>然而博主将这一项规定拿给 BH4ERB 大佬过目时，却发现大佬一脸的不屑。</p>
+<blockquote>
+<p>这玩意在国内本来就是违法的，你不给他们上传数据很正确，怎么处理是你的事情。</p>
+</blockquote>
+<p>同时，他也表达了对 FlightFeeder 进行改装的愿望。</p>
+<blockquote>
+<p>我申请到过后就一直扔在角落里没管，如果你能把他里面的驱动搞出来，在局域网里面玩玩，那还挺不错的。</p>
+</blockquote>
+<p>既然这样的话，那就试试吧。</p>
+<h1 id="陆"><a href="#陆" class="headerlink" title="陆"></a>陆</h1><p>FlightFeeder 内部，除了树莓派 3B，还有一块刻有 Mode-S Beast GPS 字样的板子。</p>
+<p><img data-src="https://c.ibcl.us/ADSB-FlightFeeder_20200319/9.jpg" alt="Mode-S Beast GPS" title="Mode-S Beast GPS"></p>
+<p>Google 一番后，博主发现 Mode-S Beast 的驱动是开源的，这为改装的操作提供了很大的便利，不然就只能靠添加 FlightAware 的软件仓库来实现了…</p>
+<p>准备好一张新的 SD 卡，刷入了来自树莓派官方的 Raspbian Buster 系统，于是博主开始搞事了。</p>
+<p>计划中的，要从源码编译打包的软件有 beast-splitter 和 dump1090-fa，此外还需要编译安装作为 dump1090 依赖项而存在的 bladeRF。</p>
+<hr>
+<p>首先准备编译的环境。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~$ sudo apt update</span><br><span class="line">pi@raspberrypi:~$ sudo apt install -y git cmake build-essential debhelper librtlsdr-dev pkg-config dh-systemd libncurses5-dev libboost-system-dev libboost-program-options-dev libboost-regex-dev libusb-1.0-0-dev doxygen libtecla-dev libtecla1 help2man pandoc</span><br></pre></td></tr></table></figure>
+
+<p>然后将所需的源码拉取到本地，由于 Github 在国内速度太慢，博主是将其导入至国内的 Gitee 后再进行的拉取操作。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~$ git clone https://gitee.com/bclswl0827/bladeRF ~/src/bladeRF</span><br><span class="line">pi@raspberrypi:~$ git clone https://gitee.com/bclswl0827/beast-splitter ~/src/beast-splitter</span><br><span class="line">pi@raspberrypi:~$ git clone https://gitee.com/bclswl0827/dump1090 ~/src/dump1090</span><br></pre></td></tr></table></figure>
+
+<p>进入 beast-splitter 的源码目录，然后通过 dpkg 生成 deb 包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~$ cd ~/src/beast-splitter</span><br><span class="line">pi@raspberrypi:~/src/beast-splitter$ dpkg-buildpackage -b --no-sign</span><br></pre></td></tr></table></figure>
+
+<p>生成的 deb 位于上级目录，安装 beast-splitter_3.8.0_armhf.deb 即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/src/beast-splitter$ sudo dpkg --install ../beast-splitter_3.8.0_armhf.deb</span><br></pre></td></tr></table></figure>
+
+<p>现在，将 Mode-S Beast 与天线和树莓派连接，启动 beast-spliter。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/src/beast-splitter$ sudo systemctl start beast-splitter</span><br></pre></td></tr></table></figure>
+
+<p>待到绿色指示灯闪烁时，可以看到 /dev 目录多出了一个名为 beast 的设备。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/src/beast-splitter$ ls /dev</span><br><span class="line">autofs           input               null    serial  tty23  tty44  tty8       vcsa3</span><br><span class="line">beast            kmsg                ppp     shm     tty24  tty45  tty9       vcsa4</span><br><span class="line">block            log                 ptmx    snd     tty25  tty46  ttyAMA0    vcsa5</span><br><span class="line">btrfs-control    loop0               pts     stderr  tty26  tty47  ttyprintk  vcsa6</span><br><span class="line">bus              loop1               ram0    stdin   tty27  tty48  ttyUSB0    vcsm</span><br><span class="line">cachefiles       loop2               ram1    stdout  tty28  tty49  ttyUSB1    vcsm-cma</span><br><span class="line">char             loop3               ram10   tty     tty29  tty5   uhid       vcsu</span><br><span class="line">console          loop4               ram11   tty0    tty3   tty50  uinput     vcsu1</span><br><span class="line">cpu_dma_latency  loop5               ram12   tty1    tty30  tty51  urandom    vcsu2</span><br><span class="line">cuse             loop6               ram13   tty10   tty31  tty52  v4l        vcsu3</span><br><span class="line">disk             loop7               ram14   tty11   tty32  tty53  vchiq      vcsu4</span><br><span class="line">fb0              loop-control        ram15   tty12   tty33  tty54  vcio       vcsu5</span><br><span class="line">fd               mapper              ram2    tty13   tty34  tty55  vc-mem     vcsu6</span><br><span class="line">full             media0              ram3    tty14   tty35  tty56  vcs        vhci</span><br><span class="line">fuse             mem                 ram4    tty15   tty36  tty57  vcs1       video10</span><br><span class="line">gpiochip0        memory_bandwidth    ram5    tty16   tty37  tty58  vcs2       video11</span><br><span class="line">gpiochip1        mmcblk0             ram6    tty17   tty38  tty59  vcs3       video12</span><br><span class="line">gpiochip2        mmcblk0p1           ram7    tty18   tty39  tty6   vcs4       watchdog</span><br><span class="line">gpiochip3        mmcblk0p2           ram8    tty19   tty4   tty60  vcs5       watchdog0</span><br><span class="line">gpiochip4        mqueue              ram9    tty2    tty40  tty61  vcs6       zero</span><br><span class="line">gpiomem          net                 random  tty20   tty41  tty62  vcsa</span><br><span class="line">hwrng            network_latency     raw     tty21   tty42  tty63  vcsa1</span><br><span class="line">initctl          network_throughput  rfkill  tty22   tty43  tty7   vcsa2</span><br></pre></td></tr></table></figure>
+
+<p>安装好了 Beast 的驱动，已经成功了一半，接下来是编译打包 bladeRF 和 dump1090-fa。</p>
+<p>前面已经提到，dump1090-fa 依赖于 bladeRF，所以先要安装 bladeRF 才能编译 dump1090-fa。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/src/beast-splitter$ cd ~/src/bladeRF</span><br><span class="line">pi@raspberrypi:~/src/beast-splitter$ git checkout 2017.12-rc1</span><br><span class="line">pi@raspberrypi:~/src/bladeRF$ dpkg-buildpackage -b --no-sign</span><br><span class="line">pi@raspberrypi:~/src/bladeRF$ sudo dpkg --install ../libbladerf1_2017.07_armhf.deb</span><br><span class="line">pi@raspberrypi:~/src/bladeRF$ sudo dpkg --install ../libbladerf-dev_2017.07_armhf.deb</span><br><span class="line">pi@raspberrypi:~/src/bladeRF$ sudo dpkg --install ../libbladerf-udev_2017.07_armhf.deb</span><br></pre></td></tr></table></figure>
+
+<p>在安装好 bladeRF 过后，就可以编译 dump1090-fa 了。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/src/bladeRF$ cd ~/src/dump1090</span><br><span class="line">pi@raspberrypi:~/src/dump1090$ dpkg-buildpackage -b --no-sign</span><br></pre></td></tr></table></figure>
+
+<p>由于 dump1090-fa 依赖于 lighttpd 工作，所以安装打包好的 dump1090-fa 之前还要先安装 lighttpd，否则会报错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/src/dump1090$ sudo apt install -y lighttpd</span><br></pre></td></tr></table></figure>
+
+<p>接下来才是安装 dump1090-fa。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/src/dump1090$ sudo dpkg --install ~/src/dump1090-fa_3.8.0_armhf.deb</span><br></pre></td></tr></table></figure>
+
+<p>最后重启设备。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~/src/dump1090$ sudo reboot</span><br></pre></td></tr></table></figure>
+
+<p>重启完毕后，打开 <code>http://[树莓派 IP]:80/dump1090-fa/</code> 即可看到实时的 ADS-B 资讯。</p>
+<h1 id="柒"><a href="#柒" class="headerlink" title="柒"></a>柒</h1><p>一切结束了吗？</p>
+<p>不。因为 BH4ERB 还要求博主把方法告诉他，然而博主已经不想连上 Teamviewer 远程指导了。</p>
+<p>干脆做一个 Docker 镜像吧！</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9odWIuZG9ja2VyLmNvbS9yZXBvc2l0b3J5L2RvY2tlci9iY2xzd2wwODI3L2ZsaWdodGZlZWRlci1kb2NrZXI=">最后博主将做好的 Docker 镜像 Push 到了 DockerHub。<i class="fa fa-external-link-alt"></i></span></p>
+<p>除去安装 Docker 的步骤，部署起来只有两步。</p>
+<ol>
+<li>连接 Mode-S Beast；</li>
+<li>部署 Docker 镜像。<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pi@raspberrypi:~$ docker run -d \</span><br><span class="line">  --device /dev/ttyUSB0 \</span><br><span class="line">  --device /dev/ttyUSB1 \</span><br><span class="line">  --name flightfeeder \</span><br><span class="line">  --restart always \</span><br><span class="line">  -p 80:80 \</span><br><span class="line">  -p 123:123/udp \</span><br><span class="line">  -p 8080:8080 \</span><br><span class="line">  -p 30005:30005 \</span><br><span class="line">  bclswl0827/flightfeeder-docker:latest</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>部署成功后，打开 <code>http://[树莓派 IP]:8000/dump1090-fa/</code> 即可看到 ADS-B 资讯。</p>
+<p>此时，博主真想说一声 Docker YES！</p>
+<h1 id="捌"><a href="#捌" class="headerlink" title="捌"></a>捌</h1><p>好在留了个心眼，才使得博主没有沦为被喝茶的处境。但鉴于博主白嫖了一堆 FlightAware 的设备，对 FlightAware 心存愧疚，最后博主将这块树莓派装上了 PiAware，通过 V2Ray 透明代理为 FlightAware 提供数据。</p>
+<p>这也算是符合国情了吧？</p>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A3%B9"><span class="nav-number">1.</span> <span class="nav-text">壹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B2%B3"><span class="nav-number">2.</span> <span class="nav-text">貳</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%81"><span class="nav-number">3.</span> <span class="nav-text">叁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%82%86"><span class="nav-number">4.</span> <span class="nav-text">肆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BC%8D"><span class="nav-number">5.</span> <span class="nav-text">伍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%99%86"><span class="nav-number">6.</span> <span class="nav-text">陆</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9F%92"><span class="nav-number">7.</span> <span class="nav-text">柒</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8D%8C"><span class="nav-number">8.</span> <span class="nav-text">捌</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/archive/ADSB-FlightFeeder_20200319.html',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

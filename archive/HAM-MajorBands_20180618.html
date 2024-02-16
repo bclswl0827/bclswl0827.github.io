@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="160m频段（1.80～2.00MHz） 这是业余无线电台允许使用的最低频段。    传播规律跟中波很相似，白天主要是靠地面波近距离通讯，晚上可以通过电离层D层反射进行远距离通讯  在冬天的傍晚或黎明时分，是进行远距离通讯的时候。  需要架设庞大的天线，  雷电干扰比较大，尤其在夏天，最好要有专门的接收天线以提供信噪比  电离层对它的衰减也比较大，需要较大的功率  操作的人较少，并且多用CW进行联">
+<meta property="og:type" content="website">
+<meta property="og:title" content="主要业余波段的传播规律">
+<meta property="og:url" content="https://ibcl.us/archive/HAM-MajorBands_20180618.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="160m频段（1.80～2.00MHz） 这是业余无线电台允许使用的最低频段。    传播规律跟中波很相似，白天主要是靠地面波近距离通讯，晚上可以通过电离层D层反射进行远距离通讯  在冬天的傍晚或黎明时分，是进行远距离通讯的时候。  需要架设庞大的天线，  雷电干扰比较大，尤其在夏天，最好要有专门的接收天线以提供信噪比  电离层对它的衰减也比较大，需要较大的功率  操作的人较少，并且多用CW进行联">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-18T12:08:08.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.382Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="广播">
+<meta property="article:tag" content="HAM">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://ibcl.us/archive/HAM-MajorBands_20180618">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : false,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>主要业余波段的传播规律 | I BCL.
+</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+  
+  
+
+          <div class="content page posts-expand">
+            
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">主要业余波段的传播规律
+</h1>
+
+<div class="post-meta">
+  
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+          <h2 id="160m频段（1-80～2-00MHz）"><a href="#160m频段（1-80～2-00MHz）" class="headerlink" title="160m频段（1.80～2.00MHz）"></a>160m频段（1.80～2.00MHz）</h2><blockquote>
+<p>这是业余无线电台允许使用的最低频段。 </p>
+</blockquote>
+<ul>
+<li>传播规律跟中波很相似，白天主要是靠地面波近距离通讯，晚上可以通过电离层D层反射进行远距离通讯 </li>
+<li>在冬天的傍晚或黎明时分，是进行远距离通讯的时候。 </li>
+<li>需要架设庞大的天线， </li>
+<li>雷电干扰比较大，尤其在夏天，最好要有专门的接收天线以提供信噪比 </li>
+<li>电离层对它的衰减也比较大，需要较大的功率 </li>
+<li>操作的人较少，并且多用CW进行联络。</li>
+</ul>
+<span id="more"></span>
+
+<h2 id="80m频段（3-50～3-90MHz）"><a href="#80m频段（3-50～3-90MHz）" class="headerlink" title="80m频段（3.50～3.90MHz）"></a>80m频段（3.50～3.90MHz）</h2><blockquote>
+<p>传播规律与160m频段相似，主要是以F层和E层混合传播为主。</p>
+</blockquote>
+<ul>
+<li>夏天和白天由于D层和E层的电子密度高，这个频段以下的电波会被吸收掉而不能经电离层反射，白天只能进行100～200km距离的通讯。 </li>
+<li>在夏天经常发生雷电，噪音很大，弱小的信号不能被听到。 </li>
+<li>在冬季的傍晚或黎明时分，远距离通讯的效果比160m频段好，通联到远距离电台的机会也大。 </li>
+<li>天线也是比较庞大，但比起160m频段的天线已经缩小了许多，有许多缩短型的产品天线，架设天线的难度减低。 </li>
+<li>一般简易架设多用水平半波偶极天线，缩短型的产品多为GP天线，有大的架设场地和充足的资金就可以在几十米的铁塔上架设起庞大的八木定向天线！</li>
+</ul>
+<h2 id="40m频段（7-00～7-10MHz）"><a href="#40m频段（7-00～7-10MHz）" class="headerlink" title="40m频段（7.00～7.10MHz）"></a>40m频段（7.00～7.10MHz）</h2><blockquote>
+<p>短波初学者的入门频段之一，也是最拥挤热闹的频段。 </p>
+</blockquote>
+<ul>
+<li>操作范围比较窄，几乎全年全天可以进行QSO </li>
+<li>白天，可以进行几百公里的通联 </li>
+<li>在傍晚或黎明时分是开通远距离通讯的好机会 </li>
+<li>在深夜时分，常常是洲际通讯的好时机，因此，常在这个波段狩猎珍稀电台的HAM有个“夜猫子”的美称。 </li>
+<li>国内较多HAM在7.050～7.070MHz之间用LSB进行通联，许多省还在某些频点上设立固定的本地网络。 </li>
+<li>这个频率的天线无论是简单的偶极天线、垂直接地天线或者复杂的八木旋转定向天线都能享受其中的乐趣</li>
+</ul>
+<h2 id="20m频段（14-00～14-350MHz）"><a href="#20m频段（14-00～14-350MHz）" class="headerlink" title="20m频段（14.00～14.350MHz）"></a>20m频段（14.00～14.350MHz）</h2><blockquote>
+<p>这个频段是著名的DX（远距离通讯）频段，原因是这个频段主要是靠电离层F层进行全球的通讯。 </p>
+</blockquote>
+<ul>
+<li>传播比较稳定，太阳的活动和季节的变化对传播影响比较小，电离层开通的时间比较长。 </li>
+<li>在冬季传播稍差，春秋两季开始开通全球传播，在夏季，即使在白天也有DX通讯的可能。 </li>
+<li>在这个频段DX通讯的人多，是狩猎珍稀电台最佳频段。 </li>
+<li>在国内比较有名的是14.180MHz BJT8:00开始的B net，14.330MHz每星期二上午十点CRSA网络，BY1PK主控，14.270MHz是国内呼叫频点。 </li>
+<li>这个频段的天线已经可以做得比较小巧，常常采用八木定向天线，天线的增益也比较高。</li>
+</ul>
+<h2 id="15m频段（21-00～21-450MHz）"><a href="#15m频段（21-00～21-450MHz）" class="headerlink" title="15m频段（21.00～21.450MHz）"></a>15m频段（21.00～21.450MHz）</h2><blockquote>
+<p>另外一个短波初学者入门频段 </p>
+</blockquote>
+<ul>
+<li>是一个比较好的DX频段。 </li>
+<li>主要是靠电离层F2层反射，太阳活动、昼夜和四季等的变化对这个频段的影响较大 </li>
+<li>当太阳活动比较活跃的期间，是DX联络的主要波段 </li>
+<li>太阳活动低潮期，远距离通讯比较困难 </li>
+<li>在春秋两季，早上可以开通美洲，下午开通大洋洲和东南亚，傍晚则开通欧洲和非洲。 </li>
+<li>背景杂音比较小，加上天线尺寸比较小，用小功率就可以进行DX通讯，简易的天线可以可以进行DX通讯。 </li>
+<li>21.400MHz是中国业余无线电爱好者的呼叫频率 </li>
+<li>固定作DX的多采用高增益八木旋转定向天线</li>
+</ul>
+<h2 id="10m频段（28-00～29-70MHz）"><a href="#10m频段（28-00～29-70MHz）" class="headerlink" title="10m频段（28.00～29.70MHz）"></a>10m频段（28.00～29.70MHz）</h2><blockquote>
+<p>短波段的最高频段，也是短波段中频带最宽的频段 </p>
+</blockquote>
+<ul>
+<li>传播特性介于HF和VHF之间，主要特点是受太阳活动的影响大，有突发E层传播现象，一旦开通传播电离层衰减小。</li>
+<li>频率杂音较小，天线增益容易做高。 </li>
+<li>在电离层没有反射的时候，它只能作视距的传播。 </li>
+<li>当传播开通时，却可以用很小的功率进行出乎意料的远距离通讯。 </li>
+<li>29.600MHz频率是个国际FM呼叫频率，四级可用 </li>
+<li>28.495MHZ国际SSB呼叫频率，三级可用 </li>
+<li>多是使用高增益定向天线和各种垂直天线。</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+    
+
+    
+    
+    
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#160m%E9%A2%91%E6%AE%B5%EF%BC%881-80%EF%BD%9E2-00MHz%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">160m频段（1.80～2.00MHz）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#80m%E9%A2%91%E6%AE%B5%EF%BC%883-50%EF%BD%9E3-90MHz%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">80m频段（3.50～3.90MHz）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#40m%E9%A2%91%E6%AE%B5%EF%BC%887-00%EF%BD%9E7-10MHz%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">40m频段（7.00～7.10MHz）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#20m%E9%A2%91%E6%AE%B5%EF%BC%8814-00%EF%BD%9E14-350MHz%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">20m频段（14.00～14.350MHz）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#15m%E9%A2%91%E6%AE%B5%EF%BC%8821-00%EF%BD%9E21-450MHz%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">15m频段（21.00～21.450MHz）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10m%E9%A2%91%E6%AE%B5%EF%BC%8828-00%EF%BD%9E29-70MHz%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">10m频段（28.00～29.70MHz）</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/archive/HAM-MajorBands_20180618.html',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

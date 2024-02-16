@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="在博主的高中时代，曾经意外接触到一本名为「段子手股民的忏悔录」的书，出于兴趣，在博主满 18 岁那天的早上，便果断给自己开了一个股票账户，从此入坑大 A 股海。 由于博主资金体量不大，而大 A 市场也不能以零股形式交易，所以博主长期以来的持仓，都只能靠几只稳如老狗的银行股和几个行业 ETF 苟活。直到有一天，博主在刷雪球时看到，原来像博主这样的小散户，还能透过可转债打新的方式，靠运气赚点零花钱。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="老乡别走：搭建自己的 Telegram 可转债机器人">
+<meta property="og:url" content="https://ibcl.us/BondBot-Telegram_20230524/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="在博主的高中时代，曾经意外接触到一本名为「段子手股民的忏悔录」的书，出于兴趣，在博主满 18 岁那天的早上，便果断给自己开了一个股票账户，从此入坑大 A 股海。 由于博主资金体量不大，而大 A 市场也不能以零股形式交易，所以博主长期以来的持仓，都只能靠几只稳如老狗的银行股和几个行业 ETF 苟活。直到有一天，博主在刷雪球时看到，原来像博主这样的小散户，还能透过可转债打新的方式，靠运气赚点零花钱。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/BondBot-Telegram_20230524/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/BondBot-Telegram_20230524/2.png">
+<meta property="article:published_time" content="2023-05-24T14:56:42.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="股票">
+<meta property="article:tag" content="可转债">
+<meta property="article:tag" content="A 股">
+<meta property="article:tag" content="韭菜">
+<meta property="article:tag" content="Golang">
+<meta property="article:tag" content="Telegram 机器人">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/BondBot-Telegram_20230524/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/BondBot-Telegram_20230524/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>老乡别走：搭建自己的 Telegram 可转债机器人 | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/BondBot-Telegram_20230524/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          老乡别走：搭建自己的 Telegram 可转债机器人
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-05-24 22:56:42" itemprop="dateCreated datePublished" datetime="2023-05-24T22:56:42+08:00">2023-05-24</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%82%A1%E5%B8%82/" itemprop="url" rel="index"><span itemprop="name">股市</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/BondBot-Telegram_20230524/" class="post-meta-item leancloud_visitors" data-flag-title="老乡别走：搭建自己的 Telegram 可转债机器人" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/BondBot-Telegram_20230524/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/BondBot-Telegram_20230524/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在博主的高中时代，曾经意外接触到一本名为「段子手股民的忏悔录」的书，出于兴趣，在博主满 18 岁那天的早上，便果断给自己开了一个股票账户，从此入坑大 A 股海。</p>
+<p>由于博主资金体量不大，而大 A 市场也不能以零股形式交易，所以博主长期以来的持仓，都只能靠几只稳如老狗的银行股和几个行业 ETF 苟活。直到有一天，博主在刷雪球时看到，原来像博主这样的小散户，还能透过可转债打新的方式，靠运气赚点零花钱。</p>
+<p>不幸的是，可转债这种东西，并不是每天都能申购的。作为一个懒人，每天一早打开炒股软件，生无可恋地看一眼自己绿油油的收益，再去看有没有能申购的新可转债，实在是一件很痛苦的事情。</p>
+<p>多亏博主心理比较强大，也坚信价值投资的意义，否则就成为被收割的韭菜了。在痛苦之余，博主也曾思考，能否写一个小程序，获取每日的可转债并通知博主申购呢？</p>
+<p>也好在博主是 Telegram 的常驻用户，同时，Telegram 也提供了健全的生态，以支援平台下的机器人开发，于是博主萌生了写一个 Telegram 可转债机器人的想法。</p>
+<p>这篇文章，将会分享博主编写简单的 Telegram 可转债机器人时的一些思路，并介绍如何将其搭建在云服务器上，实现每天给自己或是往几个朋友组建的小群里自动推送可供当日申购的可转债，推动「共同富裕」。</p>
+<p><img data-src="https://c.ibcl.us/BondBot-Telegram_20230524/1.jpg" alt="博主 2022 打新收益"></p>
+<span id="more"></span>
+
+<h1 id="寻找数据来源"><a href="#寻找数据来源" class="headerlink" title="寻找数据来源"></a>寻找数据来源</h1><p>既然需要推送当日可转债，那就需要一个靠谱的数据来源了。在博主综合比较多个网站过后，最后瞄准了东方财富的<span class="exturl" data-url="aHR0cHM6Ly9kYXRhLmVhc3Rtb25leS5jb20veGcveGcvP21rdD1reno=">新股申购与中签查询<i class="fa fa-external-link-alt"></i></span>。</p>
+<p>东方财富的债券接口是 <code>https://datacenter-web.eastmoney.com/api/data/v1/get</code>，请求方法为 GET。除此之外，在请求时，还需要带上一些额外的参数才能正确响应。</p>
+<p>经过博主摸索和测试，最后总结出来可用于获取可转债列表的接口调用方法如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GET https://datacenter-web.eastmoney.com/api/data/v1/get?callback=_&amp;sortColumns=PUBLIC_START_DATE&amp;sortTypes=-1&amp;pageNumber=1&amp;quoteType=0&amp;reportName=RPT_BOND_CB_LIST&amp;columns=ALL&amp;quoteColumns=f2~01~CONVERT_STOCK_CODE~CONVERT_STOCK_PRICE,f235~10~SECURITY_CODE~TRANSFER_PRICE,f236~10~SECURITY_CODE~TRANSFER_VALUE,f2~10~SECURITY_CODE~CURRENT_BOND_PRICE,f237~10~SECURITY_CODE~TRANSFER_PREMIUM_RATIO,f239~10~SECURITY_CODE~RESALE_TRIG_PRICE,f240~10~SECURITY_CODE~REDEEM_TRIG_PRICE,f23~01~CONVERT_STOCK_CODE~PBV_RATIO</span><br></pre></td></tr></table></figure>
+
+<p>此外，由于东方财富的可转债接口为了实现跨域请求，返回值没有使用日常开发常用的 JSON 格式，而是使用了 JSONP 格式，将数据包裹在 <code>_</code> 这个 callback 中。</p>
+<h1 id="解析-JSONP"><a href="#解析-JSONP" class="headerlink" title="解析 JSONP"></a>解析 JSONP</h1><p>博主决定使用 Golang 来实现这个小需求，但是苦于 Golang 中的标准库没有提供 JSONP 的解析方式，所以还需要博主自行编写一个包装器来解析。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> JsonpWrapper <span class="keyword">struct</span> &#123;</span><br><span class="line">	Prefix     <span class="type">string</span>    <span class="comment">// 指定 callback 前缀</span></span><br><span class="line">	Underlying io.Reader <span class="comment">// 在底层提供 JSONP 数据</span></span><br><span class="line"></span><br><span class="line">	gotPrefix <span class="type">bool</span>       <span class="comment">// 指示是否读到 callback</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>假设 <code>JsonpWrapper</code> 的实例化后的名称为 <code>jpw</code>，那么实现 <code>jpw.Read()</code> 方法的流程如下所述。</p>
+<ol>
+<li>若已读取过前缀（即 <code>jpw.gotPrefix</code> 为 <code>true</code>，则直接调用 <code>jpw.Underlying.Read(b)</code> 从底层的 JSONP 数据源读取数据，并返回结果；若未读取过前缀，则创建一个与前缀长度相同的字节数组 <code>prefix</code></li>
+<li>调用 <code>io.ReadFull</code> 方法从 <code>jpw.Underlying</code> 中读取与前缀长度相同的字节，并将结果存储在 <code>prefix</code> 中</li>
+<li>若读取前缀的结果与指定的前缀字符串 <code>jpw.Prefix</code> 不同，则返回读取的字节数 n 和错误，表明前缀不匹配</li>
+<li>若读取到的前缀与指定前缀相同，则创建一个长度为 1 的字节数组 <code>char</code></li>
+<li>连续从 <code>jpw.Underlying</code> 中逐字节读取，并将结果存储在 <code>char</code> 中，直到遇到 <code>(</code> 字符为止</li>
+<li>将 <code>jpw.gotPrefix</code> 设置为 <code>true</code>，标记已经读取到了前缀</li>
+<li>调用 <code>jpw.Underlying.Read(b)</code> 从底层数据源读取数据，并返回结果</li>
+</ol>
+<p>根据上述流程，可以编写如下代码。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(jpw *JsonpWrapper)</span></span> Read(b []<span class="type">byte</span>) (<span class="type">int</span>, <span class="type">error</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> jpw.gotPrefix &#123;</span><br><span class="line">		<span class="keyword">return</span> jpw.Underlying.Read(b)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	prefix := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="built_in">len</span>(jpw.Prefix))</span><br><span class="line">	n, err := io.ReadFull(jpw.Underlying, prefix)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> n, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="type">string</span>(prefix) != jpw.Prefix &#123;</span><br><span class="line">		<span class="keyword">return</span> n, fmt.Errorf(</span><br><span class="line">            <span class="string">&quot;JSONP prefix mismatch: expected %q, got %q&quot;</span>,</span><br><span class="line">			jpw.Prefix, prefix)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	char := <span class="built_in">make</span>([]<span class="type">byte</span>, <span class="number">1</span>)</span><br><span class="line">	<span class="keyword">for</span> char[<span class="number">0</span>] != <span class="string">&#x27;(&#x27;</span> &#123;</span><br><span class="line">		n, err = jpw.Underlying.Read(char)</span><br><span class="line">		<span class="keyword">if</span> n == <span class="number">0</span> || err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> n, err</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	jpw.gotPrefix = <span class="literal">true</span></span><br><span class="line">	<span class="keyword">return</span> jpw.Underlying.Read(b)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以使用 <code>JsonpWrapper</code> 来解析 JSONP 数据了。例如，有一串 JSONP 数据如下所示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">_</span>(&#123;<span class="string">&quot;data&quot;</span>:[],<span class="string">&quot;success&quot;</span>:<span class="literal">true</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>那么可以使用如下方法来解析。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">r := strings.NewReader(<span class="string">`_(&#123;&quot;data&quot;:[1, 2, 3],&quot;success&quot;:true&#125;)`</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> data <span class="keyword">struct</span> &#123;</span><br><span class="line">    Data            []any <span class="string">`json:&quot;data&quot;`</span></span><br><span class="line">    Success <span class="type">bool</span>    <span class="string">`json:&quot;success&quot;`</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">err := json.NewDecoder(&amp;JsonpWrapper&#123;</span><br><span class="line">    Prefix:     <span class="string">&quot;_&quot;</span>, <span class="comment">// 指定 callback 名称，需要与 JSONP 数据中的前缀相同</span></span><br><span class="line">    Underlying: r, <span class="comment">// 透过 strings.NewReader() 实现 io.Reader 接口</span></span><br><span class="line">&#125;).Decode(&amp;data)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">panic</span>(err)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="略过节假日"><a href="#略过节假日" class="headerlink" title="略过节假日"></a>略过节假日</h1><p>由于节假日是不会开市的，所以在获取可转债列表时，需要略过节假日，以避免多余的推送打扰了在节假日休息的博主。</p>
+<p>麻烦的是，除了日常的周末外，还有一些特殊的节假日，例如春节、劳动节等，为了避免麻烦，所以博主决定用别人写好的库来判断是否为节假日，这里使用的是 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FkbWluZ3l1L2dvLXdvcmtpbmdkYXk=">go-workingday<i class="fa fa-external-link-alt"></i></span>。</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FkbWluZ3l1L2dvLXdvcmtpbmdkYXk=">go-workingday<i class="fa fa-external-link-alt"></i></span> 的调用方法也很简单，只需要调用 <code>workingday.IsWorkDay()</code> 方法，传入日期和地区即可，例如 <code>workingday.IsWorkDay(time.Now(), &quot;CN&quot;)</code>。</p>
+<p>博主在阅读了这个库的源码后，发现这个库的实现也很简单粗暴，原理是请求了一个网上的 <span class="exturl" data-url="aHR0cDovL3BjLnN1aXNoZW55dW4ubmV0L3BlYWNvY2svYXBpL2g1L2Zlc3RpdmFs">API<i class="fa fa-external-link-alt"></i></span> 来判断是否为节假日。</p>
+<h1 id="对接-Telegram"><a href="#对接-Telegram" class="headerlink" title="对接 Telegram"></a>对接 Telegram</h1><p>这里用到了 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2dvLXRlbGVncmFtLWJvdC1hcGkvdGVsZWdyYW0tYm90LWFwaQ==">telegram-bot-api<i class="fa fa-external-link-alt"></i></span> 这个库，这个库的使用方法也很简单，只需要调用 <code>tgbotapi.NewBotAPI()</code> 方法，传入 Bot Token 即可完成 Bot 的实例化。</p>
+<p>示例代码如下，博主按照<span class="exturl" data-url="aHR0cHM6Ly9pdGhlbHAuaXRob21lLmNvbS50dy9tL2FydGljbGVzLzEwMjYyODgx">这个教程<i class="fa fa-external-link-alt"></i></span>申请了一个 Telegram Bot，然后将 Bot Token 传入 <code>tgbotapi.NewBotAPI()</code> 方法即可完成对接，向指定用户发送消息。</p>
+<p>需要注意，由于 Telegram 在中国被屏蔽，所以需要使用代理才能正常使用。所以博主在运行程序前，需要设置 <code>HTTPS_PROXY</code> 环境变量，例如在 Linux 下运行 <code>export HTTPS_PROXY=http://127.0.0.1:10809</code> 命令。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化 Bot</span></span><br><span class="line"><span class="comment">// 假设 Bot Token 为 123456789:abcdefghijklmnopqrstuvwxyz</span></span><br><span class="line">bot, err := tgbotapi.NewBotAPI(<span class="string">&quot;123456789:abcdefghijklmnopqrstuvwxyz&quot;</span>)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">    <span class="built_in">panic</span>(err)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取消息间隔</span></span><br><span class="line">u := tgbotapi.NewUpdate(<span class="number">0</span>)</span><br><span class="line"><span class="comment">// 设定超时</span></span><br><span class="line">u.Timeout = <span class="number">10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 向用户发送消息</span></span><br><span class="line"><span class="comment">// 假设用户的 ID 为 987654321</span></span><br><span class="line">msg := tgbotapi.NewMessage(</span><br><span class="line">    <span class="number">987654321</span>, <span class="string">&quot;Hello World!&quot;</span>,</span><br><span class="line">)</span><br><span class="line">bot.Send(msg)</span><br></pre></td></tr></table></figure>
+
+<p>至于如何取得用户或群组 ID，可以参考<span class="exturl" data-url="aHR0cHM6Ly93ZWIuYXJjaGl2ZS5vcmcvd2ViLzIwMjMwNTIxMDYwNjU2L2h0dHBzOi8vd3cuc2pmbi5jb20vcG9zdC90ZWxlZ3JhbS1nZXQtaWQuaHRtbA==">这篇教程<i class="fa fa-external-link-alt"></i></span>。</p>
+<h1 id="成品和实战"><a href="#成品和实战" class="headerlink" title="成品和实战"></a>成品和实战</h1><p>博主已经将上述的代码整合到了一个完整的程序中，可以在 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2JjbHN3bDA4MjcvYm9uZC1ib3Q=">GitHub - bclswl0827/bond-bot<i class="fa fa-external-link-alt"></i></span> 找到。</p>
+<p>由于博主的朋友也在打新可转债，所以博主将程序部署到了自己的云服务器上，每天早上 9 点 30 分自动推送可转债列表，以便大家及时了解可转债的情况。</p>
+<p>用户可以自行决定推送的时间，例如在每天 10 点整推送可转债信息，只需要修改 <code>config.json</code> 配置文件即可，配置文件中的时间一律为北京时间。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;token&quot;</span><span class="punctuation">:</span> <span class="string">&quot;123456789:abcdefghijklmnopqrstuvwxyz&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;chat_id&quot;</span><span class="punctuation">:</span> <span class="number">987654321</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;hour&quot;</span><span class="punctuation">:</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;minute&quot;</span><span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>最后附上推送效果截图。</p>
+<p><img data-src="https://c.ibcl.us/BondBot-Telegram_20230524/2.png" alt="中签的博主"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%82%A1%E7%A5%A8/" rel="tag"># 股票</a>
+              <a href="/tags/%E5%8F%AF%E8%BD%AC%E5%80%BA/" rel="tag"># 可转债</a>
+              <a href="/tags/A-%E8%82%A1/" rel="tag"># A 股</a>
+              <a href="/tags/%E9%9F%AD%E8%8F%9C/" rel="tag"># 韭菜</a>
+              <a href="/tags/Golang/" rel="tag"># Golang</a>
+              <a href="/tags/Telegram-%E6%9C%BA%E5%99%A8%E4%BA%BA/" rel="tag"># Telegram 机器人</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/JJY-Timecode_20230522/" rel="prev" title="记与一款 JJY 电波钟模块的邂逅">
+      <i class="fa fa-chevron-left"></i> 记与一款 JJY 电波钟模块的邂逅
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Soundcard-SDR_20230601/" rel="next" title="探寻二十年前的声卡 SDR">
+      探寻二十年前的声卡 SDR <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90"><span class="nav-number">1.</span> <span class="nav-text">寻找数据来源</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90-JSONP"><span class="nav-number">2.</span> <span class="nav-text">解析 JSONP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%95%A5%E8%BF%87%E8%8A%82%E5%81%87%E6%97%A5"><span class="nav-number">3.</span> <span class="nav-text">略过节假日</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%B9%E6%8E%A5-Telegram"><span class="nav-number">4.</span> <span class="nav-text">对接 Telegram</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%90%E5%93%81%E5%92%8C%E5%AE%9E%E6%88%98"><span class="nav-number">5.</span> <span class="nav-text">成品和实战</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/BondBot-Telegram_20230524/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="本文内容仅供参考、学习之用。 在阅读本文之前，请详细了解相关法律，若因读者对本文内容进行模仿而造成的一切负面影响及后果，“I BCL.”一概对其不负责。 本文内容应情节需求系完全虚构，如有雷同实属巧合。  前情提要一个百无聊赖的午间，博主正躺在床上带着耳机听歌，昏昏欲睡之中，突然收到一条讯息。 冷气与睡意之间，被通知铃声吵醒是一件痛苦的事，但是博主还是打开了萤幕，原来是某位大佬发来的留言。  大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历">
+<meta property="og:url" content="https://ibcl.us/GSM-Sniffing_20200826/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="本文内容仅供参考、学习之用。 在阅读本文之前，请详细了解相关法律，若因读者对本文内容进行模仿而造成的一切负面影响及后果，“I BCL.”一概对其不负责。 本文内容应情节需求系完全虚构，如有雷同实属巧合。  前情提要一个百无聊赖的午间，博主正躺在床上带着耳机听歌，昏昏欲睡之中，突然收到一条讯息。 冷气与睡意之间，被通知铃声吵醒是一件痛苦的事，但是博主还是打开了萤幕，原来是某位大佬发来的留言。  大">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/GSM-Sniffing_20200826/1.jpg">
+<meta property="og:image" content="https://c.ibcl.us/GSM-Sniffing_20200826/2.jpg">
+<meta property="og:image" content="https://c.ibcl.us/GSM-Sniffing_20200826/3.jpg">
+<meta property="og:image" content="https://c.ibcl.us/GSM-Sniffing_20200826/4.jpg">
+<meta property="article:published_time" content="2020-08-25T17:16:38.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="广播">
+<meta property="article:tag" content="原创">
+<meta property="article:tag" content="SDR">
+<meta property="article:tag" content="瞎搞">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/GSM-Sniffing_20200826/1.jpg">
+
+<link rel="canonical" href="https://ibcl.us/GSM-Sniffing_20200826/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历 | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/GSM-Sniffing_20200826/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-26 01:16:38" itemprop="dateCreated datePublished" datetime="2020-08-26T01:16:38+08:00">2020-08-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B9%BF%E6%92%AD/" itemprop="url" rel="index"><span itemprop="name">广播</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/GSM-Sniffing_20200826/" class="post-meta-item leancloud_visitors" data-flag-title="偷窥狂养成记：成本 50 块的 GSM 网络嗅探经历" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/GSM-Sniffing_20200826/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/GSM-Sniffing_20200826/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><em>本文内容仅供参考、学习之用。</em></li>
+<li><em>在阅读本文之前，请详细了解相关法律，若因读者对本文内容进行模仿而造成的一切负面影响及后果，<a href="https://ibcl.us/">“I BCL.”</a>一概对其不负责。</em></li>
+<li><em>本文内容应情节需求系完全虚构，如有雷同实属巧合。</em></li>
+</ul>
+<h1 id="前情提要"><a href="#前情提要" class="headerlink" title="前情提要"></a>前情提要</h1><p>一个百无聊赖的午间，博主正躺在床上带着耳机听歌，昏昏欲睡之中，突然收到一条讯息。</p>
+<p>冷气与睡意之间，被通知铃声吵醒是一件痛苦的事，但是博主还是打开了萤幕，原来是某位大佬发来的留言。</p>
+<blockquote>
+<p>大佬：最近忙啥呢？</p>
+</blockquote>
+<p>既然是大佬主动联系博主，一定是有什么有趣的事情。</p>
+<blockquote>
+<p>博主：表示现在很闲，大佬是有什么事？</p>
+</blockquote>
+<p>接着，大佬发来一个链接，对应的地址是一个<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3B0cmtyeXNpay9nci1nc20=">名为 gr-gsm 开源专案<i class="fa fa-external-link-alt"></i></span>。</p>
+<blockquote>
+<p>大佬：既然有时间，咱们来玩嗅探 GSM 怎么样？就用你的 RTL-SDR。</p>
+</blockquote>
+<blockquote>
+<p>博主：蛤？</p>
+</blockquote>
+<p>博主从未想过，自己与成为一个能偷看他人简讯的偷窥狂，仅仅只有 50 块的距离……</p>
+<p>这么有趣的体验，怎么能够拒绝？于是博主果断答应了大佬的邀请。</p>
+<span id="more"></span>
+
+<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><h2 id="裸奔的-GSM"><a href="#裸奔的-GSM" class="headerlink" title="裸奔的 GSM"></a>裸奔的 GSM</h2><p>由于各种原因，就算 4G LTE 早已普及，也仍然存在大量 GSM 流量。由于 GSM 信号在中国并未被加密，也就是说，只要有相应的设备，就能捕获到空中的 GSM 信号，轻易地在神不知鬼不觉间解码出一条条的简讯。</p>
+<p>所以，即便是在 0202 年的今天，网上也仍然有着不少类似“卡还在，可是钱没了”的新闻。</p>
+<p><img data-src="https://c.ibcl.us/GSM-Sniffing_20200826/1.jpg" alt="卡还在，可是钱没了 --P 民网" title="卡还在，可是钱没了 --P 民网"></p>
+<p>而事实上，GSM 本身就是一种极不安全的协定，简单来说，其自身的缺陷可以归纳为如下 4 点。</p>
+<ol>
+<li>位置隐私有漏洞：电话在第一次接入网络或是换手（Handover）的情況下，若旧的 VLR（拜访网络）无法正常运作时，新的 VLR 可以要求电话送出 IMSI（用户识别码），以便向 HLR（归属网络）要求认证的资讯。这种情况会暴露电话的真实位置，无法满足隐私需求； </li>
+<li>电话无法对 VLR 做认证：在通信协定中，我们总是希望能认证对方的身份，以防对方是假冒的，但目前的 GSM 只做到了 VLR 对电话的认证；</li>
+<li>网络主机间不做认证：在 GSM 里，网络主机间是相互信赖的；</li>
+<li>可以使用不加密通信：根据一些国家政府、法律、运营商政策的规定，GSM 可以不加密进行通信。</li>
+</ol>
+<p>对于那些利用伪基站进行攻击，然后截获用户简讯骗取钱财的攻击者来说，他们利用的则是上述漏洞的 2、4 点，即先利用干扰设备使被攻击者的电话网络降级到 2G，然后再利用网银等平台的<strong>简讯获取动态密码登入</strong>或是<strong>以简讯验证找回密码</strong>的功能，通过对 GSM 进行嗅探获取到实时验证码，然后登入被攻击者的账户，最后实现转出被攻击者的资金并跑路。</p>
+<p>而在本文，博主则将利用上述漏洞的第 4 点，实现对简讯的嗅探，因为在中国，GSM 就是没有加密的。</p>
+<h2 id="嗅探工具"><a href="#嗅探工具" class="headerlink" title="嗅探工具"></a>嗅探工具</h2><p>博主在之前的文章中有提到过不同型号的 RTL-SDR 所能接收的频率范围，所以在此不再赘述。此外，从网络上了解到，中国所使用的 GSM 频率中，GSM 850 和 GSM 900 是包含在大多数的 RTL-SDR 接收范围之内的，对应的频率分别是 850-900 MHz 和 900-999 MHz。其中，GSM 850 是上行数据，GSM 900 是下行数据。</p>
+<p>由于上行数据并不好嗅探，所以为了方便起见，本文将以嗅探下行数据（GSM 900）做演示。</p>
+<p>天线使用 RTL-SDR 随机所附的天线即可，除了 RTL-SDR 之外，还需要用到一台运行着 Linux 的主机，博主使用的是那台身经百战，运行着 Debian Buster 的斐讯 T1 盒子，事先安装了 LXDE 桌面。</p>
+<p>扫描基站频率有多种方案，比如 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL09yb3M0Mi9JTVNJLWNhdGNoZXI=">IMSI-Catcher<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0ZXZlLW0va2FsaWJyYXRlLXJ0bA==">kalibrate-rtl（用于 RTL-SDR）<i class="fa fa-external-link-alt"></i></span>、<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3NjYXRldS9rYWxpYnJhdGUtaGFja3Jm">kalibrate-hackrf（用于 HackRF）<i class="fa fa-external-link-alt"></i></span>。博主选用的是 kalibrate-rtl。</p>
+<p>在扫描完基站频率过后，就要选择一个基站来进行嗅探了，嗅探的工具是 gr-gsm 的 <code>grgsm_livemon_headless</code> 模块。嗅探到的 GSM 流量是以数据流的形式传输的，所以还需要用到 Wireshark 来抓包，筛选出有用的资讯。</p>
+<p><img data-src="https://c.ibcl.us/GSM-Sniffing_20200826/2.jpg" alt="全景图" title="全景图"></p>
+<p>准备好了硬件，综合以上内容，嗅探 GSM 网络需要以下软件。</p>
+<ul>
+<li>librtlsdr</li>
+<li>kalibrate-rtl</li>
+<li>gr-gsm</li>
+<li>wireshark</li>
+</ul>
+<h1 id="搭建环境"><a href="#搭建环境" class="headerlink" title="搭建环境"></a>搭建环境</h1><p>略去安装 LXDE、更换 APT 镜像源的步骤，由于一些软件需要从源码编译，所以需要准备对应的编译环境。</p>
+<p>一并安装需要用到的依赖项。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ sudo apt update</span><br><span class="line">yuki@meow:~$ sudo apt install -y cmake libusb-1.0-0-dev build-essential libtool \</span><br><span class="line">  automake autoconf libfftw3-dev pkg-config python-scipy python-docutils \</span><br><span class="line">  libosmocore-dev libboost-all-dev swig doxygen git \</span><br><span class="line">  gnuradio-dev gr-osmosdr libcppunit-dev liblog4cpp5-dev  </span><br></pre></td></tr></table></figure>
+
+<h2 id="librtlsdr"><a href="#librtlsdr" class="headerlink" title="librtlsdr"></a>librtlsdr</h2><p>无论是 gr-gsm 的 <code>grgsm_livemon_headless</code> 模块还是 kalibrate-rtl 的 <code>kal</code> 命令，运行过程中都需要 RTL-SDR 对应的依赖库 librtlsdr 才能运行，而新版的 gr-gsm 需要较新的 librtlsdr 版本，否则会在编译时期报错。不幸的是，部分 Linux 发行版软件仓库中的 librtlsdr 版本过低，所以为了不给后面的操作留坑，从源码编译 librtlsdr 是最保险的做法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ git clone https://github.com/librtlsdr/librtlsdr librtlsdr</span><br><span class="line">yuki@meow:~$ mkdir -p librtlsdr/build</span><br><span class="line">yuki@meow:~$ cd librtlsdr/build</span><br><span class="line">yuki@meow:~/librtlsdr/build$ cmake ../ -DINSTALL_UDEV_RULES=ON -DDETACH_KERNEL_DRIVER=ON</span><br><span class="line">yuki@meow:~/librtlsdr/build$ make -j4</span><br><span class="line">yuki@meow:~/librtlsdr/build$ sudo make install</span><br><span class="line">yuki@meow:~/librtlsdr/build$ sudo ldconfig</span><br><span class="line">yuki@meow:~/librtlsdr/build$ cd ~</span><br></pre></td></tr></table></figure>
+
+<h2 id="kalibrate-rtl"><a href="#kalibrate-rtl" class="headerlink" title="kalibrate-rtl"></a>kalibrate-rtl</h2><p>前面已经提到过，kalibrate-rtl 是扫描基站频率的一个工具，由于 Debian 软件仓库中并没有这个软件，所以需要从源码编译安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ git clone https://github.com/steve-m/kalibrate-rtl.git kalibrate-rtl</span><br><span class="line">yuki@meow:~$ cd kalibrate-rtl</span><br><span class="line">yuki@meow:~/kalibrate-rtl$ ./bootstrap</span><br><span class="line">yuki@meow:~/kalibrate-rtl$ ./configure</span><br><span class="line">yuki@meow:~/kalibrate-rtl$ make -j4</span><br><span class="line">yuki@meow:~/kalibrate-rtl$ sudo make install</span><br><span class="line">yuki@meow:~/kalibrate-rtl$ cd ~</span><br></pre></td></tr></table></figure>
+
+<h2 id="gr-gsm"><a href="#gr-gsm" class="headerlink" title="gr-gsm"></a>gr-gsm</h2><p>gr-gsm 是本次嗅探 GSM 网络的主角。虽然一些 Linux 发行版已经将其加入了其测试版的软件仓库中，但是考虑到稳定性以及使用过程中可能会碰到一些玄学问题，从源码编译安装 gr-gsm 仍然是比较好的做法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ git clone https://github.com/ptrkrysik/gr-gsm.git gr-gsm</span><br><span class="line">yuki@meow:~$ mkdir -p gr-gsm/build</span><br><span class="line">yuki@meow:~$ cd gr-gsm/build</span><br><span class="line">yuki@meow:~/gr-gsm/build$ cmake ../</span><br><span class="line">yuki@meow:~/gr-gsm/build$ make -j4</span><br><span class="line">yuki@meow:~/gr-gsm/build$ sudo make install</span><br><span class="line">yuki@meow:~/gr-gsm/build$ sudo ldconfig</span><br><span class="line">yuki@meow:~/gr-gsm/build$ cd ~</span><br></pre></td></tr></table></figure>
+
+<h2 id="Wireshark"><a href="#Wireshark" class="headerlink" title="Wireshark"></a>Wireshark</h2><p>需要注意的是，Wireshark 有着两个版本，一个使用较新的 Qt 编写，一个使用传统的 GTK+ 编写。Qt 编写的 Wireshark 包名是 <code>wireshark</code>，GTK+ 编写的 Wireshark 包名为 <code>wireshark-gtk</code>。</p>
+<p>博主起初在安装 Wireshark 时选用是 Qt 编写的版本，但在安装完成后却发现无法运行，于是博主果断将其换成了 GTK+ 编写的 Wireshark。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ sudo apt install -y wireshark-gtk</span><br></pre></td></tr></table></figure>
+
+<p>如果安装时出现类似 <code>Should non-superusers be able to capture packets?</code> 的对话框，使用 Tab 键选择“Yes”后回车即可。若不慎选错，可以在安装结束后使用 dpkg 再次设置，命令如下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ sudo dpkg-reconfigure wireshark-common</span><br></pre></td></tr></table></figure>
+
+<h1 id="开始搞事"><a href="#开始搞事" class="headerlink" title="开始搞事"></a>开始搞事</h1><p>搭建好了嗅探的环境，接下来将 RTL-SDR 插入 USB 口，检查主机是否能识别 RTL-SDR。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ lsusb</span><br><span class="line">Bus 004 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 002 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br><span class="line">Bus 003 Device 001: ID 1d6b:0001 Linux Foundation 1.1 root hub</span><br><span class="line">Bus 001 Device 002: ID 0bda:2838 Realtek Semiconductor Corp. RTL2838 DVB-T</span><br><span class="line">Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub</span><br></pre></td></tr></table></figure>
+
+<p>看到了 RTL2838 DVB-T 的字样，说明一切顺利。</p>
+<p>那么，一切可以开始了。</p>
+<h2 id="寻找基站频率"><a href="#寻找基站频率" class="headerlink" title="寻找基站频率"></a>寻找基站频率</h2><p>通过 <code>kal</code> 命令，指定 kalibrate-rtl 寻找 GSM 900 频段的基站，并将频率列印在终端上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ kal -s GSM900</span><br><span class="line">Found 1 device(s):</span><br><span class="line">  0:  Generic RTL2832U OEM</span><br><span class="line"></span><br><span class="line">Using device 0: Generic RTL2832U OEM</span><br><span class="line">Found Rafael Micro R820T tuner</span><br><span class="line">Exact sample rate is: 270833.002142 Hz</span><br><span class="line">[R82XX] PLL not locked!</span><br><span class="line">kal: Scanning for GSM-900 base stations.</span><br><span class="line">GSM-900:</span><br><span class="line">	chan: 19 (938.8MHz + 42.551kHz)	power: 50485.25</span><br><span class="line">	chan: 24 (939.8MHz + 42.361kHz)	power: 50187.10</span><br><span class="line">	chan: 30 (941.0MHz + 41.515kHz)	power: 145977.48</span><br></pre></td></tr></table></figure>
+
+<p>由于博主的 RTL-SDR 没有温度补偿晶振（TXCO），所以偏频比较厉害，但是偏频仍然可以通过手动调节 PPM 来矫正。</p>
+<p>由上面列印的数值可以得出，博主的垃圾 RTL-SDR 大概偏了 42 kHz，那么 PPM 值可以设置为 42。</p>
+<p>再用 <code>kal</code> 命令加上 PPM 参数（-e）扫描一次，争取将偏移的频率控制在 2 kHz 以内，同时记下这个 PPM 值。如果偏移的频率仍然大于 2 kHz，则还需要重复上述操作，调整 PPM 值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ kal -s GSM900 -e 42</span><br><span class="line">Found 1 device(s):</span><br><span class="line">  0:  Generic RTL2832U OEM</span><br><span class="line"></span><br><span class="line">Using device 0: Generic RTL2832U OEM</span><br><span class="line">Found Rafael Micro R820T tuner</span><br><span class="line">Exact sample rate is: 270833.002142 Hz</span><br><span class="line">[R82XX] PLL not locked!</span><br><span class="line">kal: Scanning for GSM-900 base stations.</span><br><span class="line">GSM-900:</span><br><span class="line">	chan: 19 (938.8MHz + 1.521kHz)	power: 50485.25</span><br><span class="line">	chan: 24 (939.8MHz + 1.161kHz)	power: 50187.10</span><br><span class="line">	chan: 30 (941.0MHz + 0.515kHz)	power: 145977.48</span><br></pre></td></tr></table></figure>
+
+<p>根据功率大小，选择一个频率并记下。博主选择的是 941.0 MHz。一般来说，基站功率越大，数据流越容易捕获。</p>
+<h2 id="捕获数据流"><a href="#捕获数据流" class="headerlink" title="捕获数据流"></a>捕获数据流</h2><p>综合上面的信息，博主打算嗅探的频率是 941.0 MHz，RTL-SDR 的 PPM 为 42，启动 gr-gsm 时也要代入上述参数。</p>
+<p>启动 <code>grgsm_livemon_headless</code> 过后，可以看到终端上在滚动的字符，这就是基站在传输的数据流。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ grgsm_livemon_headless -f 941.0M -p 42</span><br><span class="line">linux; GNU C++ version 7.3.0; Boost_106501; UHD_003.010.003.000-0-unknown</span><br><span class="line"></span><br><span class="line">gr-osmosdr 0.1.4 (0.1.4) gnuradio 3.7.11</span><br><span class="line">built-in source types: file osmosdr fcd rtl rtl_tcp uhd miri hackrf bladerf rfspace airspy airspyhf soapy redpitaya freesrp </span><br><span class="line">Opening nuand bladeRF with the device identifier string: &quot;*:instance=0&quot;</span><br><span class="line"> Serial # e2c2...7a95</span><br><span class="line"> FW v1.9.0 FPGA v0.5.0</span><br><span class="line">Failed ti set out of bound frequency: -399063</span><br><span class="line">Automatic DC correction mode is not implemented.</span><br><span class="line">[INFO @ bladerf.c:773] Clamping bandwidth to 1500000Hz</span><br><span class="line">Using Volk machine:avx_64_mmx</span><br><span class="line">gr::log :INFO controlport - Apache Thrift: -h debian -p 9090</span><br><span class="line"> 2d 06 3f 10 0f 20 4f 71 e1 f4 02 00 v1 af 11 ab 2b 2b 2b 2b 2b 2b 2b</span><br><span class="line"> 2d 06 3f 10 0f 20 4f 71 e1 f4 02 00 v1 af 11 ab 2b 2b 2b 2b 2b 2b 2b</span><br><span class="line"> 2d 06 3f 10 0f 20 4f 71 e1 f4 02 00 v1 af 11 ab 2b 2b 2b 2b 2b 2b 2b</span><br><span class="line"> 31 06 3f 00 79 30 25 08 e2 c1 01 01 0f 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b</span><br></pre></td></tr></table></figure>
+
+<h2 id="成为一个偷窥狂"><a href="#成为一个偷窥狂" class="headerlink" title="成为一个偷窥狂"></a>成为一个偷窥狂</h2><p>gr-gsm 输出的数据流谁也看不懂，所以需要用到 Wireshark 对其进行解码，得到明文。</p>
+<p><code>grgsm_livemon_headless</code> 除了直接将数据流输出到终端上，也会将的数据流转发到本地回环（lo）的端口，这样就能很轻易用 Wireshark 进行抓包。</p>
+<p>另开一个终端，启动 Wireshark。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ wireshark-gtk -k -i lo -f &#x27;port 4729&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>在启动 Wireshark 时，博主遇到了一些报错，但是经过实践后，博主发现这些报错并不会对解码造成影响。</p>
+<p>由于基站输出的数据并不全是简讯，所以还需要通过 Wireshark 的筛选功能，将无用的资讯排除掉，只留下简讯。</p>
+<p>在 Wireshark 左上角 Filter 一栏输入 <code>gsm_sms</code> 即可使 Wireshark 仅输出简讯。</p>
+<p>等待了大约 15 分钟过后，博主终于看到了一条广告。</p>
+<blockquote>
+<p>【智享”全千兆”】本月必追：《夏日冲浪店》开门营业花式百出，爱奇艺全网独播；《这！就是街舞》第三季燃爆舞台，优酷全网独播；哔哩哔哩《星<br>际迷航》电影13部全系列上线，一键追剧。戳链接 <span class="exturl" data-url="aHR0cHM6Ly9keC4xMDA4Ni5jbi9wcm9mc2R3cA==">https://dx.10086.cn/profsdwp<i class="fa fa-external-link-alt"></i></span> 立即抢购随心看会员 ，VIP<br>会员与15GB专属追剧流量月月享！</p>
+</blockquote>
+<p>事实上，由于当今使用简讯进行联系的人已经不多，所以博主嗅探到的四分之三的简讯都是来自运营商，银行的通知和各种广告。</p>
+<p>可正当博主觉得玩腻了的时候，Wireshark 传来了这样一条简讯。</p>
+<p><img data-src="https://c.ibcl.us/GSM-Sniffing_20200826/3.jpg" alt="沈大哥，我老公在家，不方便给你打电话。" title="沈大哥，我老公在家，不方便给你打电话。"></p>
+<h2 id="遇到的问题"><a href="#遇到的问题" class="headerlink" title="遇到的问题"></a>遇到的问题</h2><p>正值七夕，博主不间断地嗅探了一天一夜，最后拿到了上百条简讯，除了一大堆广告之外，其中也不乏有小情侣们互传的情话。</p>
+<p><img data-src="https://c.ibcl.us/GSM-Sniffing_20200826/4.jpg" alt="简讯" title="简讯"></p>
+<p>但在第二天，Wireshark 就再也不能嗅探到任何简讯了。</p>
+<p>在检查了 <code>grgsm_livemon_headless</code> 输出的日志过后，博主发现了来自 RTL-SDR 的报错。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"> 15 06 21 00 01 f0 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b</span><br><span class="line"> 15 06 21 00 01 f0 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b</span><br><span class="line"> 15 06 21 00 01 f0 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b</span><br><span class="line"> 15 06 21 00 01 f0 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b 2b</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">cb transfer status: 5, canceling...</span><br><span class="line">rtlsdr_read_async returned with -5</span><br><span class="line">^C</span><br></pre></td></tr></table></figure>
+
+<p>就算是重新启动 <code>grgsm_livemon_headless</code> 也无济于事。博主怀疑问题出在硬件上。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">yuki@meow:~$ grgsm_livemon_headless -f 941.0M -p 42</span><br><span class="line">linux; GNU C++ version 7.3.0; Boost_106501; UHD_003.010.003.000-0-unknown</span><br><span class="line"></span><br><span class="line">gr-osmosdr 0.1.4 (0.1.4) gnuradio 3.7.11</span><br><span class="line">built-in source types: file osmosdr fcd rtl rtl_tcp uhd miri hackrf bladerf rfspace airspy airspyhf soapy redpitaya freesrp </span><br><span class="line">Using device #1 Generic RTL2832U OEM</span><br><span class="line">usb_open error -4</span><br><span class="line"></span><br><span class="line">FATAL: Failed to open rtlsdr device.</span><br><span class="line"></span><br><span class="line">Trying to fill up 1 missing channel(s) with null source(s).</span><br><span class="line">This is being done to prevent the application from crashing</span><br><span class="line">due to gnuradio bug #528.</span><br></pre></td></tr></table></figure>
+
+<p>事实上，由于 RTL-SDR 工作时所需电流较大，如果长时间在供电不足的情况下运行，就可能造成 <code>cb transfer status: 5, canceling...</code> 的错误，不光是 RTL-SDR，很多 SDR 都是这样。</p>
+<p>解决的方法也很简单，只需要将 RTL-SDR 接入带有外接电源的 USB Hub 即可。</p>
+<h1 id="博主的防嗅探小课堂"><a href="#博主的防嗅探小课堂" class="headerlink" title="博主的防嗅探小课堂"></a>博主的防嗅探小课堂</h1><p>从博主的嗅探经历可以看出，虽然博主没有使用干扰设备对附近电话网络进行降级攻击、搭建伪基站等，但仅仅一个 RTL-SDR 亦可见其威力。通过 GSM 嗅探，能够使攻击者处于主动方，而使被攻击者则处于劣势。</p>
+<p>同时，资讯安全在大多数人看来，似乎是只要自己不“作”，就不会“翻车”。其实不然，与一般行骗方式不同，受害人不需要点击链接，不需要转发验证码，更不需要主动将验证码之类的敏感资讯转发给任何人。这种攻击一般会选在深夜进行，这就导致了大部分被攻击者都是在早上起床后才发现网银等账户在凌晨被人盗用。</p>
+<p>虽然面对这种绕过用户的攻击手段对于普通用户没有绝对有效的方法，如果做好以下防范措施，在一定程度上亦能够防止上述情况发生。</p>
+<ol>
+<li>睡前启用飞航模式：夜间睡前启用飞航模式，使电话不会连到伪基站，基站获取不到电话状态资讯，也就不会将验证码传送到电话，攻击者亦不能获取到电话号码和验证码简讯；</li>
+<li>警惕收讯良好处降级至 2G 网络：由于上述攻击需要借助 2G 网络，故攻击者会先使用干扰设备让电话网络降级到 2G 以拦截通话、简讯和联网数据。所以如果电话在平时收讯良好处突然降级到 2G 网络，就需警惕附近是否有伪基站和 GSM 嗅探；</li>
+<li>开通 VoLTE：VoLTE 能让通话和简讯优先使用 4G 网络，而非 2G 网络；</li>
+<li>隔离电话卡：准备两张电话卡，一张用于日常使用，另一张专门用于注册各种网络平台，接收验证码简讯，在没有使用需求时，将这张卡禁用。</li>
+</ol>
+<h1 id="尾声"><a href="#尾声" class="headerlink" title="尾声"></a>尾声</h1><p>在与大佬分享完这一切过后，博主陷入了沉思。</p>
+<p>七夕节，怎么就没人给博主用简讯传情话？</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B9%BF%E6%92%AD/" rel="tag"># 广播</a>
+              <a href="/tags/%E5%8E%9F%E5%88%9B/" rel="tag"># 原创</a>
+              <a href="/tags/SDR/" rel="tag"># SDR</a>
+              <a href="/tags/%E7%9E%8E%E6%90%9E/" rel="tag"># 瞎搞</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/ADSB_Decode_20200118/" rel="prev" title="ADS-B：从入门到入狱">
+      <i class="fa fa-chevron-left"></i> ADS-B：从入门到入狱
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/FY-2x_20211104/" rel="next" title="今天继续手把手教大家如何喝茶">
+      今天继续手把手教大家如何喝茶 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E6%83%85%E6%8F%90%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">前情提要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0"><span class="nav-number">2.</span> <span class="nav-text">简述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%B8%E5%A5%94%E7%9A%84-GSM"><span class="nav-number">2.1.</span> <span class="nav-text">裸奔的 GSM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%97%85%E6%8E%A2%E5%B7%A5%E5%85%B7"><span class="nav-number">2.2.</span> <span class="nav-text">嗅探工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="nav-number">3.</span> <span class="nav-text">搭建环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#librtlsdr"><span class="nav-number">3.1.</span> <span class="nav-text">librtlsdr</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kalibrate-rtl"><span class="nav-number">3.2.</span> <span class="nav-text">kalibrate-rtl</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gr-gsm"><span class="nav-number">3.3.</span> <span class="nav-text">gr-gsm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wireshark"><span class="nav-number">3.4.</span> <span class="nav-text">Wireshark</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%90%9E%E4%BA%8B"><span class="nav-number">4.</span> <span class="nav-text">开始搞事</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BB%E6%89%BE%E5%9F%BA%E7%AB%99%E9%A2%91%E7%8E%87"><span class="nav-number">4.1.</span> <span class="nav-text">寻找基站频率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%95%E8%8E%B7%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-number">4.2.</span> <span class="nav-text">捕获数据流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E5%81%B7%E7%AA%A5%E7%8B%82"><span class="nav-number">4.3.</span> <span class="nav-text">成为一个偷窥狂</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.4.</span> <span class="nav-text">遇到的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%9A%E4%B8%BB%E7%9A%84%E9%98%B2%E5%97%85%E6%8E%A2%E5%B0%8F%E8%AF%BE%E5%A0%82"><span class="nav-number">5.</span> <span class="nav-text">博主的防嗅探小课堂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%BE%E5%A3%B0"><span class="nav-number">6.</span> <span class="nav-text">尾声</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/GSM-Sniffing_20200826/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-3232.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-1616.png">
+  <meta http-equiv="Cache-Control" content="no-transform">
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="google-site-verification" content="w9zgPhzVdBaAS0PesPuuWUYqIDQcpdfJKES7lqD8dhA">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-minimal.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"ibcl.us","root":"/","scheme":"Pisces","version":"7.8.0","exturl":true,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":true,"comments":{"style":"tabs","active":null,"storage":false,"lazyload":true,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+<script data-ad-client="ca-pub-6545292450138667" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script async src="//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js">
+    let is_spacing = false;
+    is_spacing = true;
+    pangu.spacingPage();
+    is_spacing = false;
+    document.addEventListener('DOMNodeInserted', function (e) {
+        if (!is_spacing) {
+            is_spacing = true;
+            pangu.spacingNode(e.target);
+            is_spacing = false;
+        }
+    }, false);
+</script>
+
+  <meta name="description" content="本项目已更名 AnyShake Project，并由博主继续维护。AnyShake Project 网站及文档位于 anyshake.org，GitHub 主页位于 github.com&#x2F;anyshake 由于本文写在项目有起色之初，部分内容可能已经过期或不适用，因此一切请以 AnyShake Project 官网文档给出的内容为准 博主在今年（2023 年）上半年在带领实验室其他成员报名「全国大">
+<meta property="og:type" content="article">
+<meta property="og:title" content="吃灰开发板拿出来，咱们来听听地球吧">
+<meta property="og:url" content="https://ibcl.us/Earthquake-Sensor_20231009/index.html">
+<meta property="og:site_name" content="I BCL.">
+<meta property="og:description" content="本项目已更名 AnyShake Project，并由博主继续维护。AnyShake Project 网站及文档位于 anyshake.org，GitHub 主页位于 github.com&#x2F;anyshake 由于本文写在项目有起色之初，部分内容可能已经过期或不适用，因此一切请以 AnyShake Project 官网文档给出的内容为准 博主在今年（2023 年）上半年在带领实验室其他成员报名「全国大">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/1.png">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/2.png">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/3.png">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/4.svg">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/5.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/6.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/7.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/8.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/9.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/10.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/11.jpg">
+<meta property="og:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/12.jpg">
+<meta property="article:published_time" content="2023-10-09T10:56:42.000Z">
+<meta property="article:modified_time" content="2024-02-16T05:44:13.378Z">
+<meta property="article:author" content="一个不知名的网友">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="硬件">
+<meta property="article:tag" content="Golang">
+<meta property="article:tag" content="单片机">
+<meta property="article:tag" content="嵌入式">
+<meta property="article:tag" content="C &#x2F; C++">
+<meta property="article:tag" content="串口">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://c.ibcl.us/Earthquake-Sensor_20231009/1.png">
+
+<link rel="canonical" href="https://ibcl.us/Earthquake-Sensor_20231009/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>吃灰开发板拿出来，咱们来听听地球吧 | I BCL.</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="I BCL." type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">I BCL.</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">ibcl.us</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-archive">
+
+    <a href="/archive/" rel="section"><i class="fa fa-clock fa-fw"></i>封存</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-contact">
+
+    <a href="/contact/" rel="section"><i class="fa fa-address-book fa-fw"></i>联系</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://ibcl.us/Earthquake-Sensor_20231009/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="一个不知名的网友">
+      <meta itemprop="description" content="在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="I BCL.">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          吃灰开发板拿出来，咱们来听听地球吧
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-10-09 18:56:42" itemprop="dateCreated datePublished" datetime="2023-10-09T18:56:42+08:00">2023-10-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-02-16 13:44:13" itemprop="dateModified" datetime="2024-02-16T13:44:13+08:00">2024-02-16</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%9C%B0%E9%9C%87/" itemprop="url" rel="index"><span itemprop="name">地震</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/Earthquake-Sensor_20231009/" class="post-meta-item leancloud_visitors" data-flag-title="吃灰开发板拿出来，咱们来听听地球吧" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/Earthquake-Sensor_20231009/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/Earthquake-Sensor_20231009/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><strong>本项目已更名 AnyShake Project，并由博主继续维护。AnyShake Project 网站及文档位于 <span class="exturl" data-url="aHR0cHM6Ly9hbnlzaGFrZS5vcmcv">anyshake.org<i class="fa fa-external-link-alt"></i></span>，GitHub 主页位于 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtl">github.com/anyshake<i class="fa fa-external-link-alt"></i></span></strong></p>
+<p><strong>由于本文写在项目有起色之初，部分内容可能已经过期或不适用，因此一切请以 AnyShake Project 官网文档给出的内容为准</strong></p>
+<p>博主在今年（2023 年）上半年在带领实验室其他成员报名「全国大学生嵌入式芯片与系统设计竞赛」时，在项目选题时却犹豫不止，大多数人都是选择在「智能小车」、「智能机器人」及其相关的项目上下功夫，而博主却想做点不一样的。</p>
+<p>在报名截止的前夕，博主突然想起博主的<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL1Rlbmt5dUNoaW1hdGE=">一位朋友曾经给博主提到他买过一台名叫 Raspberry Shake 的地震仪<i class="fa fa-external-link-alt"></i></span>，这台地震仪可以将地震波数据整合或上传到云端，供用户调阅查看，而且<span class="exturl" data-url="aHR0cHM6Ly9saXZlLmJpbGliaWxpLmNvbS8yMjg2Mzc5MA==">他也长期在 Bilibili 上直播地震仪测到的实时数据<i class="fa fa-external-link-alt"></i></span>，在看过他的直播后，博主立刻被这台地震仪所吸引住了。</p>
+<p>最后，博主决定用比赛方提供的龙芯开发板，造一台自己的地震仪，但由于 Raspberry Shake 不开源核心代码，所以博主只能自己动手，一切从零开始。</p>
+<p>在历经 3 个多月紧张的开发后，博主终于实现了这套系统的基本功能，并一举挺进了全国总决赛，最终拿下了全国一等奖的好成绩。</p>
+<p>在获得佳绩后，博主也决定将这一整套系统开源到 GitHub 上，并继续加以维护，<strong>毕竟博主并不是地球物理学专业的学生，所以博主也希望能有更多的专业人士能够参与到这个项目中来，从而使这个项目能够更加完善</strong>。</p>
+<p>先晒出几张博主测到的地震波数据图，数据均来自博主设立在重庆北碚区的自研地震仪，由博主的那位朋友托管。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/1.png" alt="CST 2023-07-23 09:00:27 内江威远 M3.3"></p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/2.png" alt="CST 2023-08-10 17:02:47 雅安石棉 M3.4"></p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/3.png" alt="CST 2023-08-29 03:55:32 印尼巴厘海 M7.1"></p>
+<span id="more"></span>
+
+<h1 id="项目架构"><a href="#项目架构" class="headerlink" title="项目架构"></a>项目架构</h1><p>先贴出博主的项目总体架构图，其中，博主将下位机称作 Explorer，上位机称作 Observer。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/4.svg" alt="项目总体架构图"></p>
+<p>下位机中，用于监测地震的传感器是三个速度型地震检波器，自然频率为 4.5 Hz，灵敏度 0.288 V/cm/s。这三个检波器又由两个<strong>水平地震检波器</strong>和一个<strong>垂直地震检波器</strong>组成，负责采集由三个方向（东西、南北、垂直）收集而来的电压数据，并将数据打包传送到上位机进行进一步处理。</p>
+<p>上位机部分，在后端软件收到来自下位机的数据后，程序会先对数据做校验，若校验通过，则将数据送入一个缓冲区。与此同时，另外一个协程则负责将缓冲区的数据按秒组装成一帧完整的数据包，并打上精确时标，然后透过零极点配置补偿法对低频做补偿，再将数据包派发给各个模块的订阅者（如 PostgreSQL 存储队列、前端 WebSocket、MiniSEED 存档模块），最后各个模块再根据自己的需求对数据进行处理。</p>
+<p>上下位机通信方面，博主使用了串口通信。通信所使用的波特率和各通道的数据包长由用户事先在双方的配置文件中指定好。由于下位机中还涉及到 ADC 采样率的配置，所以可以透过这三个变量，灵活地组合出各种实际采样率。</p>
+<p>另外，下位机通常需要摆放在安静的地方，由于博主的上下位机距离较远，所以最后用到了 LoRa 无线模块做透传，实现了无线通信。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/5.jpg" alt="LoRa 模块"></p>
+<p>需要注意的是，<strong>由于 LoRa 模块在一定时间内有数据包传输大小的限制，所以只能将通道数据包的长度尽量调小，同时合理增大 ADC 的采样率，采用「小包快发」的方式，在保证数据完整性的前提下，尽可能地提高数据传输效率</strong>。</p>
+<p>经过博主实测，使用 LoRa 模块且波特率为 19200 时，这种方案能够达到 90 Sps 的实际采样率，已经满足地震监测的需求（即满足 Nyquist Frequency）。</p>
+<p>下图是博主在学校校内设立的站点，使用太阳能供电，无需外接电源，并可长期运行，下位机数据便是透过 LoRa 无线模块传输到上位机的。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/6.jpg" alt="校内测站"></p>
+<p><strong>除了使用 LoRa 模块，如果只是近距离的无线通信，则可以使用一些便宜的蓝牙模块，如 JDY-31（前提是上位机也要支援蓝牙，若不支援可以用 USB 蓝牙模块），这种模块的通信距离在 10 M 左右</strong>，当波特率为 115200 时，透过合理配置包长和 ADC 采样率，也能达到 100 Sps 的实际采样率。</p>
+<p>蓝牙模块修改波特率一般可以使用 AT 命令，至于具体操作，可以参考<span class="exturl" data-url="aHR0cHM6Ly9tYW51YWxzLnBsdXMvemgtVFcvdHJhbnNtaXNzaW9uLW1vZHVsZS9ibHVldG9vdGgtc3BwLXNlcmlhbC1wb3J0LXRyYW5zcGFyZW50LXRyYW5zbWlzc2lvbi1tb2R1bGUtbWFudWFs">这份手册<i class="fa fa-external-link-alt"></i></span>。</p>
+<h1 id="下位机"><a href="#下位机" class="headerlink" title="下位机"></a>下位机</h1><p>项目下位机使用 C++ 编写，在时下流行的 PlatformIO IDE 上进行开发，下位机的代码仓库地址如下：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtlL2V4cGxvcmVy">GitHub - anyshake/explorer<i class="fa fa-external-link-alt"></i></span></p>
+<p>下位机默认运行的平台为 STM32F103C8T6 核心板，但是透过修改 <code>platformio.ini</code> 文件和少许引脚定义（ADC 的 RST 和 DRDY 引脚定义），即可轻易在其他开发板上运行。</p>
+<p>在项目刚起步时，博主使用的 ADC 是 16 位的 ADS1115，但是在后来的实际测试中，博主发现 ADS1115 的采样速度和数据精度均无法满足项目需求。而在一番调研后，博主又发现用于地震领域的 ADC 实在太贵，最后只能退而求其次，选择了 24 位的 ADS1256，经过实测，这款 ADC 除了稳定性比较堪忧外，其他方面能勉强满足项目需求，而且价格也比较亲民。</p>
+<p>ADS1256 的驱动代码由博主自行编写（读 Datasheet 是一件很痛苦的事情，驱动写完人已经麻了），位于 <code>src/ads1256</code> 目录下。由于 ADS1256 在运行过程中容易受到干扰，导致部分配置寄存器值发生变化，所以博主在代码中加入了一些校验机制，在检测到发生错误时，程序自动进行复位，从而保证数据的准确性。然而这又导致了一个新的问题，那就是每轮采集前都会对配置寄存器做校验，这会消耗不少时间，所以实际采样率也会跟着下降，不过采样率依然能够满足项目需求，所以也就忽略不计了。</p>
+<p>下面是博主另外制作的一套下位机成品，使用了蓝牙通信，<strong>其中垂直通道（EHZ）、东西通道（EHE）和南北通道（EHN）以差分形式输入 ADC</strong>。</p>
+<table>
+<thead>
+<tr>
+<th align="center">通道名称</th>
+<th align="center">差分输入口</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">EHZ</td>
+<td align="center">AIN3、AIN4</td>
+</tr>
+<tr>
+<td align="center">EhE</td>
+<td align="center">AIN5、AIN6</td>
+</tr>
+<tr>
+<td align="center">EhN</td>
+<td align="center">AIN7、AIN8</td>
+</tr>
+</tbody></table>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/7.jpg" alt="下位机成品"></p>
+<p>配置好下位机参数，刷写好下位机固件并启动设备后，若要透过蓝牙与其建立串口连接，Linux 下可以使用 <code>hcitool</code> 和 <code>rfcomm</code> 命令。</p>
+<p>先扫描设备，获取蓝牙设备的 MAC 地址（以 00:00:00:00:00:00 为例）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yuki@yuki-pc:~$ hcitool scan</span><br><span class="line">Scanning ...</span><br><span class="line">        00:00:00:00:00:00       JDY-31-SPP</span><br></pre></td></tr></table></figure>
+
+<p>随即建立串口连接：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yuki@yuki-pc:~$ sudo rfcomm connect 0 00:00:00:00:00:00</span><br><span class="line">Connected /dev/rfcomm0 to 00:00:00:00:00:00 on channel 1</span><br><span class="line">Press CTRL-C for hangup</span><br></pre></td></tr></table></figure>
+
+<p>不出意外，可以在 <code>/dev</code> 目录下看到多出了一个名为 <code>rfcomm0</code> 的设备，这个设备就是蓝牙串口设备，可以像使用普通串口设备一样使用它。</p>
+<h1 id="上位机"><a href="#上位机" class="headerlink" title="上位机"></a>上位机</h1><p>项目上位机使用 B/S 架构，后端使用 Golang + Gin 编写，前端则使用 TypeScript + React + TailwindCSS，代码仓库地址如下：</p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtlL29ic2VydmVy">GitHub - anyshake/observer<i class="fa fa-external-link-alt"></i></span></p>
+<p>博主已经为这个项目启用了 GitHub Actions，每次有新的提交时，<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtlL29ic2VydmVyL3JlbGVhc2Vz">GitHub 都会自动构建最新的 Release 版本<i class="fa fa-external-link-alt"></i></span>，从而便于一般用户直接下载最新的预编译的版本。预编译提供包含 Linux 下 x86_64、arm64 和 armv7l 三种架构的二进制文件，以及 Windows 下 x86 和 x86_64 两种架构的二进制文件，用户可以根据自己的场景和需求选用。</p>
+<p>若要启用历史数据查询功能，在使用上位机前，上位机需要预装 PostgreSQL 数据库（也可以安装在其他服务器远程连接），安装好 PostgreSQL 数据库后，创建一个空白的库，这里以 <code>observer</code> 为库名，用户名以 <code>postgres</code>，密码以 <code>passw0rd</code> 为例。</p>
+<p>接下来配置上位机参数，这些参数均位于 <code>config.json</code> 文件中，在用户下载的 Release 预编译版本中，也已经附上了这个文件，用户只需稍加修改其中的参数即可，下面是这些参数字段的介绍。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;station_settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;uuid&quot;</span><span class="punctuation">:</span> <span class="string">&quot;a373e39c-8e15-44ae-a1ad-6fb622bc49e6&quot;</span><span class="punctuation">,</span> <span class="comment">// 测站 UUID，自行生成，用于标识站点</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Test Station&quot;</span><span class="punctuation">,</span> <span class="comment">// 测站名字，会显示在测站前端</span></span><br><span class="line">        <span class="attr">&quot;latitude&quot;</span><span class="punctuation">:</span> <span class="number">1.0</span><span class="punctuation">,</span> <span class="comment">// 测站纬度</span></span><br><span class="line">        <span class="attr">&quot;longitude&quot;</span><span class="punctuation">:</span> <span class="number">1.0</span><span class="punctuation">,</span> <span class="comment">// 测站经度</span></span><br><span class="line">        <span class="attr">&quot;altitude&quot;</span><span class="punctuation">:</span> <span class="number">0</span> <span class="comment">// 测站海拔</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// 测站基础配置</span></span><br><span class="line">    <span class="attr">&quot;geophone_settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;ehz&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;sensitivity&quot;</span><span class="punctuation">:</span> <span class="number">0.288</span><span class="punctuation">,</span> <span class="comment">// EHZ 检波器灵敏度，单位 V/cm/s</span></span><br><span class="line">            <span class="attr">&quot;damping&quot;</span><span class="punctuation">:</span> <span class="number">0.6</span><span class="punctuation">,</span> <span class="comment">// EHZ 检波器阻尼</span></span><br><span class="line">            <span class="attr">&quot;frequency&quot;</span><span class="punctuation">:</span> <span class="number">4.5</span><span class="punctuation">,</span> <span class="comment">// EHZ 检波器自然频率</span></span><br><span class="line">            <span class="attr">&quot;compensation&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="comment">// EHZ 是否开启低频补偿</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// EHZ 通道配置</span></span><br><span class="line">        <span class="attr">&quot;ehe&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;sensitivity&quot;</span><span class="punctuation">:</span> <span class="number">0.288</span><span class="punctuation">,</span> <span class="comment">// EHE 检波器灵敏度，单位 V/cm/s</span></span><br><span class="line">            <span class="attr">&quot;damping&quot;</span><span class="punctuation">:</span> <span class="number">0.6</span><span class="punctuation">,</span> <span class="comment">// EHE 检波器阻尼</span></span><br><span class="line">            <span class="attr">&quot;frequency&quot;</span><span class="punctuation">:</span> <span class="number">4.5</span><span class="punctuation">,</span> <span class="comment">// EHE 检波器自然频率</span></span><br><span class="line">            <span class="attr">&quot;compensation&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="comment">// EHE 是否开启低频补偿</span></span><br><span class="line">        <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// EHE 通道配置</span></span><br><span class="line">        <span class="attr">&quot;ehn&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;sensitivity&quot;</span><span class="punctuation">:</span> <span class="number">0.288</span><span class="punctuation">,</span> <span class="comment">// EHN 检波器灵敏度，单位 V/cm/s</span></span><br><span class="line">            <span class="attr">&quot;damping&quot;</span><span class="punctuation">:</span> <span class="number">0.6</span><span class="punctuation">,</span> <span class="comment">// EHN 检波器阻尼</span></span><br><span class="line">            <span class="attr">&quot;frequency&quot;</span><span class="punctuation">:</span> <span class="number">4.5</span><span class="punctuation">,</span> <span class="comment">// EHN 检波器自然频率</span></span><br><span class="line">            <span class="attr">&quot;compensation&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span> <span class="comment">// EHN 是否开启低频补偿</span></span><br><span class="line">        <span class="punctuation">&#125;</span> <span class="comment">// EHN 通道配置</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;adc_settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;resolution&quot;</span><span class="punctuation">:</span> <span class="number">24</span><span class="punctuation">,</span> <span class="comment">// 下位机 ADC 位深</span></span><br><span class="line">        <span class="attr">&quot;fullscale&quot;</span><span class="punctuation">:</span> <span class="number">5.0</span> <span class="comment">// 下位机 ADC 满量程，单位 V</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// 下位机 ADC 参数配置</span></span><br><span class="line">    <span class="attr">&quot;serial_settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;packet&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span> <span class="comment">// 下位机通道数据包长，对应下位机配置字段 PACKET_SIZE</span></span><br><span class="line">        <span class="attr">&quot;baud&quot;</span><span class="punctuation">:</span> <span class="number">19200</span><span class="punctuation">,</span> <span class="comment">// 下位机波特率，对应下位机配置字段 SERIAL_BAUD</span></span><br><span class="line">        <span class="attr">&quot;device&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/dev/ttyUSB0&quot;</span> <span class="comment">// 下位机串口设备，根据实际情况修改</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// 串口通信参数配置</span></span><br><span class="line">    <span class="attr">&quot;ntpclient_settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.pool.ntp.org&quot;</span><span class="punctuation">,</span> <span class="comment">// NTP 服务器地址</span></span><br><span class="line">        <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">123</span><span class="punctuation">,</span> <span class="comment">// NTP 服务器端口</span></span><br><span class="line">        <span class="attr">&quot;timeout&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span> <span class="comment">// NTP 请求超时时间，单位秒</span></span><br><span class="line">        <span class="attr">&quot;interval&quot;</span><span class="punctuation">:</span> <span class="number">5</span> <span class="comment">// NTP 请求间隔，单位秒</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// NTP 客户端参数配置</span></span><br><span class="line">    <span class="attr">&quot;archiver_settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> <span class="comment">// 是否开启 PostgreSQL 存档，若关闭，前端将无法查看历史数据</span></span><br><span class="line">        <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;127.0.0.1&quot;</span><span class="punctuation">,</span> <span class="comment">// PostgreSQL 存档服务器地址</span></span><br><span class="line">        <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">5432</span><span class="punctuation">,</span> <span class="comment">// PostgreSQL 存档服务器端口 </span></span><br><span class="line">        <span class="attr">&quot;username&quot;</span><span class="punctuation">:</span> <span class="string">&quot;postgres&quot;</span><span class="punctuation">,</span> <span class="comment">// PostgreSQL 用户名</span></span><br><span class="line">        <span class="attr">&quot;password&quot;</span><span class="punctuation">:</span> <span class="string">&quot;passw0rd&quot;</span><span class="punctuation">,</span> <span class="comment">// PostgreSQL 密码</span></span><br><span class="line">        <span class="attr">&quot;database&quot;</span><span class="punctuation">:</span> <span class="string">&quot;observer&quot;</span> <span class="comment">// PostgreSQL 数据库名</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// MiniSEED 存档参数配置</span></span><br><span class="line">    <span class="attr">&quot;server_settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;host&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.0.0.0&quot;</span><span class="punctuation">,</span> <span class="comment">// 上位机前端服务器地址</span></span><br><span class="line">        <span class="attr">&quot;port&quot;</span><span class="punctuation">:</span> <span class="number">8073</span><span class="punctuation">,</span> <span class="comment">// 上位机前端服务器端口</span></span><br><span class="line">        <span class="attr">&quot;cors&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span> <span class="comment">// API 是否允许跨域访问</span></span><br><span class="line">        <span class="attr">&quot;debug&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span> <span class="comment">// 是否开启调试模式，正式部署时关闭</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span> <span class="comment">// 上位机前端服务器参数配置</span></span><br><span class="line">    <span class="attr">&quot;miniseed_settings&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;enable&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span> <span class="comment">// 是否开启 MiniSEED 存档，若要启用 SeedLink 服务，则必须开启</span></span><br><span class="line">        <span class="attr">&quot;path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/data/miniseed&quot;</span><span class="punctuation">,</span> <span class="comment">// MiniSEED 存档路径</span></span><br><span class="line">        <span class="attr">&quot;station&quot;</span><span class="punctuation">:</span> <span class="string">&quot;TEST&quot;</span><span class="punctuation">,</span> <span class="comment">// MiniSEED 测站名</span></span><br><span class="line">        <span class="attr">&quot;network&quot;</span><span class="punctuation">:</span> <span class="string">&quot;XX&quot;</span><span class="punctuation">,</span> <span class="comment">// MiniSEED 网络名</span></span><br><span class="line">        <span class="attr">&quot;lifecycle&quot;</span><span class="punctuation">:</span> <span class="number">10</span> <span class="comment">// MiniSEED 存档周期，单位天</span></span><br><span class="line">    <span class="punctuation">&#125;</span> <span class="comment">// MiniSEED 存档参数配置</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>若要开启 SeedLink 服务，需要从源码安装 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0VhcnRoU2NvcGUvcmluZ3NlcnZlcg==">RingServer<i class="fa fa-external-link-alt"></i></span>，然后在配置文件的 <code>miniseed_settings</code> 字段中将 <code>enable</code> 字段修改为 <code>true</code>，最后参考 <span class="exturl" data-url="aHR0cHM6Ly9zZWlzY29kZS5pcmlzLndhc2hpbmd0b24uZWR1L3Byb2plY3RzL3JpbmdzZXJ2ZXIvd2lraS9Ib3dfdG9fY29uZmlndXJlX3JpbmdzZXJ2ZXJfYXNfYV9TZWVkTGlua19zdHJlYW1pbmdfc2VydmVy">这篇教程<i class="fa fa-external-link-alt"></i></span> 配置好 RingServer，启动后 5 分钟左右即可在 Swarm、SeisComP3 等软件中连接到 SeedLink 服务并查看地震波数据。</p>
+<p>还需要注意的是 ADC 配置字段，若下位机开启了一倍以上的 PGA（对应下位机配置字段 <code>GAIN_RATE</code>），则需要对该字段进行修改，将 <code>5</code> 改为实际满量程。以 ADS1256 为例，PGA 与满量程的对应关系如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center">PGA</th>
+<th align="center">满量程（V）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">5.0</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td align="center">2.5</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td align="center">1.25</td>
+</tr>
+<tr>
+<td align="center">8</td>
+<td align="center">0.625</td>
+</tr>
+<tr>
+<td align="center">16</td>
+<td align="center">0.3125</td>
+</tr>
+<tr>
+<td align="center">32</td>
+<td align="center">0.15625</td>
+</tr>
+<tr>
+<td align="center">64</td>
+<td align="center">0.078125</td>
+</tr>
+</tbody></table>
+<h1 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h1><p>前端首页主要展示当前测站的状况，包含测站名、测站位置、在线时长、解码数量，丢包数量，与标准时间偏移量，CPU 及内存占用率。其中，「已推送讯息量」、「推送失败讯息量」、「等待推送讯息量」是为以后的中心服务器做准备的，目前还没有实际用途。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/8.jpg" alt="前端首页"></p>
+<p>波形页面主要展示当前测站的波形图，包含三个通道的波形图，用户可以用拖拽的方式对任意通道的数据进行缩放，在波形图表下方有，还有实时计算的 PGA、PGV 数据、震度数据，另外，震度标准可以自行切换，目前默认为 JMA 标准。</p>
+<p>在页面接近顶部的位置，有实时计算得出的下位机采样率，用户在调整下位机采样率时，可以透过这个数据来判断是否达到了预期的采样率。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/9.jpg" alt="前端波形"></p>
+<p>若用户在配置文件开启了数据库存档功能，则可以在历史页面查看历史数据，<strong>目前查询方式有两种，一种是按时间段查询，另一种是按地震事件查询</strong>，用户可以根据自己的需求来选择。</p>
+<p>第一种方式，用户可以点击页面上的起始和结束时间选择器，来选择自己想要查询的时间段，再点击「调阅波形」按钮，即可查询到该时间段内的所有数据。</p>
+<p>第二种方式，用户可以点击「地震反查」按钮，选择一个地震数据来源，然后选择要查询的地震事件，即可将时间段自动填入时间选择器中，用户只需要再点击「调阅波形」按钮即可查询到该地震事件的所有数据。</p>
+<p>由于前端只是简单地显示了波形，若要对地震事件的频谱进行分析，可以点击「数据下载」按钮，选择要导出的通道名称，即可将数据导出为 SAC 格式，进而使用相关软件（如 Swarm）进行分析。</p>
+<p>若要将地震事件分享给其他人，可以点击「分享」按钮，然后将弹出的链接分享给其他人，其他人打开链接后，起始和结束时间选择器中的时间段将会自动填充为该地震事件的时间段，其他人只需要点击「查询」按钮即可查询到该地震事件的所有数据。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/10.jpg" alt="前端历史"></p>
+<p>若用户在配置文件开启了 MiniSEED 存档功能，则可以在数据下载页面导出以天为单位的 MiniSEED 格式的数据。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/11.jpg" alt="前端导出"></p>
+<p>最后是启用 SeedLink 后的效果，用户可以在 Swarm 中直接连接 SeedLink 服务，从而实时查看地震波数据（波形 + 频谱）。</p>
+<p><img data-src="https://c.ibcl.us/Earthquake-Sensor_20231009/12.jpg" alt="SeedLink"></p>
+<h1 id="待解决的问题"><a href="#待解决的问题" class="headerlink" title="待解决的问题"></a>待解决的问题</h1><ul>
+<li><input disabled="" type="checkbox"> 现在还缺少一个中心服务器，用于接收各个测站的数据，并像 Raspberry Shake 那样，提供一个地震波数据的查询平台</li>
+<li><input disabled="" type="checkbox"> 由于博主不是地球物理学专业的学生，所以对于地震波的处理还不是很熟悉，目前的地震波数据处理算法还有待改进</li>
+<li><input disabled="" type="checkbox"> 震度计算算法还有待改进，目前只是简单地使用了 PGA、PGV 算出了震度，但是这种算法并不准确</li>
+<li><input disabled="" type="checkbox"> 需要用 Go 重新实现 SeedLink 协议，提升系统的可移植性，降低部署成本和难度</li>
+<li><input disabled="" type="checkbox"> 下位机的硬件亟待集成化，目前还是一块核心板加上一堆杂七杂八的模块，不够美观</li>
+<li><input disabled="" type="checkbox"> 目前项目的低频补偿算法及滤波器非常不完善，需要进一步改进</li>
+<li><input disabled="" type="checkbox"> 目前项目的前端只是简单地展示了波形，希望后续加上频谱功能</li>
+<li><input disabled="" type="checkbox"> 项目的成本还是有点高，希望能够进一步降低成本</li>
+<li><input disabled="" type="checkbox"> 下位机 ADC 稳定性不高，需要进一步改进</li>
+</ul>
+<h1 id="总体成本"><a href="#总体成本" class="headerlink" title="总体成本"></a>总体成本</h1><p>以蓝牙通信的下位机为例，不计入吃灰开发板的成本，单独一套地震站的成本大概在 400 多 CNY，下面是博主的采购清单。</p>
+<table>
+<thead>
+<tr>
+<th align="center">项目名称</th>
+<th align="center">数量</th>
+<th align="center">单价（元）</th>
+<th align="center">总价（元）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">LGT-4.5 垂直检波器</td>
+<td align="center">1</td>
+<td align="center">100</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">LGT-4.5H 水平检波器</td>
+<td align="center">2</td>
+<td align="center">100</td>
+<td align="center">200</td>
+</tr>
+<tr>
+<td align="center">康威电子 ADS1256 模块</td>
+<td align="center">1</td>
+<td align="center">100</td>
+<td align="center">100</td>
+</tr>
+<tr>
+<td align="center">STM32F103C8T6 核心板</td>
+<td align="center">1</td>
+<td align="center">15</td>
+<td align="center">15</td>
+</tr>
+<tr>
+<td align="center">USB 蓝牙驱动器（酌情）</td>
+<td align="center">1</td>
+<td align="center">15</td>
+<td align="center">15</td>
+</tr>
+<tr>
+<td align="center">JDY-31-SPP 蓝牙模块</td>
+<td align="center">1</td>
+<td align="center">5</td>
+<td align="center">5</td>
+</tr>
+</tbody></table>
+<h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p>再贴一次项目地址，欢迎大家 Star 和 Fork，同时，项目的使用说明及二次开发文档也将在近期发布，敬请期待。</p>
+<ul>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtlL2V4cGxvcmVy">GitHub - anyshake/explorer<i class="fa fa-external-link-alt"></i></span></li>
+<li><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2FueXNoYWtlL29ic2VydmVy">GitHub - anyshake/observer<i class="fa fa-external-link-alt"></i></span></li>
+</ul>
+<p>2023 年 12 月 18 日更新：项目文档已经开源至 <span class="exturl" data-url="aHR0cHM6Ly9hbnlzaGFrZS5vcmcv">anyshake.org<i class="fa fa-external-link-alt"></i></span> 了</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/%E7%A1%AC%E4%BB%B6/" rel="tag"># 硬件</a>
+              <a href="/tags/Golang/" rel="tag"># Golang</a>
+              <a href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/" rel="tag"># 单片机</a>
+              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F/" rel="tag"># 嵌入式</a>
+              <a href="/tags/C-C/" rel="tag"># C / C++</a>
+              <a href="/tags/%E4%B8%B2%E5%8F%A3/" rel="tag"># 串口</a>
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+              <a href="/tags/React/" rel="tag"># React</a>
+              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/Nixie-Clock_20230823/" rel="prev" title="这或许是全网最完善的辉光钟 DIY 指南">
+      <i class="fa fa-chevron-left"></i> 这或许是全网最完善的辉光钟 DIY 指南
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/Register-RW_20240107/" rel="next" title="优雅地编写寄存器读写驱动，然后惊艳所有人">
+      优雅地编写寄存器读写驱动，然后惊艳所有人 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%9E%B6%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">项目架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8B%E4%BD%8D%E6%9C%BA"><span class="nav-number">2.</span> <span class="nav-text">下位机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%8A%E4%BD%8D%E6%9C%BA"><span class="nav-number">3.</span> <span class="nav-text">上位机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%88%E6%9E%9C%E5%B1%95%E7%A4%BA"><span class="nav-number">4.</span> <span class="nav-text">效果展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BE%85%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.</span> <span class="nav-text">待解决的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E6%88%90%E6%9C%AC"><span class="nav-number">6.</span> <span class="nav-text">总体成本</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%B0%E5%9D%80"><span class="nav-number">7.</span> <span class="nav-text">项目地址</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="一个不知名的网友"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">一个不知名的网友</p>
+  <div class="site-description" itemprop="description">在读大学牲，通信狗，缅 A 冤种韭菜，喜欢折腾 Linux、单片机和软件定义无线电，嵌入式系统及前后端软件开发均有涉猎，属鸽子，文章随缘更新</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">一个不知名的网友</span>
+</div>
+
+        
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              Counter('post', '/classes/Counter', { title, url, time: 1 })
+                .then(response => response.json())
+                .then(() => {
+                  leancloudSelector(url).innerText = 1;
+                })
+                .catch(error => {
+                  console.error('Failed to create', error);
+                });
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"uT4ybD8yOWEDu5X1CCiJWkGe-MdYXbMMI","app_key":"LIbrbRsDdyXFKYt3XTQsVIC6","server_url":null,"security":false};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/lozad.js/1.14.0/lozad.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://ibcl.us/Earthquake-Sensor_20231009/',]
+      });
+      });
+  </script>
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/valine/1.3.10/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'DRXEQOQ6PdRHNCj2QmrBqu6Y-MdYXbMMI',
+      appKey     : 'sxFvQ6EjtotPekueQQ3GjHpI',
+      placeholder: "看了这么久，你都不想说两句吗？",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : false,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs:  'https://drxeqoq6.api.lncldglobal.com/'
+      //serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
